@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="#F4F4EC"
+    android:padding="16dp">
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mi Historial de Citas"
+        android:textSize="22sp"
+        android:textStyle="bold"
+        android:textColor="#00569B"
+        android:layout_marginBottom="16dp"/>
+
+    <!-- CORRECCIÓN: se agrega tvMensajeVacio que usa MisCitasActivity.java -->
+    <TextView
+        android:id="@+id/tvMensajeVacio"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Aún no tienes citas registradas."
+        android:textColor="#666666"
+        android:textSize="16sp"
+        android:textStyle="italic"
+        android:gravity="center"
+        android:padding="20dp"
+        android:visibility="gone"/>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:id="@+id/contenedorMisCitas"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical" />
+    </ScrollView>
+
+</LinearLayout>

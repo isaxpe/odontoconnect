@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1053721969057",
+    "project_id": "odontoconnect-507d5",
+    "storage_bucket": "odontoconnect-507d5.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1053721969057:android:8139d22c35fa7b22594be0",
+        "android_client_info": {
+          "package_name": "com.example.odontoconnect"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBb3YEjZBuykduai1pee88EmoMVxbVBPUA"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

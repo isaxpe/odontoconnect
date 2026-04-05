@@ -1,9 +1,45 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.Odontoconnect" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <style name="Theme.Odontoconnect" parent="Theme.MaterialComponents.Light.NoActionBar">
+        <item name="colorPrimary">@color/azul_primario</item>
+        <item name="colorPrimaryVariant">@color/azul_oscuro</item>
+        <item name="colorOnPrimary">@color/blanco</item>
+        <item name="colorSecondary">@color/azul_acento</item>
+        <item name="colorOnSecondary">@color/blanco</item>
+        <item name="android:windowBackground">@color/fondo_app</item>
+        <item name="android:statusBarColor">@color/azul_oscuro</item>
+        <item name="materialButtonStyle">@style/BotonAzul</item>
+        <item name="materialCardViewStyle">@style/CardAzul</item>
     </style>
 
-    <style name="Theme.Odontoconnect" parent="Base.Theme.Odontoconnect" />
+    <style name="BotonAzul" parent="Widget.MaterialComponents.Button">
+        <item name="backgroundTint">@color/azul_primario</item>
+        <item name="android:textColor">@color/blanco</item>
+        <item name="cornerRadius">14dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="android:letterSpacing">0.05</item>
+    </style>
+
+    <style name="BotonOutlineAzul" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="strokeColor">@color/azul_primario</item>
+        <item name="android:textColor">@color/azul_primario</item>
+        <item name="cornerRadius">14dp</item>
+    </style>
+
+    <style name="CardAzul" parent="Widget.MaterialComponents.CardView">
+        <item name="cardCornerRadius">16dp</item>
+        <item name="cardElevation">4dp</item>
+        <item name="cardBackgroundColor">@color/fondo_card</item>
+        <item name="strokeColor">@color/gris_claro</item>
+        <item name="strokeWidth">1dp</item>
+    </style>
+
+    <style name="HoraBtn" parent="Widget.AppCompat.Button">
+        <item name="android:layout_height">50dp</item>
+        <item name="android:layout_margin">3dp</item>
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">@color/texto_primario</item>
+        <item name="android:backgroundTint">@color/gris_claro</item>
+        <item name="android:padding">0dp</item>
+    </style>
 </resources>

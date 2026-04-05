@@ -1,38 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical"
-    android:background="#F4F6F8"
-    android:padding="20dp">
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Solicitudes Pendientes"
-        android:textColor="#0056B3"
-        android:textSize="24sp"
-        android:textStyle="bold" />
-
-    <TextView
-        android:id="@+id/tvMensajeVacio"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:gravity="center"
-        android:text="Buscando solicitudes..."
-        android:textSize="16sp" />
-
-    <ScrollView
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_marginTop="16dp">
-
-        <LinearLayout
-            android:id="@+id/contenedorSolicitudes"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical" />
+    android:layout_width="match_parent" android:layout_height="match_parent"
+    android:orientation="vertical" android:background="@color/fondo_app">
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:background="@color/azul_primario" android:orientation="vertical" android:paddingTop="44dp" android:paddingBottom="20dp" android:paddingHorizontal="20dp">
+        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Solicitudes Pendientes" android:textColor="@color/blanco" android:textSize="22sp" android:textStyle="bold"/>
+        <TextView android:id="@+id/tvMensajeVacio" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:text="Buscando solicitudes..." android:textColor="#90CAF9" android:textSize="13sp"/>
+    </LinearLayout>
+    <ScrollView android:layout_width="match_parent" android:layout_height="match_parent" android:padding="16dp">
+        <LinearLayout android:id="@+id/contenedorSolicitudes" android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical"/>
     </ScrollView>
-
 </LinearLayout>

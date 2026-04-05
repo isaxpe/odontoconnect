@@ -5,46 +5,84 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="12dp"
-    app:cardCornerRadius="12dp"
-    app:cardElevation="3dp">
+    app:cardCornerRadius="16dp"
+    app:cardElevation="4dp"
+    app:strokeColor="@color/gris_claro"
+    app:strokeWidth="1dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical"
-        android:padding="16dp">
+        android:padding="18dp">
 
         <TextView
             android:id="@+id/tvTratamientoPaciente"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Tratamiento: Limpieza"
-            android:textColor="#333333"
-            android:textSize="18sp"
-            android:textStyle="bold" />
+            android:text="Tratamiento"
+            android:textColor="@color/texto_primario"
+            android:textSize="17sp"
+            android:textStyle="bold"/>
 
         <TextView
             android:id="@+id/tvFechaHoraPaciente"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="4dp"
-            android:text="2024-03-20 a las 10:00"
-            android:textColor="#666666"
-            android:textSize="14sp" />
+            android:layout_marginTop="6dp"
+            android:text="📅 Fecha  🕐 Hora"
+            android:textColor="@color/texto_secundario"
+            android:textSize="13sp"/>
 
-        <TextView
-            android:id="@+id/tvEstadoCita"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="12dp"
-            android:background="#FFC107"
-            android:paddingHorizontal="12dp"
-            android:paddingVertical="6dp"
-            android:text="PENDIENTE"
-            android:textColor="#FFFFFF"
-            android:textSize="12sp"
-            android:textStyle="bold"
-            app:cornerRadius="8dp" />
+            android:layout_marginTop="14dp"
+            android:orientation="horizontal"
+            android:gravity="center_vertical">
+
+            <TextView
+                android:id="@+id/tvEstadoCita"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@color/color_pendiente"
+                android:paddingHorizontal="14dp"
+                android:paddingVertical="6dp"
+                android:text="PENDIENTE"
+                android:textColor="@color/blanco"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                app:cornerRadius="8dp"/>
+
+            <View
+                android:layout_width="0dp"
+                android:layout_height="1dp"
+                android:layout_weight="1"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnCancelarCita"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="wrap_content"
+                android:layout_height="34dp"
+                android:text="Cancelar"
+                android:textSize="12sp"
+                android:textColor="@color/color_rechazada"
+                android:visibility="gone"
+                app:strokeColor="@color/color_rechazada"
+                app:cornerRadius="10dp"/>
+        </LinearLayout>
+
+        <!-- NUEVO: Botón pagar anticipo -->
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnPagarAnticipo"
+            android:layout_width="match_parent"
+            android:layout_height="42dp"
+            android:layout_marginTop="10dp"
+            android:text="💳 Pagar anticipo"
+            android:textSize="13sp"
+            android:visibility="gone"
+            app:backgroundTint="@color/azul_primario"
+            app:cornerRadius="10dp"/>
 
     </LinearLayout>
 </com.google.android.material.card.MaterialCardView>

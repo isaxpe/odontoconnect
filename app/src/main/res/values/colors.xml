@@ -1,5 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <!-- Paleta azul principal -->
+    <color name="azul_primario">#1565C0</color>
+    <color name="azul_oscuro">#0D47A1</color>
+    <color name="azul_medio">#1976D2</color>
+    <color name="azul_claro">#E3F2FD</color>
+    <color name="azul_muy_claro">#EEF6FF</color>
+    <color name="azul_acento">#2196F3</color>
+
+    <!-- Fondos -->
+    <color name="fondo_app">#F0F4FF</color>
+    <color name="fondo_card">#FFFFFF</color>
+
+    <!-- Textos -->
+    <color name="texto_primario">#0D1B3E</color>
+    <color name="texto_secundario">#5C7499</color>
+    <color name="texto_hint">#A8BFDC</color>
+
+    <!-- Estados -->
+    <color name="color_aceptada">#1565C0</color>
+    <color name="color_pendiente">#F59E0B</color>
+    <color name="color_rechazada">#EF4444</color>
+    <color name="color_bloqueado">#EF4444</color>
+
+    <!-- Otros -->
+    <color name="blanco">#FFFFFF</color>
+    <color name="negro">#000000</color>
+    <color name="gris_claro">#E8EDF5</color>
+    <color name="gris_medio">#CCCCCC</color>
+    <color name="azul_nav">#1565C0</color>
 </resources>

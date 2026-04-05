@@ -4,111 +4,223 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F4F4EC">
+    android:background="@color/fondo_app">
 
-    <!-- Header azul -->
-    <LinearLayout
-        android:id="@+id/headerPerfil"
-        android:layout_width="match_parent"
-        android:layout_height="160dp"
-        android:background="#00569B"
-        android:gravity="center"
-        android:orientation="vertical"
-        app:layout_constraintTop_toTopOf="parent">
-
-        <ImageView
-            android:layout_width="70dp"
-            android:layout_height="70dp"
-            android:src="@android:drawable/ic_menu_myplaces"
-            app:tint="#FFFFFF" />
-
-        <TextView
-            android:id="@+id/tvNombreDoctor"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            android:text="Dr. Nombre"
-            android:textColor="#FFFFFF"
-            android:textSize="20sp"
-            android:textStyle="bold" />
-    </LinearLayout>
-
-    <!-- Tarjeta de info -->
-    <androidx.cardview.widget.CardView
-        android:id="@+id/cardInfoDoctor"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="24dp"
-        app:cardCornerRadius="16dp"
-        app:cardElevation="6dp"
-        app:layout_constraintTop_toBottomOf="@id/headerPerfil">
+    <ScrollView
+        android:id="@+id/scrollPerfilDoctor"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/bottomNavigation"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical"
-            android:padding="20dp">
+            android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Correo electrónico"
-                android:textColor="#666666"
-                android:textSize="12sp" />
+            <!-- HEADER -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="220dp"
+                android:background="@color/azul_primario"
+                android:gravity="center"
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/tvCorreoDoctor"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:text="correo@ejemplo.com"
-                android:textColor="#000000"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+                <FrameLayout android:layout_width="90dp" android:layout_height="90dp">
+                    <ImageView android:layout_width="90dp" android:layout_height="90dp"
+                        android:background="@drawable/bg_boton_redondo"
+                        android:src="@android:drawable/ic_menu_myplaces"
+                        android:scaleType="centerCrop" app:tint="@color/blanco"/>
+                </FrameLayout>
 
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Rol en el sistema"
-                android:textColor="#666666"
-                android:textSize="12sp" />
+                <TextView android:id="@+id/tvNombreDoctor" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:text="Dr. Nombre" android:textColor="@color/blanco" android:textSize="22sp" android:textStyle="bold"/>
+                <TextView android:id="@+id/tvEspecialidadDoctor" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:text="Odontólogo General" android:textColor="#90CAF9" android:textSize="14sp"/>
+                <TextView android:id="@+id/tvRolDoctor" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="6dp" android:background="#1A7ACC" android:paddingHorizontal="12dp" android:paddingVertical="4dp" android:text="● Activo" android:textColor="@color/blanco" android:textSize="12sp"/>
+            </LinearLayout>
 
-            <TextView
-                android:id="@+id/tvRolDoctor"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Odontólogo"
-                android:textColor="#00569B"
-                android:textSize="16sp"
-                android:textStyle="bold" />
+            <!-- ESTADÍSTICAS -->
+            <androidx.cardview.widget.CardView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginHorizontal="16dp" android:layout_marginTop="16dp" app:cardCornerRadius="14dp" app:cardElevation="4dp">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:padding="16dp" android:weightSum="3">
+                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:orientation="vertical">
+                        <TextView android:id="@+id/tvTotalPacientesDoctor" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="0" android:textColor="@color/azul_primario" android:textSize="26sp" android:textStyle="bold"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Pacientes" android:textColor="@color/texto_secundario" android:textSize="12sp"/>
+                    </LinearLayout>
+                    <View android:layout_width="1dp" android:layout_height="50dp" android:background="@color/gris_claro"/>
+                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:orientation="vertical">
+                        <TextView android:id="@+id/tvCitasHoyDoctor" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="0" android:textColor="#2E7D32" android:textSize="26sp" android:textStyle="bold"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Citas hoy" android:textColor="@color/texto_secundario" android:textSize="12sp"/>
+                    </LinearLayout>
+                    <View android:layout_width="1dp" android:layout_height="50dp" android:background="@color/gris_claro"/>
+                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:orientation="vertical">
+                        <TextView android:id="@+id/tvPendientesDoctor" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="0" android:textColor="#F57C00" android:textSize="26sp" android:textStyle="bold"/>
+                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Pendientes" android:textColor="@color/texto_secundario" android:textSize="12sp"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- INFORMACIÓN PROFESIONAL -->
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="16dp" android:layout_marginTop="20dp" android:layout_marginBottom="8dp" android:text="INFORMACIÓN PROFESIONAL" android:textColor="@color/azul_primario" android:textSize="12sp" android:textStyle="bold"/>
+
+            <androidx.cardview.widget.CardView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginHorizontal="16dp" app:cardCornerRadius="14dp" app:cardElevation="3dp">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="16dp">
+
+                    <!-- Correo -->
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="48dp" android:gravity="center_vertical" android:orientation="horizontal">
+                        <ImageView android:layout_width="20dp" android:layout_height="20dp" android:src="@android:drawable/ic_dialog_email" app:tint="@color/azul_primario"/>
+                        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:layout_marginStart="12dp">
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Correo electrónico" android:textColor="@color/texto_secundario" android:textSize="11sp"/>
+                            <TextView android:id="@+id/tvCorreoDoctor" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="correo@ejemplo.com" android:textColor="@color/texto_primario" android:textSize="14sp" android:textStyle="bold"/>
+                        </LinearLayout>
+                    </LinearLayout>
+
+                    <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/gris_claro" android:layout_marginVertical="4dp"/>
+
+                    <!-- Teléfono -->
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="48dp" android:gravity="center_vertical" android:orientation="horizontal">
+                        <ImageView android:layout_width="20dp" android:layout_height="20dp" android:src="@android:drawable/ic_menu_call" app:tint="@color/azul_primario"/>
+                        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:layout_marginStart="12dp">
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Teléfono" android:textColor="@color/texto_secundario" android:textSize="11sp"/>
+                            <TextView android:id="@+id/tvTelefonoDoctor" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="No registrado" android:textColor="@color/texto_primario" android:textSize="14sp" android:textStyle="bold"/>
+                        </LinearLayout>
+                        <ImageView android:id="@+id/btnEditarTelefonoDoctor" android:layout_width="24dp" android:layout_height="24dp" android:src="@android:drawable/ic_menu_edit" app:tint="@color/gris_medio" android:clickable="true" android:focusable="true"/>
+                    </LinearLayout>
+
+                    <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/gris_claro" android:layout_marginVertical="4dp"/>
+
+                    <!-- Dirección -->
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="48dp" android:gravity="center_vertical" android:orientation="horizontal">
+                        <ImageView android:layout_width="20dp" android:layout_height="20dp" android:src="@android:drawable/ic_menu_mapmode" app:tint="@color/azul_primario"/>
+                        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:layout_marginStart="12dp">
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Dirección" android:textColor="@color/texto_secundario" android:textSize="11sp"/>
+                            <TextView android:id="@+id/tvDireccionDoctor" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="No registrada" android:textColor="@color/texto_primario" android:textSize="14sp" android:textStyle="bold"/>
+                        </LinearLayout>
+                        <ImageView android:id="@+id/btnEditarDireccionDoctor" android:layout_width="24dp" android:layout_height="24dp" android:src="@android:drawable/ic_menu_edit" app:tint="@color/gris_medio" android:clickable="true" android:focusable="true"/>
+                    </LinearLayout>
+
+                    <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/gris_claro" android:layout_marginVertical="4dp"/>
+
+                    <!-- Especialidad -->
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="48dp" android:gravity="center_vertical" android:orientation="horizontal">
+                        <ImageView android:layout_width="20dp" android:layout_height="20dp" android:src="@android:drawable/ic_menu_agenda" app:tint="@color/azul_primario"/>
+                        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:layout_marginStart="12dp">
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Especialidad" android:textColor="@color/texto_secundario" android:textSize="11sp"/>
+                            <TextView android:id="@+id/tvEspecialidadPerfil" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="No registrada" android:textColor="@color/texto_primario" android:textSize="14sp" android:textStyle="bold"/>
+                        </LinearLayout>
+                        <ImageView android:id="@+id/btnEditarEspecialidad" android:layout_width="24dp" android:layout_height="24dp" android:src="@android:drawable/ic_menu_edit" app:tint="@color/gris_medio" android:clickable="true" android:focusable="true"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- DATOS BANCARIOS -->
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="16dp" android:layout_marginTop="20dp" android:layout_marginBottom="8dp" android:text="DATOS BANCARIOS (para anticipos)" android:textColor="@color/azul_primario" android:textSize="12sp" android:textStyle="bold"/>
+
+            <androidx.cardview.widget.CardView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginHorizontal="16dp" app:cardCornerRadius="14dp" app:cardElevation="3dp">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="16dp">
+
+                    <!-- Banco -->
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="48dp" android:gravity="center_vertical" android:orientation="horizontal">
+                        <ImageView android:layout_width="20dp" android:layout_height="20dp" android:src="@android:drawable/ic_menu_send" app:tint="@color/azul_primario"/>
+                        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:layout_marginStart="12dp">
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Banco" android:textColor="@color/texto_secundario" android:textSize="11sp"/>
+                            <TextView android:id="@+id/tvBancoDoctor" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="No registrado" android:textColor="@color/texto_primario" android:textSize="14sp" android:textStyle="bold"/>
+                        </LinearLayout>
+                        <ImageView android:id="@+id/btnEditarBanco" android:layout_width="24dp" android:layout_height="24dp" android:src="@android:drawable/ic_menu_edit" app:tint="@color/gris_medio" android:clickable="true" android:focusable="true"/>
+                    </LinearLayout>
+
+                    <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/gris_claro" android:layout_marginVertical="4dp"/>
+
+                    <!-- CLABE -->
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="48dp" android:gravity="center_vertical" android:orientation="horizontal">
+                        <ImageView android:layout_width="20dp" android:layout_height="20dp" android:src="@android:drawable/ic_menu_send" app:tint="@color/azul_primario"/>
+                        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:layout_marginStart="12dp">
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="CLABE interbancaria" android:textColor="@color/texto_secundario" android:textSize="11sp"/>
+                            <TextView android:id="@+id/tvClabeDoctor" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="No registrada" android:textColor="@color/texto_primario" android:textSize="14sp" android:textStyle="bold" android:fontFamily="monospace"/>
+                        </LinearLayout>
+                        <ImageView android:id="@+id/btnEditarClabe" android:layout_width="24dp" android:layout_height="24dp" android:src="@android:drawable/ic_menu_edit" app:tint="@color/gris_medio" android:clickable="true" android:focusable="true"/>
+                    </LinearLayout>
+
+                    <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/gris_claro" android:layout_marginVertical="4dp"/>
+
+                    <!-- Titular -->
+                    <LinearLayout android:layout_width="match_parent" android:layout_height="48dp" android:gravity="center_vertical" android:orientation="horizontal">
+                        <ImageView android:layout_width="20dp" android:layout_height="20dp" android:src="@android:drawable/ic_menu_myplaces" app:tint="@color/azul_primario"/>
+                        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:layout_marginStart="12dp">
+                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Titular de la cuenta" android:textColor="@color/texto_secundario" android:textSize="11sp"/>
+                            <TextView android:id="@+id/tvTitularDoctor" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="No registrado" android:textColor="@color/texto_primario" android:textSize="14sp" android:textStyle="bold"/>
+                        </LinearLayout>
+                        <ImageView android:id="@+id/btnEditarTitular" android:layout_width="24dp" android:layout_height="24dp" android:src="@android:drawable/ic_menu_edit" app:tint="@color/gris_medio" android:clickable="true" android:focusable="true"/>
+                    </LinearLayout>
+
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- ACCIONES RÁPIDAS -->
+            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="16dp" android:layout_marginTop="20dp" android:layout_marginBottom="8dp" android:text="ACCIONES RÁPIDAS" android:textColor="@color/azul_primario" android:textSize="12sp" android:textStyle="bold"/>
+
+            <androidx.cardview.widget.CardView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginHorizontal="16dp" app:cardCornerRadius="14dp" app:cardElevation="3dp">
+                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="8dp">
+
+                    <LinearLayout android:id="@+id/btnIrAgenda" android:layout_width="match_parent" android:layout_height="52dp" android:gravity="center_vertical" android:orientation="horizontal" android:padding="8dp" android:background="?attr/selectableItemBackground" android:clickable="true" android:focusable="true">
+                        <ImageView android:layout_width="20dp" android:layout_height="20dp" android:src="@drawable/ic_calendar" app:tint="@color/azul_primario"/>
+                        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginStart="12dp" android:text="Configurar agenda" android:textColor="@color/texto_primario" android:textSize="14sp"/>
+                        <ImageView android:layout_width="16dp" android:layout_height="16dp" android:src="@android:drawable/arrow_up_float" app:tint="@color/gris_medio"/>
+                    </LinearLayout>
+
+                    <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/gris_claro" android:layout_marginHorizontal="8dp"/>
+
+                    <LinearLayout android:id="@+id/btnIrCitas" android:layout_width="match_parent" android:layout_height="52dp" android:gravity="center_vertical" android:orientation="horizontal" android:padding="8dp" android:background="?attr/selectableItemBackground" android:clickable="true" android:focusable="true">
+                        <ImageView android:layout_width="20dp" android:layout_height="20dp" android:src="@android:drawable/ic_menu_today" app:tint="@color/azul_primario"/>
+                        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginStart="12dp" android:text="Ver solicitudes de citas" android:textColor="@color/texto_primario" android:textSize="14sp"/>
+                        <ImageView android:layout_width="16dp" android:layout_height="16dp" android:src="@android:drawable/arrow_up_float" app:tint="@color/gris_medio"/>
+                    </LinearLayout>
+
+                    <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/gris_claro" android:layout_marginHorizontal="8dp"/>
+
+                    <LinearLayout android:id="@+id/btnIrTratamientos" android:layout_width="match_parent" android:layout_height="52dp" android:gravity="center_vertical" android:orientation="horizontal" android:padding="8dp" android:background="?attr/selectableItemBackground" android:clickable="true" android:focusable="true">
+                        <ImageView android:layout_width="20dp" android:layout_height="20dp" android:src="@android:drawable/ic_menu_manage" app:tint="@color/azul_primario"/>
+                        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginStart="12dp" android:text="Gestionar tratamientos" android:textColor="@color/texto_primario" android:textSize="14sp"/>
+                        <ImageView android:layout_width="16dp" android:layout_height="16dp" android:src="@android:drawable/arrow_up_float" app:tint="@color/gris_medio"/>
+                    </LinearLayout>
+
+                    <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/gris_claro" android:layout_marginHorizontal="8dp"/>
+
+                    <LinearLayout android:id="@+id/btnCambiarPasswordDoctor" android:layout_width="match_parent" android:layout_height="52dp" android:gravity="center_vertical" android:orientation="horizontal" android:padding="8dp" android:background="?attr/selectableItemBackground" android:clickable="true" android:focusable="true">
+                        <ImageView android:layout_width="20dp" android:layout_height="20dp" android:src="@android:drawable/ic_lock_lock" app:tint="@color/azul_primario"/>
+                        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginStart="12dp" android:text="Cambiar contraseña" android:textColor="@color/texto_primario" android:textSize="14sp"/>
+                        <ImageView android:layout_width="16dp" android:layout_height="16dp" android:src="@android:drawable/arrow_up_float" app:tint="@color/gris_medio"/>
+                    </LinearLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Botón cerrar sesión -->
+            <Button
+                android:id="@+id/btnCerrarSesionPerfil"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:layout_marginHorizontal="16dp"
+                android:layout_marginTop="20dp"
+                android:layout_marginBottom="20dp"
+                android:backgroundTint="@color/color_rechazada"
+                android:text="Cerrar Sesión"
+                android:textColor="@color/blanco"
+                android:textStyle="bold"/>
 
         </LinearLayout>
-    </androidx.cardview.widget.CardView>
+    </ScrollView>
 
-    <!-- Botón cerrar sesión -->
-    <Button
-        android:id="@+id/btnCerrarSesionPerfil"
-        android:layout_width="match_parent"
-        android:layout_height="56dp"
-        android:layout_marginHorizontal="20dp"
-        android:layout_marginTop="24dp"
-        android:backgroundTint="#B00020"
-        android:text="Cerrar Sesión"
-        android:textColor="#FFFFFF"
-        android:textStyle="bold"
-        app:layout_constraintTop_toBottomOf="@id/cardInfoDoctor" />
-
-    <!-- BottomNavigation -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigation"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="60dp"
-        android:background="#00569B"
-        app:itemIconTint="#FFFFFF"
-        app:itemTextColor="#FFFFFF"
+        android:background="@color/azul_primario"
+        app:itemIconTint="@color/blanco"
+        app:itemTextColor="@color/blanco"
         app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:menu="@menu/bottom_nav_menu" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:menu="@menu/bottom_nav_menu"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

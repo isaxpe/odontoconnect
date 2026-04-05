@@ -3,7 +3,21 @@
   <component name="deploymentTargetSelector">
     <selectionStates>
       <SelectionState runConfigName="app">
-        <option name="selectionMode" value="DROPDOWN" />
+        <option name="selectionMode" value="DIALOG" />
+        <DialogSelection>
+          <targets>
+            <Target type="DEFAULT_BOOT">
+              <handle>
+                <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\cisai\.android\avd\Medium_Phone.avd" />
+              </handle>
+            </Target>
+            <Target type="DEFAULT_BOOT">
+              <handle>
+                <DeviceId pluginId="LocalEmulator" identifier="path=C:\Users\cisai\.android\avd\Pixel_9a.avd" />
+              </handle>
+            </Target>
+          </targets>
+        </DialogSelection>
       </SelectionState>
       <SelectionState runConfigName="Sin nombre">
         <option name="selectionMode" value="DROPDOWN" />
@@ -18,10 +32,10 @@
       </SelectionState>
       <SelectionState runConfigName="Sin nombre (1)">
         <option name="selectionMode" value="DIALOG" />
-        <DropdownSelection timestamp="2026-03-17T21:21:04.201795600Z">
+        <DropdownSelection timestamp="2026-03-23T21:35:54.258625500Z">
           <Target type="DEFAULT_BOOT">
             <handle>
-              <DeviceId pluginId="PhysicalDevice" identifier="serial=3136bc73" />
+              <DeviceId pluginId="PhysicalDevice" identifier="serial=BAT4GMJF95KZTO4X" />
             </handle>
           </Target>
         </DropdownSelection>

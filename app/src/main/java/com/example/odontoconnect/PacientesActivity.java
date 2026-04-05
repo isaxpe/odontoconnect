@@ -4,136 +4,126 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.LinearLayout;
 import android.widget.TextView;
-import androidx.annotation.NonNull;
+
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.recyclerview.widget.LinearLayoutManager;
-import androidx.recyclerview.widget.RecyclerView;
+
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.HashMap;
 
 public class PacientesActivity extends AppCompatActivity {
 
-    private RecyclerView rvPacientes;
+    private LinearLayout contenedor;
     private TextView tvSinPacientes;
     private FirebaseFirestore db;
-    private final List<Map<String, Object>> listaPacientes = new ArrayList<>();
-    private PacienteAdapter adapter;
+    private ListenerRegistration listener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_pacientes);
 
-        rvPacientes    = findViewById(R.id.rvPacientes);
+        db             = FirebaseFirestore.getInstance();
+        contenedor     = findViewById(R.id.contenedorPacientes);
         tvSinPacientes = findViewById(R.id.tvSinPacientes);
-        db = FirebaseFirestore.getInstance();
-
-        adapter = new PacienteAdapter(listaPacientes);
-        rvPacientes.setLayoutManager(new LinearLayoutManager(this));
-        rvPacientes.setAdapter(adapter);
 
         cargarPacientes();
 
-        // ── BottomNavigation ──
-        BottomNavigationView bottomNav = findViewById(R.id.bottomNavigationPacientes);
-        bottomNav.setSelectedItemId(R.id.nav_pacientes);
-
-        bottomNav.setOnItemSelectedListener(item -> {
-            int id = item.getItemId();
-            if (id == R.id.nav_inicio) {
-                startActivity(new Intent(this, MainActivity.class));
-                overridePendingTransition(0, 0);
-                finish();
-                return true;
-            } else if (id == R.id.nav_agenda) {
-                startActivity(new Intent(this, AgendaActivity.class));
-                overridePendingTransition(0, 0);
-                finish();
-                return true;
-            } else if (id == R.id.nav_pacientes) {
-                return true; // Ya estamos aquí
-            } else if (id == R.id.nav_perfil) {
-                startActivity(new Intent(this, PerfilDoctorActivity.class));
-                overridePendingTransition(0, 0);
-                return true;
-            }
-            return false;
-        });
+        BottomNavigationView bottomNav = findViewById(R.id.bottomNavigation);
+        if (bottomNav != null) {
+            bottomNav.setSelectedItemId(R.id.nav_pacientes);
+            bottomNav.setOnItemSelectedListener(item -> {
+                int id = item.getItemId();
+                if (id == R.id.nav_inicio) {
+                    startActivity(new Intent(this, MainActivity.class));
+                    overridePendingTransition(0, 0); finish(); return true;
+                } else if (id == R.id.nav_agenda) {
+                    startActivity(new Intent(this, AgendaActivity.class));
+                    overridePendingTransition(0, 0); finish(); return true;
+                } else if (id == R.id.nav_pacientes) {
+                    return true;
+                } else if (id == R.id.nav_perfil) {
+                    startActivity(new Intent(this, PerfilDoctorActivity.class));
+                    overridePendingTransition(0, 0); finish(); return true;
+                }
+                return false;
+            });
+        }
     }
 
     private void cargarPacientes() {
-        db.collection("usuarios")
+        listener = db.collection("usuarios")
                 .whereEqualTo("rol", "paciente")
-                .addSnapshotListener((queryDocumentSnapshots, error) -> {
-                    if (error != null || queryDocumentSnapshots == null) return;
+                .addSnapshotListener((snap, error) -> {
+                    if (error != null || snap == null) return;
+                    contenedor.removeAllViews();
 
-                    listaPacientes.clear();
-                    for (QueryDocumentSnapshot doc : queryDocumentSnapshots) {
-                        Map<String, Object> item = new HashMap<>(doc.getData());
-                        item.put("uid", doc.getId());
-                        listaPacientes.add(item);
-                    }
-
-                    if (listaPacientes.isEmpty()) {
-                        rvPacientes.setVisibility(View.GONE);
+                    if (snap.isEmpty()) {
                         tvSinPacientes.setVisibility(View.VISIBLE);
-                    } else {
-                        rvPacientes.setVisibility(View.VISIBLE);
-                        tvSinPacientes.setVisibility(View.GONE);
-                        adapter.notifyDataSetChanged();
+                        return;
+                    }
+                    tvSinPacientes.setVisibility(View.GONE);
+
+                    for (QueryDocumentSnapshot doc : snap) {
+                        String uid    = doc.getId();
+                        String nombre = doc.getString("Nombre");
+                        if (nombre == null) nombre = doc.getString("nombre");
+                        Long faltas   = doc.getLong("faltas");
+                        Boolean bloq  = doc.getBoolean("bloqueado");
+                        String idPac  = doc.getString("paciente_id");
+
+                        if (faltas == null) faltas = 0L;
+                        if (bloq == null) bloq = false;
+
+                        View tarjeta = LayoutInflater.from(this)
+                                .inflate(R.layout.item_paciente, contenedor, false);
+
+                        TextView tvNombre = tarjeta.findViewById(R.id.tvNombrePacienteItem);
+                        TextView tvId     = tarjeta.findViewById(R.id.tvIdPacienteItem);
+                        TextView tvFaltas = tarjeta.findViewById(R.id.tvFaltasPacienteItem);
+                        TextView tvEstado = tarjeta.findViewById(R.id.tvEstadoPacienteItem);
+
+                        tvNombre.setText(nombre != null ? nombre : "Sin nombre");
+                        tvId.setText("ID: " + (idPac != null
+                                ? idPac : uid.substring(0, 6).toUpperCase()));
+                        tvFaltas.setText("Faltas: " + faltas + "/3");
+
+                        if (bloq || faltas >= 3) {
+                            tvEstado.setText("🔴 Bloqueado");
+                            tvEstado.setTextColor(0xFFB71C1C);
+                            tvFaltas.setTextColor(0xFFB71C1C);
+                        } else if (faltas == 2) {
+                            tvEstado.setText("🟠 2 faltas");
+                            tvEstado.setTextColor(0xFFF57C00);
+                            tvFaltas.setTextColor(0xFFF57C00);
+                        } else if (faltas == 1) {
+                            tvEstado.setText("🟡 1 falta");
+                            tvEstado.setTextColor(0xFFF59E0B);
+                        } else {
+                            tvEstado.setText("🟢 Activo");
+                            tvEstado.setTextColor(0xFF1565C0);
+                        }
+
+                        // NUEVO: tocar la tarjeta abre el detalle del paciente
+                        final String uidFinal = uid;
+                        tarjeta.setOnClickListener(v -> {
+                            Intent intent = new Intent(this,
+                                    DetallePacienteActivity.class);
+                            intent.putExtra("idPaciente", uidFinal);
+                            startActivity(intent);
+                        });
+
+                        contenedor.addView(tarjeta);
                     }
                 });
     }
 
-    static class PacienteAdapter extends RecyclerView.Adapter<PacienteAdapter.VH> {
-        private final List<Map<String, Object>> data;
-
-        PacienteAdapter(List<Map<String, Object>> data) { this.data = data; }
-
-        @NonNull
-        @Override
-        public VH onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-            View v = LayoutInflater.from(parent.getContext())
-                    .inflate(android.R.layout.simple_list_item_2, parent, false);
-            return new VH(v);
-        }
-
-        @Override
-        public void onBindViewHolder(@NonNull VH holder, int position) {
-            Map<String, Object> paciente = data.get(position);
-            Object nombre = paciente.get("Nombre");
-            if (nombre == null) nombre = paciente.get("nombre");
-            holder.tvNombre.setText(nombre != null ? String.valueOf(nombre) : "Paciente");
-
-            Object id     = paciente.get("paciente_id");
-            Object faltas = paciente.get("faltas");
-            Object bloq   = paciente.get("bloqueado");
-            String estadoTexto = Boolean.TRUE.equals(bloq) ? " 🔴 BLOQUEADO" : " 🟢 Activo";
-            holder.tvDetalle.setText(
-                    "ID: " + (id != null ? id : "—") +
-                    "  |  Faltas: " + (faltas != null ? faltas : 0) + "/3" +
-                    estadoTexto
-            );
-        }
-
-        @Override
-        public int getItemCount() { return data.size(); }
-
-        static class VH extends RecyclerView.ViewHolder {
-            TextView tvNombre, tvDetalle;
-            VH(@NonNull View itemView) {
-                super(itemView);
-                tvNombre  = itemView.findViewById(android.R.id.text1);
-                tvDetalle = itemView.findViewById(android.R.id.text2);
-            }
-        }
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (listener != null) listener.remove();
     }
 }

@@ -7,17 +7,18 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.textfield.TextInputEditText;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.messaging.FirebaseMessaging;
 
 public class LoginActivity extends AppCompatActivity {
 
     private EditText etEmail, etPassword;
     private Button btnIngresar;
-    private TextView tvRegistrarse;
+    private TextView tvRegistrarse, tvOlvidePassword;
 
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
@@ -28,27 +29,60 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
 
         mAuth = FirebaseAuth.getInstance();
-        db = FirebaseFirestore.getInstance();
+        db    = FirebaseFirestore.getInstance();
 
-        etEmail = findViewById(R.id.etEmail);
-        etPassword = findViewById(R.id.etPassword);
-        btnIngresar = findViewById(R.id.btnIngresar);
-        tvRegistrarse = findViewById(R.id.tvRegistrarse);
+        etEmail           = findViewById(R.id.etEmail);
+        etPassword        = findViewById(R.id.etPassword);
+        btnIngresar       = findViewById(R.id.btnIngresar);
+        tvRegistrarse     = findViewById(R.id.tvRegistrarse);
+        tvOlvidePassword  = findViewById(R.id.tvOlvidePassword);
 
         btnIngresar.setOnClickListener(v -> {
             String email = etEmail.getText().toString().trim();
-            String pass = etPassword.getText().toString().trim();
+            String pass  = etPassword.getText().toString().trim();
 
-            if (!email.isEmpty() && !pass.isEmpty()) {
-                iniciarSesion(email, pass);
-            } else {
-                Toast.makeText(LoginActivity.this, "Por favor, completa los campos", Toast.LENGTH_SHORT).show();
+            if (email.isEmpty() || pass.isEmpty()) {
+                Toast.makeText(this, "Por favor completa todos los campos",
+                        Toast.LENGTH_SHORT).show();
+                return;
             }
+            iniciarSesion(email, pass);
         });
 
         tvRegistrarse.setOnClickListener(v ->
-                startActivity(new Intent(LoginActivity.this, RegistroActivity.class))
+                startActivity(new Intent(this, RegistroActivity.class))
         );
+
+        // NUEVO: olvidé mi contraseña
+        if (tvOlvidePassword != null) {
+            tvOlvidePassword.setOnClickListener(v -> {
+                String email = etEmail.getText().toString().trim();
+                if (email.isEmpty()) {
+                    Toast.makeText(this,
+                            "Escribe tu correo arriba para recuperar tu contraseña",
+                            Toast.LENGTH_LONG).show();
+                    return;
+                }
+                new AlertDialog.Builder(this)
+                        .setTitle("Recuperar contraseña")
+                        .setMessage("Te enviaremos un correo a:\n" + email)
+                        .setPositiveButton("Enviar", (d, w) ->
+                                mAuth.sendPasswordResetEmail(email)
+                                        .addOnSuccessListener(aVoid ->
+                                                Toast.makeText(this,
+                                                        "📧 Correo enviado. Revisa tu bandeja.",
+                                                        Toast.LENGTH_LONG).show()
+                                        )
+                                        .addOnFailureListener(e ->
+                                                Toast.makeText(this,
+                                                        "No encontramos ese correo registrado.",
+                                                        Toast.LENGTH_SHORT).show()
+                                        )
+                        )
+                        .setNegativeButton("Cancelar", null)
+                        .show();
+            });
+        }
     }
 
     private void iniciarSesion(String email, String pass) {
@@ -56,92 +90,74 @@ public class LoginActivity extends AppCompatActivity {
         btnIngresar.setText("Ingresando...");
 
         mAuth.signInWithEmailAndPassword(email, pass)
-                .addOnSuccessListener(authResult -> {
-                    guardarFcmToken(); // Guardar token antes de navegar
-                    verificarRol();
-                })
+                .addOnSuccessListener(authResult -> verificarRol())
                 .addOnFailureListener(e -> {
                     resetBoton();
-                    Toast.makeText(LoginActivity.this, "Error: " + e.getMessage(), Toast.LENGTH_LONG).show();
+                    // CORRECCIÓN: mensajes de error en español
+                    String msg = traduzirError(e.getMessage());
+                    Toast.makeText(this, msg, Toast.LENGTH_LONG).show();
                 });
     }
 
-    // Obtiene el token FCM del dispositivo y lo guarda en Firestore
-    // Esto es lo que permite que las notificaciones push lleguen a este teléfono
-    private void guardarFcmToken() {
-        if (mAuth.getCurrentUser() == null) return;
-        String uid = mAuth.getCurrentUser().getUid();
-
-        FirebaseMessaging.getInstance().getToken()
-                .addOnSuccessListener(token -> {
-                    db.collection("usuarios").document(uid)
-                            .update("fcmToken", token)
-                            .addOnFailureListener(e ->
-                                    // Si falla el update (ej: documento no existe aún), usamos set con merge
-                                    db.collection("usuarios").document(uid)
-                                            .set(new java.util.HashMap<String, Object>() {{
-                                                put("fcmToken", token);
-                                            }}, com.google.firebase.firestore.SetOptions.merge())
-                            );
-                })
-                .addOnFailureListener(e ->
-                        // No es crítico si falla, la app sigue funcionando, solo sin notificaciones
-                        android.util.Log.w("FCM", "No se pudo obtener el token FCM: " + e.getMessage())
-                );
+    private String traduzirError(String errorEn) {
+        if (errorEn == null) return "Error desconocido";
+        if (errorEn.contains("password")) return "Contraseña incorrecta";
+        if (errorEn.contains("no user")) return "No existe cuenta con ese correo";
+        if (errorEn.contains("badly formatted")) return "El formato del correo no es válido";
+        if (errorEn.contains("network")) return "Sin conexión a internet";
+        if (errorEn.contains("too many")) return "Demasiados intentos. Intenta más tarde";
+        return "Error al iniciar sesión. Verifica tus datos";
     }
 
     private void verificarRol() {
         if (mAuth.getCurrentUser() == null) return;
-
         String uid = mAuth.getCurrentUser().getUid();
 
         db.collection("usuarios").document(uid).get()
-                .addOnSuccessListener(documentSnapshot -> {
-                    if (documentSnapshot.exists()) {
-                        String rol = documentSnapshot.getString("rol");
-
+                .addOnSuccessListener(doc -> {
+                    if (doc.exists()) {
+                        String rol = doc.getString("rol");
                         if (rol != null) {
                             rol = rol.toLowerCase().trim();
-
                             if (rol.equals("odontologo") || rol.equals("doctor")) {
-                                startActivity(new Intent(LoginActivity.this, MainActivity.class));
+                                startActivity(new Intent(this, MainActivity.class));
                                 finish();
                             } else if (rol.equals("paciente")) {
-                                startActivity(new Intent(LoginActivity.this, PacienteMainActivity.class));
+                                startActivity(new Intent(this, PacienteMainActivity.class));
                                 finish();
                             } else {
-                                Toast.makeText(this, "Rol no reconocido: " + rol, Toast.LENGTH_SHORT).show();
+                                Toast.makeText(this, "Rol no reconocido",
+                                        Toast.LENGTH_SHORT).show();
                                 mAuth.signOut();
                                 resetBoton();
                             }
                         } else {
-                            Toast.makeText(this, "Este usuario no tiene un rol asignado", Toast.LENGTH_SHORT).show();
+                            Toast.makeText(this, "Tu cuenta no tiene rol asignado",
+                                    Toast.LENGTH_SHORT).show();
                             mAuth.signOut();
                             resetBoton();
                         }
                     } else {
                         mAuth.signOut();
                         resetBoton();
-                        Toast.makeText(this, "El perfil no existe en Firestore", Toast.LENGTH_LONG).show();
+                        Toast.makeText(this, "Perfil no encontrado",
+                                Toast.LENGTH_LONG).show();
                     }
                 })
                 .addOnFailureListener(e -> {
                     resetBoton();
-                    Toast.makeText(this, "Error de base de datos", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(this, "Error de conexión", Toast.LENGTH_SHORT).show();
                 });
     }
 
     private void resetBoton() {
         btnIngresar.setEnabled(true);
-        btnIngresar.setText("Ingresar");
+        btnIngresar.setText("INICIAR SESIÓN");
     }
 
     @Override
     protected void onStart() {
         super.onStart();
-        if (mAuth.getCurrentUser() != null) {
-            guardarFcmToken(); // Actualizar token también al reabrir la app
-            verificarRol();
-        }
+        if (mAuth.getCurrentUser() != null) verificarRol();
     }
 }

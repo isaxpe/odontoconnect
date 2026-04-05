@@ -1,54 +1,39 @@
-<?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
-
-    <application
-        android:allowBackup="true"
-        android:dataExtractionRules="@xml/data_extraction_rules"
-        android:fullBackupContent="@xml/backup_rules"
-        android:icon="@mipmap/ic_launcher"
-        android:label="@string/app_name"
-        android:roundIcon="@mipmap/ic_launcher_round"
-        android:supportsRtl="true"
-        android:theme="@style/Theme.Odontoconnect"
-        tools:targetApi="31">
-        <activity android:name=".PerfilDoctorActivity" />
-        <activity
-            android:name=".MisCitasActivity"
-            android:exported="false" />
-        <activity
-            android:name=".VerCitasActivity"
-            android:exported="false" />
-        <activity
-            android:name=".GestionTratamientosActivity"
-            android:exported="false" />
-        <activity
-            android:name=".AgendarCitaActivity"
-            android:exported="false" />
-        <activity
-            android:name=".RegistroActivity"
-            android:exported="false" />
-        <activity
-            android:name=".PacienteMainActivity"
-            android:exported="false" />
-        <activity
-            android:name=".PacientesActivity"
-            android:exported="false" />
-        <activity
-            android:name=".LoginActivity"
-            android:exported="true">
+<manifest xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools">
+    <!--  Permisos para fotos (comprobantes y triaje)  -->
+    <uses-permission android:name="android.permission.READ_MEDIA_IMAGES"/>
+    <uses-permission android:name="android.permission.READ_MEDIA_VISUAL_USER_SELECTED"/>
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <application android:allowBackup="true" android:dataExtractionRules="@xml/data_extraction_rules" android:fullBackupContent="@xml/backup_rules" android:icon="@mipmap/ic_launcher" android:label="@string/app_name" android:roundIcon="@mipmap/ic_launcher_round" android:supportsRtl="true" android:theme="@style/Theme.Odontoconnect" tools:targetApi="31">
+        <!--  ── Pantalla de inicio ──  -->
+        <activity android:name=".LoginActivity" android:exported="true">
             <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
-
-                <category android:name="android.intent.category.LAUNCHER" />
+                <action android:name="android.intent.action.MAIN"/>
+                <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
-        <activity
-            android:name=".MainActivity"
-            android:exported="false" />
-        <activity
-            android:name=".AgendaActivity"
-            android:exported="false" />
+        <!--  ── Registro y onboarding ──  -->
+        <activity android:name=".RegistroActivity" android:exported="false"/>
+        <activity android:name=".CuestionarioBienvenidaActivity" android:exported="false"/>
+        <!--  ── Doctor ──  -->
+        <activity android:name=".MainActivity" android:exported="false"/>
+        <activity android:name=".AgendaActivity" android:exported="false"/>
+        <activity android:name=".VerCitasActivity" android:exported="false"/>
+        <activity android:name=".CitasHoyActivity" android:exported="false"/>
+        <activity android:name=".PacientesActivity" android:exported="false"/>
+        <activity android:name=".DetallePacienteActivity" android:exported="false"/>
+        <activity android:name=".GestionTratamientosActivity" android:exported="false"/>
+        <activity android:name=".PerfilDoctorActivity" android:exported="false"/>
+        <activity android:name=".ExpedienteActivity" android:exported="false"/>
+        <activity android:name=".ConfirmarPagoActivity" android:exported="false"/>
+        <!--  ── Paciente ──  -->
+        <activity android:name=".PacienteMainActivity" android:exported="false"/>
+        <activity android:name=".AgendarCitaActivity" android:exported="false"/>
+        <activity android:name=".TriajeActivity" android:exported="false"/>
+        <activity android:name=".MisCitasActivity" android:exported="false"/>
+        <activity android:name=".PerfilPacienteActivity" android:exported="false"/>
+        <activity android:name=".FamiliaresActivity" android:exported="false"/>
+        <activity android:name=".RegistrarFamiliarActivity" android:exported="false"/>
+        <activity android:name=".PagoAnticipoActivity" android:exported="false"/>
+        <activity android:name=".OdontogramaActivity" android:exported="false"/>
     </application>
-
 </manifest>

@@ -3,101 +3,141 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F4F6F8"
+    android:background="@color/fondo_app"
     android:fillViewport="true">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="24dp">
+        android:orientation="vertical">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Agendar Cita"
-            android:textColor="#0056B3"
-            android:textSize="24sp"
-            android:textStyle="bold" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="1. Selecciona el tratamiento:"
-            android:textColor="#333333"
-            android:textStyle="bold" />
-
-        <Spinner
-            android:id="@+id/spinnerTratamiento"
-            android:layout_width="match_parent"
-            android:layout_height="50dp"
-            android:layout_marginTop="8dp"
-            android:background="#E9ECEF" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="2. Selecciona el día:"
-            android:textColor="#333333"
-            android:textStyle="bold" />
-
-        <com.google.android.material.card.MaterialCardView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="8dp"
-            app:cardCornerRadius="16dp"
-            app:cardElevation="4dp">
-
-            <CalendarView
-                android:id="@+id/calendarViewPaciente"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content" />
-        </com.google.android.material.card.MaterialCardView>
-
-        <TextView
-            android:id="@+id/tvInfoDisponibilidad"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:gravity="center"
-            android:text="Selecciona un día en el calendario."
-            android:textColor="#666666"
-            android:textSize="14sp" />
-
+        <!-- Header -->
         <LinearLayout
-            android:id="@+id/layoutHoras"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:background="@color/azul_primario"
             android:orientation="vertical"
-            android:visibility="gone"
-            android:layout_marginTop="16dp">
+            android:paddingTop="44dp"
+            android:paddingBottom="20dp"
+            android:paddingHorizontal="20dp">
+
+            <!-- NUEVO: título dinámico para familiar -->
+            <TextView
+                android:id="@+id/tvTituloAgendar"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Agendar Cita"
+                android:textColor="@color/blanco"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:lineSpacingMultiplier="1.3"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="3. Horarios disponibles para este tratamiento:"
-                android:textColor="#333333"
-                android:textStyle="bold" />
-
-            <Spinner
-                android:id="@+id/spinnerHoras"
-                android:layout_width="match_parent"
-                android:layout_height="50dp"
-                android:layout_marginTop="8dp"
-                android:background="#E9ECEF" />
+                android:layout_marginTop="4dp"
+                android:text="Selecciona tratamiento, día y horario"
+                android:textColor="#90CAF9"
+                android:textSize="13sp"/>
         </LinearLayout>
 
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnConfirmarCita"
+        <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="60dp"
-            android:layout_marginTop="32dp"
-            android:enabled="false"
-            android:text="CONFIRMAR CITA"
-            android:textSize="16sp"
-            app:cornerRadius="12dp" />
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
 
+            <!-- Tratamiento -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="1. Selecciona el tratamiento:"
+                android:textColor="@color/texto_primario"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp"/>
+
+            <Spinner
+                android:id="@+id/spinnerTratamiento"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:layout_marginBottom="20dp"
+                android:background="@color/gris_claro"
+                android:padding="8dp"/>
+
+            <!-- Calendario -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="2. Selecciona el día:"
+                android:textColor="@color/texto_primario"
+                android:textSize="15sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="8dp"/>
+
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp">
+
+                <CalendarView
+                    android:id="@+id/calendarViewPaciente"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"/>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Info disponibilidad -->
+            <TextView
+                android:id="@+id/tvInfoDisponibilidad"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:gravity="center"
+                android:text="Selecciona un día en el calendario."
+                android:textColor="@color/texto_secundario"
+                android:textSize="14sp"
+                android:layout_marginBottom="16dp"/>
+
+            <!-- Horarios disponibles -->
+            <LinearLayout
+                android:id="@+id/layoutHoras"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical"
+                android:visibility="gone"
+                android:layout_marginBottom="16dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="3. Selecciona el horario:"
+                    android:textColor="@color/texto_primario"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:layout_marginBottom="8dp"/>
+
+                <Spinner
+                    android:id="@+id/spinnerHoras"
+                    android:layout_width="match_parent"
+                    android:layout_height="54dp"
+                    android:background="@color/gris_claro"
+                    android:padding="8dp"/>
+            </LinearLayout>
+
+            <!-- Botón confirmar -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnConfirmarCita"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:layout_marginTop="8dp"
+                android:layout_marginBottom="20dp"
+                android:enabled="false"
+                android:text="CONFIRMAR CITA"
+                android:textSize="16sp"
+                app:backgroundTint="@color/azul_primario"
+                app:cornerRadius="14dp"/>
+
+        </LinearLayout>
     </LinearLayout>
 </ScrollView>

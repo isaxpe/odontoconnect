@@ -14,7 +14,8 @@ import java.util.Locale;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button btnConfigurarAgenda, btnVerCitas, btnCerrarSesion, btnGestionTratamientos;
+    private Button btnConfigurarAgenda, btnVerCitas, btnCerrarSesion,
+            btnGestionTratamientos, btnCitasHoy;
     private TextView tvBienvenida, tvCitasHoy, tvTotalPacientes, tvSolicitudes;
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
@@ -25,7 +26,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         mAuth = FirebaseAuth.getInstance();
-        db = FirebaseFirestore.getInstance();
+        db    = FirebaseFirestore.getInstance();
 
         tvBienvenida           = findViewById(R.id.tvBienvenida);
         tvCitasHoy             = findViewById(R.id.tvCitasConfirmadasValor);
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
         btnVerCitas            = findViewById(R.id.btnVerCitas);
         btnCerrarSesion        = findViewById(R.id.btnCerrarSesion);
         btnGestionTratamientos = findViewById(R.id.btnGestionTratamientos);
+        btnCitasHoy            = findViewById(R.id.btnCitasHoy);
 
         cargarDatosDoctor();
         actualizarContadoresDinamicos();
@@ -57,38 +59,40 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(this, GestionTratamientosActivity.class))
         );
 
-        // ── BottomNavigation del doctor ──
+        // NUEVO: Botón Citas de Hoy
+        if (btnCitasHoy != null) {
+            btnCitasHoy.setOnClickListener(v ->
+                    startActivity(new Intent(this, CitasHoyActivity.class))
+            );
+        }
+
+        // BottomNavigation
         BottomNavigationView bottomNav = findViewById(R.id.bottomNavigation);
-        // Marcar "Inicio" como seleccionado al entrar
-        bottomNav.setSelectedItemId(R.id.nav_inicio);
-
-        bottomNav.setOnItemSelectedListener(item -> {
-            int id = item.getItemId();
-
-            if (id == R.id.nav_inicio) {
-                // Ya estamos aquí, no hacer nada
-                return true;
-
-            } else if (id == R.id.nav_agenda) {
-                startActivity(new Intent(this, AgendaActivity.class));
-                overridePendingTransition(0, 0);
-                finish();
-                return true;
-
-            } else if (id == R.id.nav_pacientes) {
-                startActivity(new Intent(this, PacientesActivity.class));
-                overridePendingTransition(0, 0);
-                finish();
-                return true;
-
-            } else if (id == R.id.nav_perfil) {
-                startActivity(new Intent(this, PerfilDoctorActivity.class));
-                overridePendingTransition(0, 0);
-                return true;
-            }
-
-            return false;
-        });
+        if (bottomNav != null) {
+            bottomNav.setSelectedItemId(R.id.nav_inicio);
+            bottomNav.setOnItemSelectedListener(item -> {
+                int id = item.getItemId();
+                if (id == R.id.nav_inicio) {
+                    return true;
+                } else if (id == R.id.nav_agenda) {
+                    startActivity(new Intent(this, AgendaActivity.class));
+                    overridePendingTransition(0, 0);
+                    finish();
+                    return true;
+                } else if (id == R.id.nav_pacientes) {
+                    startActivity(new Intent(this, PacientesActivity.class));
+                    overridePendingTransition(0, 0);
+                    finish();
+                    return true;
+                } else if (id == R.id.nav_perfil) {
+                    startActivity(new Intent(this, PerfilDoctorActivity.class));
+                    overridePendingTransition(0, 0);
+                    finish();
+                    return true;
+                }
+                return false;
+            });
+        }
     }
 
     private void actualizarContadoresDinamicos() {
@@ -116,7 +120,6 @@ public class MainActivity extends AppCompatActivity {
 
     private void cargarDatosDoctor() {
         if (mAuth.getCurrentUser() == null) return;
-
         db.collection("usuarios").document(mAuth.getCurrentUser().getUid()).get()
                 .addOnSuccessListener(doc -> {
                     if (doc.exists()) {

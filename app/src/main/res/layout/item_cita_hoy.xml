@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="12dp"
-    app:cardCornerRadius="16dp"
+    app:cardCornerRadius="20dp"
     app:cardElevation="4dp"
     app:strokeColor="@color/gris_claro"
     app:strokeWidth="1dp">
@@ -62,7 +62,7 @@
                 android:layout_marginStart="6dp"
                 android:text="✅ Asistió"
                 android:textSize="13sp"
-                app:backgroundTint="@color/azul_primario"
+                android:background="@drawable/gradient_button" android:stateListAnimator="@null"
                 app:cornerRadius="12dp"/>
         </LinearLayout>
     </LinearLayout>

@@ -24,7 +24,7 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="220dp"
-                android:background="@color/azul_primario"
+                android:background="@drawable/gradient_header"
                 android:gravity="center"
                 android:orientation="vertical">
 
@@ -41,7 +41,7 @@
             </LinearLayout>
 
             <!-- ESTADÍSTICAS -->
-            <androidx.cardview.widget.CardView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginHorizontal="16dp" android:layout_marginTop="16dp" app:cardCornerRadius="14dp" app:cardElevation="4dp">
+            <androidx.cardview.widget.CardView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginHorizontal="16dp" android:layout_marginTop="16dp" app:cardCornerRadius="20dp" app:cardElevation="4dp">
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:padding="16dp" android:weightSum="3">
                     <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:orientation="vertical">
                         <TextView android:id="@+id/tvTotalPacientesDoctor" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="0" android:textColor="@color/azul_primario" android:textSize="26sp" android:textStyle="bold"/>
@@ -63,7 +63,7 @@
             <!-- INFORMACIÓN PROFESIONAL -->
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="16dp" android:layout_marginTop="20dp" android:layout_marginBottom="8dp" android:text="INFORMACIÓN PROFESIONAL" android:textColor="@color/azul_primario" android:textSize="12sp" android:textStyle="bold"/>
 
-            <androidx.cardview.widget.CardView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginHorizontal="16dp" app:cardCornerRadius="14dp" app:cardElevation="3dp">
+            <androidx.cardview.widget.CardView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginHorizontal="16dp" app:cardCornerRadius="20dp" app:cardElevation="3dp">
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="16dp">
 
                     <!-- Correo -->
@@ -116,7 +116,7 @@
             <!-- DATOS BANCARIOS -->
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="16dp" android:layout_marginTop="20dp" android:layout_marginBottom="8dp" android:text="DATOS BANCARIOS (para anticipos)" android:textColor="@color/azul_primario" android:textSize="12sp" android:textStyle="bold"/>
 
-            <androidx.cardview.widget.CardView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginHorizontal="16dp" app:cardCornerRadius="14dp" app:cardElevation="3dp">
+            <androidx.cardview.widget.CardView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginHorizontal="16dp" app:cardCornerRadius="20dp" app:cardElevation="3dp">
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="16dp">
 
                     <!-- Banco -->
@@ -159,7 +159,7 @@
             <!-- ACCIONES RÁPIDAS -->
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="16dp" android:layout_marginTop="20dp" android:layout_marginBottom="8dp" android:text="ACCIONES RÁPIDAS" android:textColor="@color/azul_primario" android:textSize="12sp" android:textStyle="bold"/>
 
-            <androidx.cardview.widget.CardView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginHorizontal="16dp" app:cardCornerRadius="14dp" app:cardElevation="3dp">
+            <androidx.cardview.widget.CardView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginHorizontal="16dp" app:cardCornerRadius="20dp" app:cardElevation="3dp">
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="8dp">
 
                     <LinearLayout android:id="@+id/btnIrAgenda" android:layout_width="match_parent" android:layout_height="52dp" android:gravity="center_vertical" android:orientation="horizontal" android:padding="8dp" android:background="?attr/selectableItemBackground" android:clickable="true" android:focusable="true">
@@ -214,7 +214,7 @@
         android:id="@+id/bottomNavigation"
         android:layout_width="0dp"
         android:layout_height="60dp"
-        android:background="@color/azul_primario"
+        android:background="@drawable/gradient_header"
         app:itemIconTint="@color/blanco"
         app:itemTextColor="@color/blanco"
         app:labelVisibilityMode="labeled"

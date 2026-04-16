@@ -40,7 +40,7 @@
             <!-- SECCIÓN: Información Básica -->
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="16dp" android:layout_marginTop="20dp" android:layout_marginBottom="8dp" android:text="INFORMACIÓN BÁSICA" android:textColor="#00569B" android:textSize="12sp" android:textStyle="bold"/>
 
-            <androidx.cardview.widget.CardView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginHorizontal="16dp" app:cardCornerRadius="14dp" app:cardElevation="3dp">
+            <androidx.cardview.widget.CardView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginHorizontal="16dp" app:cardCornerRadius="20dp" app:cardElevation="3dp">
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="16dp">
 
                     <LinearLayout android:layout_width="match_parent" android:layout_height="48dp" android:gravity="center_vertical" android:orientation="horizontal">
@@ -79,7 +79,7 @@
             <!-- SECCIÓN: Expediente Médico -->
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="16dp" android:layout_marginTop="20dp" android:layout_marginBottom="8dp" android:text="EXPEDIENTE MÉDICO" android:textColor="#00569B" android:textSize="12sp" android:textStyle="bold"/>
 
-            <androidx.cardview.widget.CardView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginHorizontal="16dp" app:cardCornerRadius="14dp" app:cardElevation="3dp">
+            <androidx.cardview.widget.CardView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginHorizontal="16dp" app:cardCornerRadius="20dp" app:cardElevation="3dp">
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="16dp">
 
                     <LinearLayout android:layout_width="match_parent" android:layout_height="48dp" android:gravity="center_vertical" android:orientation="horizontal">
@@ -108,7 +108,7 @@
             <!-- SECCIÓN: Estado de Cuenta -->
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="16dp" android:layout_marginTop="20dp" android:layout_marginBottom="8dp" android:text="ESTADO DE CUENTA" android:textColor="#00569B" android:textSize="12sp" android:textStyle="bold"/>
 
-            <androidx.cardview.widget.CardView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginHorizontal="16dp" app:cardCornerRadius="14dp" app:cardElevation="3dp">
+            <androidx.cardview.widget.CardView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginHorizontal="16dp" app:cardCornerRadius="20dp" app:cardElevation="3dp">
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:padding="16dp" android:weightSum="3">
                     <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:orientation="vertical">
                         <TextView android:id="@+id/tvFaltasNumeroPerfil" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="0" android:textColor="#D32F2F" android:textSize="28sp" android:textStyle="bold"/>
@@ -130,7 +130,7 @@
             <!-- SECCIÓN: Próxima Cita -->
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="16dp" android:layout_marginTop="20dp" android:layout_marginBottom="8dp" android:text="PRÓXIMA CITA" android:textColor="#00569B" android:textSize="12sp" android:textStyle="bold"/>
 
-            <androidx.cardview.widget.CardView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginHorizontal="16dp" app:cardCornerRadius="14dp" app:cardElevation="3dp" app:cardBackgroundColor="#EBF3FF">
+            <androidx.cardview.widget.CardView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginHorizontal="16dp" app:cardCornerRadius="20dp" app:cardElevation="3dp" app:cardBackgroundColor="#EBF3FF">
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="16dp">
                     <TextView android:id="@+id/tvProximaCitaPerfil" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="No tienes citas próximas agendadas." android:textColor="#4A6080" android:textSize="14sp" android:gravity="center" android:lineSpacingMultiplier="1.4"/>
                 </LinearLayout>
@@ -139,7 +139,7 @@
             <!-- SECCIÓN: Familiares -->
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="16dp" android:layout_marginTop="20dp" android:layout_marginBottom="8dp" android:text="FAMILIARES REGISTRADOS" android:textColor="#00569B" android:textSize="12sp" android:textStyle="bold"/>
 
-            <androidx.cardview.widget.CardView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginHorizontal="16dp" app:cardCornerRadius="14dp" app:cardElevation="3dp">
+            <androidx.cardview.widget.CardView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginHorizontal="16dp" app:cardCornerRadius="20dp" app:cardElevation="3dp">
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="16dp">
                     <TextView android:id="@+id/tvFamiliaresPerfil" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="No tienes familiares registrados." android:textColor="#4A6080" android:textSize="14sp" android:lineSpacingMultiplier="1.5"/>
                 </LinearLayout>
@@ -148,7 +148,7 @@
             <!-- SECCIÓN: Seguridad -->
             <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="16dp" android:layout_marginTop="20dp" android:layout_marginBottom="8dp" android:text="SEGURIDAD Y CUENTA" android:textColor="#00569B" android:textSize="12sp" android:textStyle="bold"/>
 
-            <androidx.cardview.widget.CardView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginHorizontal="16dp" app:cardCornerRadius="14dp" app:cardElevation="3dp">
+            <androidx.cardview.widget.CardView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginHorizontal="16dp" app:cardCornerRadius="20dp" app:cardElevation="3dp">
                 <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="8dp">
 
                     <LinearLayout android:id="@+id/btnCambiarPassword" android:layout_width="match_parent" android:layout_height="52dp" android:gravity="center_vertical" android:orientation="horizontal" android:padding="8dp" android:background="?attr/selectableItemBackground" android:clickable="true" android:focusable="true">
@@ -176,8 +176,8 @@
                 android:layout_marginHorizontal="16dp"
                 android:layout_marginTop="16dp"
                 android:text="  Mi Expediente Clínico"
-                app:backgroundTint="@color/azul_primario"
-                app:cornerRadius="14dp"/>
+                android:background="@drawable/gradient_button" android:stateListAnimator="@null"
+                app:cornerRadius="16dp"/>
             <Button android:id="@+id/btnCerrarSesionPaciente" android:layout_width="match_parent" android:layout_height="52dp" android:layout_marginHorizontal="16dp" android:layout_marginTop="20dp" android:backgroundTint="#00569B" android:text="Cerrar Sesión" android:textColor="#FFFFFF" android:textStyle="bold"/>
             <Button android:id="@+id/btnEliminarCuenta" android:layout_width="match_parent" android:layout_height="52dp" android:layout_marginHorizontal="16dp" android:layout_marginTop="8dp" android:layout_marginBottom="20dp" android:backgroundTint="#B00020" android:text="Eliminar Cuenta" android:textColor="#FFFFFF" android:textStyle="bold"/>
 

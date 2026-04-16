@@ -8,38 +8,86 @@
         <item name="colorOnSecondary">@color/blanco</item>
         <item name="android:windowBackground">@color/fondo_app</item>
         <item name="android:statusBarColor">@color/azul_oscuro</item>
-        <item name="materialButtonStyle">@style/BotonAzul</item>
-        <item name="materialCardViewStyle">@style/CardAzul</item>
+        <item name="android:navigationBarColor">@color/blanco</item>
+        <item name="materialButtonStyle">@style/BotonModerno</item>
+        <item name="materialCardViewStyle">@style/CardModerno</item>
+        <!-- Animaciones de transición suaves -->
+        <item name="android:windowAnimationStyle">@style/TransicionSuave</item>
     </style>
 
-    <style name="BotonAzul" parent="Widget.MaterialComponents.Button">
+    <!-- Botón principal moderno con sombra y gradiente -->
+    <style name="BotonModerno" parent="Widget.MaterialComponents.Button">
         <item name="backgroundTint">@color/azul_primario</item>
         <item name="android:textColor">@color/blanco</item>
-        <item name="cornerRadius">14dp</item>
+        <item name="cornerRadius">16dp</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:letterSpacing">0.05</item>
+        <item name="android:letterSpacing">0.03</item>
+        <item name="android:textSize">15sp</item>
+        <item name="elevation">4dp</item>
+        <item name="android:stateListAnimator">@null</item>
     </style>
 
+    <!-- Botón outline moderno -->
     <style name="BotonOutlineAzul" parent="Widget.MaterialComponents.Button.OutlinedButton">
         <item name="strokeColor">@color/azul_primario</item>
+        <item name="strokeWidth">1.5dp</item>
         <item name="android:textColor">@color/azul_primario</item>
-        <item name="cornerRadius">14dp</item>
+        <item name="cornerRadius">16dp</item>
+        <item name="android:textStyle">bold</item>
     </style>
 
-    <style name="CardAzul" parent="Widget.MaterialComponents.CardView">
-        <item name="cardCornerRadius">16dp</item>
-        <item name="cardElevation">4dp</item>
+    <!-- Card moderna con sombra suave -->
+    <style name="CardModerno" parent="Widget.MaterialComponents.CardView">
+        <item name="cardCornerRadius">20dp</item>
+        <item name="cardElevation">0dp</item>
         <item name="cardBackgroundColor">@color/fondo_card</item>
         <item name="strokeColor">@color/gris_claro</item>
         <item name="strokeWidth">1dp</item>
     </style>
 
+    <!-- Card con fondo azul suave -->
+    <style name="CardAzulSuave" parent="Widget.MaterialComponents.CardView">
+        <item name="cardCornerRadius">20dp</item>
+        <item name="cardElevation">0dp</item>
+        <item name="cardBackgroundColor">@color/surface_blue</item>
+        <item name="strokeWidth">0dp</item>
+    </style>
+
+    <!-- TextInputLayout moderno -->
+    <style name="InputModerno" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/azul_primario</item>
+        <item name="boxStrokeWidth">1.5dp</item>
+        <item name="boxCornerRadiusTopStart">14dp</item>
+        <item name="boxCornerRadiusTopEnd">14dp</item>
+        <item name="boxCornerRadiusBottomStart">14dp</item>
+        <item name="boxCornerRadiusBottomEnd">14dp</item>
+        <item name="hintTextColor">@color/azul_primario</item>
+        <item name="boxBackgroundColor">@color/fondo_input</item>
+    </style>
+
+    <!-- Estilo para botones hora agenda -->
     <style name="HoraBtn" parent="Widget.AppCompat.Button">
         <item name="android:layout_height">50dp</item>
         <item name="android:layout_margin">3dp</item>
         <item name="android:textSize">12sp</item>
-        <item name="android:textColor">@color/texto_primario</item>
-        <item name="android:backgroundTint">@color/gris_claro</item>
+        <item name="android:textColor">@color/azul_primario</item>
+        <item name="android:backgroundTint">@color/surface_blue</item>
         <item name="android:padding">0dp</item>
+    </style>
+
+    <!-- Animación suave entre pantallas -->
+    <style name="TransicionSuave" parent="@android:style/Animation.Activity">
+        <item name="android:activityOpenEnterAnimation">@anim/slide_in_right</item>
+        <item name="android:activityOpenExitAnimation">@anim/slide_out_left</item>
+        <item name="android:activityCloseEnterAnimation">@anim/slide_in_left</item>
+        <item name="android:activityCloseExitAnimation">@anim/slide_out_right</item>
+    </style>
+
+    <!-- Tema para BottomNav moderno -->
+    <style name="BotonAzul" parent="Widget.MaterialComponents.Button">
+        <item name="backgroundTint">@color/azul_primario</item>
+        <item name="android:textColor">@color/blanco</item>
+        <item name="cornerRadius">14dp</item>
+        <item name="android:textStyle">bold</item>
     </style>
 </resources>

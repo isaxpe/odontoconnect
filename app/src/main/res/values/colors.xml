@@ -1,32 +1,48 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Paleta azul principal -->
-    <color name="azul_primario">#1565C0</color>
-    <color name="azul_oscuro">#0D47A1</color>
-    <color name="azul_medio">#1976D2</color>
-    <color name="azul_claro">#E3F2FD</color>
-    <color name="azul_muy_claro">#EEF6FF</color>
-    <color name="azul_acento">#2196F3</color>
+    <!-- Paleta azul moderna 2026 -->
+    <color name="azul_primario">#1A6BFF</color>
+    <color name="azul_oscuro">#0047CC</color>
+    <color name="azul_medio">#2979FF</color>
+    <color name="azul_claro">#E8F0FF</color>
+    <color name="azul_muy_claro">#F0F5FF</color>
+    <color name="azul_acento">#00B4FF</color>
 
-    <!-- Fondos -->
-    <color name="fondo_app">#F0F4FF</color>
+    <!-- Gradiente azul (usado en headers via Java) -->
+    <color name="gradiente_inicio">#1A6BFF</color>
+    <color name="gradiente_fin">#00B4FF</color>
+
+    <!-- Fondos modernos -->
+    <color name="fondo_app">#F4F7FF</color>
     <color name="fondo_card">#FFFFFF</color>
+    <color name="fondo_input">#F0F4FF</color>
 
     <!-- Textos -->
-    <color name="texto_primario">#0D1B3E</color>
-    <color name="texto_secundario">#5C7499</color>
-    <color name="texto_hint">#A8BFDC</color>
+    <color name="texto_primario">#0A1628</color>
+    <color name="texto_secundario">#4A6080</color>
+    <color name="texto_hint">#A0B4CC</color>
 
-    <!-- Estados -->
-    <color name="color_aceptada">#1565C0</color>
-    <color name="color_pendiente">#F59E0B</color>
-    <color name="color_rechazada">#EF4444</color>
-    <color name="color_bloqueado">#EF4444</color>
+    <!-- Estados modernos -->
+    <color name="color_aceptada">#1A6BFF</color>
+    <color name="color_pendiente">#FF9F1C</color>
+    <color name="color_rechazada">#FF4757</color>
+    <color name="color_cancelada">#A0B4CC</color>
+    <color name="color_bloqueado">#FF4757</color>
+    <color name="color_exitoso">#2ED573</color>
+
+    <!-- Superficies con tono azul suave -->
+    <color name="surface_blue">#EEF3FF</color>
+    <color name="surface_green">#EDFFF4</color>
+    <color name="surface_orange">#FFF5E6</color>
+    <color name="surface_red">#FFF0F0</color>
 
     <!-- Otros -->
     <color name="blanco">#FFFFFF</color>
     <color name="negro">#000000</color>
-    <color name="gris_claro">#E8EDF5</color>
-    <color name="gris_medio">#CCCCCC</color>
-    <color name="azul_nav">#1565C0</color>
+    <color name="gris_claro">#E4EBFF</color>
+    <color name="gris_medio">#C0CEDF</color>
+    <color name="azul_nav">#1A6BFF</color>
+
+    <!-- Sombra suave -->
+    <color name="sombra">#1A1A6BFF</color>
 </resources>

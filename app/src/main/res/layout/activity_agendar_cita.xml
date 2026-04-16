@@ -11,7 +11,7 @@
         android:id="@+id/headerAgendar"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/azul_primario"
+        android:background="@drawable/gradient_header"
         android:orientation="vertical"
         android:paddingTop="44dp"
         android:paddingBottom="16dp"
@@ -138,7 +138,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                app:cardCornerRadius="16dp"
+                app:cardCornerRadius="20dp"
                 app:cardElevation="4dp">
 
                 <LinearLayout
@@ -316,7 +316,7 @@
                 android:layout_marginBottom="20dp"
                 android:text="CONFIRMAR CITA"
                 android:textSize="15sp"
-                app:backgroundTint="@color/azul_primario"
+                android:background="@drawable/gradient_button" android:stateListAnimator="@null"
                 app:cornerRadius="14dp" />
 
         </LinearLayout>

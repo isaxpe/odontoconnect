@@ -10,11 +10,11 @@
         android:id="@+id/headerCitasHoy"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@color/azul_primario"
+        android:background="@drawable/gradient_header"
         android:orientation="vertical"
-        android:paddingTop="44dp"
+        android:paddingTop="48dp"
         android:paddingBottom="20dp"
-        android:paddingHorizontal="20dp"
+        android:paddingHorizontal="24dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -24,60 +24,45 @@
             android:layout_height="wrap_content"
             android:text="Citas de Hoy"
             android:textColor="@color/blanco"
-            android:textSize="22sp"
+            android:textSize="24sp"
             android:textStyle="bold"/>
-
         <TextView
+            android:id="@+id/tvFechaHoy"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text="Marca la asistencia de cada paciente"
-            android:textColor="#90CAF9"
+            android:text="Hoy"
+            android:textColor="#CCE8FF"
             android:textSize="13sp"/>
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/tvMensajeVacioHoy"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Buscando citas de hoy..."
-        android:textColor="@color/texto_secundario"
-        android:textSize="15sp"
-        android:gravity="center"
-        android:padding="32dp"
-        app:layout_constraintTop_toBottomOf="@id/headerCitasHoy"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"/>
 
     <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:padding="16dp"
-        app:layout_constraintBottom_toTopOf="@id/bottomNavigation"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.0"
-        app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/headerCitasHoy"
-        app:layout_constraintVertical_bias="0.0">
+        app:layout_constraintBottom_toTopOf="@id/bottomNavigation"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
         <LinearLayout
             android:id="@+id/contenedorCitasHoy"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical" />
+            android:orientation="vertical"/>
     </ScrollView>
 
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigation"
         android:layout_width="0dp"
-        android:layout_height="60dp"
-        android:background="@color/azul_primario"
-        app:itemIconTint="@color/blanco"
-        app:itemTextColor="@color/blanco"
+        android:layout_height="64dp"
+        android:background="@color/blanco"
+        app:itemIconTint="@color/azul_primario"
+        app:itemTextColor="@color/azul_primario"
         app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bottom_nav_menu"/>
-
+        app:menu="@menu/bottom_nav_menu"
+        app:elevation="8dp"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

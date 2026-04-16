@@ -303,33 +303,42 @@ public class PerfilPacienteActivity extends AppCompatActivity {
     }
 
     private void eliminarCuentaCompleta() {
+        // FIX: eliminar citas propias Y citas de familiares (idPacienteTitular)
         db.collection("citas").whereEqualTo("idPaciente", userId).get()
                 .addOnSuccessListener(citasSnap -> {
                     for (QueryDocumentSnapshot doc : citasSnap) doc.getReference().delete();
-                    db.collection("usuarios").document(userId)
-                            .collection("familiares").get()
-                            .addOnSuccessListener(famSnap -> {
-                                for (QueryDocumentSnapshot doc : famSnap)
+
+                    db.collection("citas")
+                            .whereEqualTo("idPacienteTitular", userId).get()
+                            .addOnSuccessListener(titularSnap -> {
+                                for (QueryDocumentSnapshot doc : titularSnap)
                                     doc.getReference().delete();
+
                                 db.collection("usuarios").document(userId)
-                                        .collection("expediente").get()
-                                        .addOnSuccessListener(expSnap -> {
-                                            for (QueryDocumentSnapshot doc : expSnap)
+                                        .collection("familiares").get()
+                                        .addOnSuccessListener(famSnap -> {
+                                            for (QueryDocumentSnapshot doc : famSnap)
                                                 doc.getReference().delete();
                                             db.collection("usuarios").document(userId)
-                                                    .delete()
-                                                    .addOnSuccessListener(aVoid -> {
-                                                        if (mAuth.getCurrentUser() != null) {
-                                                            mAuth.getCurrentUser().delete()
-                                                                    .addOnSuccessListener(av -> {
-                                                                        Toast.makeText(this,
-                                                                                "Cuenta eliminada",
-                                                                                Toast.LENGTH_SHORT).show();
-                                                                        startActivity(new Intent(
-                                                                                this, LoginActivity.class));
-                                                                        finish();
-                                                                    });
-                                                        }
+                                                    .collection("expediente").get()
+                                                    .addOnSuccessListener(expSnap -> {
+                                                        for (QueryDocumentSnapshot doc : expSnap)
+                                                            doc.getReference().delete();
+                                                        db.collection("usuarios").document(userId)
+                                                                .delete()
+                                                                .addOnSuccessListener(aVoid -> {
+                                                                    if (mAuth.getCurrentUser() != null) {
+                                                                        mAuth.getCurrentUser().delete()
+                                                                                .addOnSuccessListener(av -> {
+                                                                                    Toast.makeText(this,
+                                                                                            "Cuenta eliminada",
+                                                                                            Toast.LENGTH_SHORT).show();
+                                                                                    startActivity(new Intent(
+                                                                                            this, LoginActivity.class));
+                                                                                    finish();
+                                                                                });
+                                                                    }
+                                                                });
                                                     });
                                         });
                             });

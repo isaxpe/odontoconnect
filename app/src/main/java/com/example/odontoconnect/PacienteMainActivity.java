@@ -222,8 +222,8 @@ public class PacienteMainActivity extends AppCompatActivity {
                         if (hora == null) hora = proximaCita.getString("hora");
                         tvDetallesProximaCita.setText(
                                 "🦷 " + (tratamiento != null ? tratamiento : "Cita") +
-                                "\n📅 " + (fecha != null ? fecha : "--") +
-                                "  🕐 " + (hora != null ? hora : "--"));
+                                "\n" + (fecha != null ? fecha : "--") +
+                                "  " + (hora != null ? hora : "--"));
                         tvDetallesProximaCita.setTextColor(0xFF1565C0);
                     } else {
                         tvDetallesProximaCita.setText("No tienes citas próximas agendadas.");

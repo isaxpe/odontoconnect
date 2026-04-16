@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/fondo_app"
+    android:fillViewport="true">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Header -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/azul_primario"
+            android:orientation="vertical"
+            android:paddingTop="44dp"
+            android:paddingBottom="20dp"
+            android:paddingHorizontal="20dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Cuéntanos cómo te sientes"
+                android:textColor="@color/blanco"
+                android:textSize="22sp"
+                android:textStyle="bold"/>
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="6dp"
+                android:text="Esta información ayuda al doctor a prepararse mejor."
+                android:textColor="#90CAF9"
+                android:textSize="13sp"/>
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:padding="20dp">
+
+            <!-- BANNER DE URGENCIA (oculto por default) -->
+            <LinearLayout
+                android:id="@+id/bannerUrgencia"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="#FFEBEE"
+                android:orientation="horizontal"
+                android:padding="14dp"
+                android:layout_marginBottom="16dp"
+                android:visibility="gone">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="🚨"
+                    android:textSize="22sp"
+                    android:layout_marginEnd="10dp"/>
+
+                <TextView
+                    android:id="@+id/tvMensajeUrgencia"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text=""
+                    android:textColor="#B71C1C"
+                    android:textSize="13sp"
+                    android:textStyle="bold"
+                    android:lineSpacingMultiplier="1.4"/>
+            </LinearLayout>
+
+            <!-- Pregunta 1: Nivel de dolor -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="18dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="1. ¿Tienes dolor actualmente?"
+                        android:textColor="@color/texto_primario"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="12dp"/>
+
+                    <RadioGroup
+                        android:id="@+id/rgDolor"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <RadioButton android:id="@+id/rbDolorNinguno" android:layout_width="match_parent" android:layout_height="48dp" android:text="😊 No, ningún dolor" android:textSize="15sp" android:button="@null" android:background="@drawable/bg_radio_option" android:layout_marginBottom="8dp" android:paddingHorizontal="16dp" android:gravity="center_vertical"/>
+                        <RadioButton android:id="@+id/rbDolorLeve" android:layout_width="match_parent" android:layout_height="48dp" android:text="😐 Leve — no interfiere con el día" android:textSize="15sp" android:button="@null" android:background="@drawable/bg_radio_option" android:layout_marginBottom="8dp" android:paddingHorizontal="16dp" android:gravity="center_vertical"/>
+                        <RadioButton android:id="@+id/rbDolorModerado" android:layout_width="match_parent" android:layout_height="48dp" android:text="😣 Moderado — molesto pero soportable" android:textSize="15sp" android:button="@null" android:background="@drawable/bg_radio_option" android:layout_marginBottom="8dp" android:paddingHorizontal="16dp" android:gravity="center_vertical"/>
+                        <RadioButton android:id="@+id/rbDolorFuerte" android:layout_width="match_parent" android:layout_height="48dp" android:text="😖 Fuerte — necesito atención urgente" android:textSize="15sp" android:button="@null" android:background="@drawable/bg_radio_option" android:paddingHorizontal="16dp" android:gravity="center_vertical"/>
+                    </RadioGroup>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="12dp"
+                        android:hint="Describe tu molestia (opcional)"
+                        app:boxStrokeColor="@color/azul_primario"
+                        app:boxCornerRadiusTopStart="12dp"
+                        app:boxCornerRadiusTopEnd="12dp"
+                        app:boxCornerRadiusBottomStart="12dp"
+                        app:boxCornerRadiusBottomEnd="12dp"
+                        app:hintTextColor="@color/azul_primario">
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/etDescripcionMolestia"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:minLines="2"
+                            android:gravity="top"/>
+                    </com.google.android.material.textfield.TextInputLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Pregunta 2: Primera visita -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="18dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="2. ¿Es tu primera visita al consultorio?"
+                        android:textColor="@color/texto_primario"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="12dp"/>
+
+                    <RadioGroup
+                        android:id="@+id/rgVisita"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <RadioButton android:id="@+id/rbVisitaSi" android:layout_width="match_parent" android:layout_height="48dp" android:text="✅ Sí, es mi primera vez" android:textSize="15sp" android:button="@null" android:background="@drawable/bg_radio_option" android:layout_marginBottom="8dp" android:paddingHorizontal="16dp" android:gravity="center_vertical"/>
+                        <RadioButton android:id="@+id/rbVisitaNo" android:layout_width="match_parent" android:layout_height="48dp" android:text="🔄 No, ya he venido antes" android:textSize="15sp" android:button="@null" android:background="@drawable/bg_radio_option" android:paddingHorizontal="16dp" android:gravity="center_vertical"/>
+                    </RadioGroup>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Pregunta 3: Medicamentos -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="18dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="3. ¿Estás tomando algún medicamento?"
+                        android:textColor="@color/texto_primario"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="12dp"/>
+
+                    <RadioGroup
+                        android:id="@+id/rgMedicamentos"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical">
+
+                        <RadioButton android:id="@+id/rbMedicamentosNo" android:layout_width="match_parent" android:layout_height="48dp" android:text="❌ No tomo medicamentos" android:textSize="15sp" android:button="@null" android:background="@drawable/bg_radio_option" android:layout_marginBottom="8dp" android:paddingHorizontal="16dp" android:gravity="center_vertical"/>
+                        <RadioButton android:id="@+id/rbMedicamentosSi" android:layout_width="match_parent" android:layout_height="48dp" android:text="💊 Sí, estoy tomando medicamentos" android:textSize="15sp" android:button="@null" android:background="@drawable/bg_radio_option" android:paddingHorizontal="16dp" android:gravity="center_vertical"/>
+                    </RadioGroup>
+
+                    <LinearLayout
+                        android:id="@+id/layoutDetalleMedicamentos"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:orientation="vertical"
+                        android:visibility="gone">
+
+                        <com.google.android.material.textfield.TextInputLayout
+                            style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="12dp"
+                            android:hint="¿Cuál(es)? Nombre y dosis"
+                            app:boxStrokeColor="@color/azul_primario"
+                            app:boxCornerRadiusTopStart="12dp"
+                            app:boxCornerRadiusTopEnd="12dp"
+                            app:boxCornerRadiusBottomStart="12dp"
+                            app:boxCornerRadiusBottomEnd="12dp"
+                            app:hintTextColor="@color/azul_primario">
+                            <com.google.android.material.textfield.TextInputEditText
+                                android:id="@+id/etMedicamentosDetalle"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:minLines="2"
+                                android:gravity="top"/>
+                        </com.google.android.material.textfield.TextInputLayout>
+                    </LinearLayout>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Foto -->
+            <androidx.cardview.widget.CardView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="16dp"
+                app:cardCornerRadius="16dp"
+                app:cardElevation="4dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="18dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="📸 Foto de la molestia (opcional)"
+                        android:textColor="@color/texto_primario"
+                        android:textSize="16sp"
+                        android:textStyle="bold"
+                        android:layout_marginBottom="8dp"/>
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Si tienes una zona inflamada o carie visible, sube una imagen."
+                        android:textColor="@color/texto_secundario"
+                        android:textSize="13sp"
+                        android:lineSpacingMultiplier="1.4"
+                        android:layout_marginBottom="14dp"/>
+
+                    <ImageView
+                        android:id="@+id/ivFotoMolestia"
+                        android:layout_width="match_parent"
+                        android:layout_height="180dp"
+                        android:scaleType="centerCrop"
+                        android:visibility="gone"
+                        android:layout_marginBottom="10dp"/>
+
+                    <TextView
+                        android:id="@+id/tvFotoSeleccionada"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="Ninguna foto seleccionada"
+                        android:textColor="@color/texto_secundario"
+                        android:textSize="13sp"
+                        android:layout_marginBottom="10dp"/>
+
+                    <com.google.android.material.button.MaterialButton
+                        android:id="@+id/btnSeleccionarFoto"
+                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                        android:layout_width="match_parent"
+                        android:layout_height="48dp"
+                        android:text="📷  Seleccionar foto"
+                        android:textColor="@color/azul_primario"
+                        app:strokeColor="@color/azul_primario"
+                        app:cornerRadius="12dp"/>
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <!-- Info adicional -->
+            <com.google.android.material.textfield.TextInputLayout
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="24dp"
+                android:hint="¿Algo más que deba saber el doctor? (opcional)"
+                app:boxStrokeColor="@color/azul_primario"
+                app:boxCornerRadiusTopStart="12dp"
+                app:boxCornerRadiusTopEnd="12dp"
+                app:boxCornerRadiusBottomStart="12dp"
+                app:boxCornerRadiusBottomEnd="12dp"
+                app:hintTextColor="@color/azul_primario">
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/etOtraInformacion"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:minLines="2"
+                    android:gravity="top"/>
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <!-- Botón enviar -->
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnEnviarTriaje"
+                android:layout_width="match_parent"
+                android:layout_height="54dp"
+                android:layout_marginBottom="20dp"
+                android:text="ENVIAR AL DOCTOR"
+                android:textSize="16sp"
+                app:backgroundTint="@color/azul_primario"
+                app:cornerRadius="14dp"/>
+
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

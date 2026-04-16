@@ -19,13 +19,16 @@ import com.google.firebase.firestore.DocumentSnapshot;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.ListenerRegistration;
 
+import java.util.Arrays;
+
 public class VerCitasActivity extends AppCompatActivity {
 
     private LinearLayout contenedorSolicitudes;
     private TextView tvMensajeVacio;
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
-    private ListenerRegistration listenerCitas;
+    private ListenerRegistration listenerPendientes;
+    private ListenerRegistration listenerComprobantes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,7 +40,7 @@ public class VerCitasActivity extends AppCompatActivity {
         db    = FirebaseFirestore.getInstance();
         mAuth = FirebaseAuth.getInstance();
 
-        cargarSolicitudesPendientes();
+        cargarCitas();
 
         BottomNavigationView bottomNav = findViewById(R.id.bottomNavigation);
         if (bottomNav != null) {
@@ -61,26 +64,42 @@ public class VerCitasActivity extends AppCompatActivity {
         }
     }
 
-    private void cargarSolicitudesPendientes() {
+    private void cargarCitas() {
         if (mAuth.getCurrentUser() == null) return;
-        String miUidDoctor = mAuth.getCurrentUser().getUid();
+        String miUid = mAuth.getCurrentUser().getUid();
 
-        listenerCitas = db.collection("citas")
-                .whereEqualTo("idDoctor", miUidDoctor)
-                .whereEqualTo("estado", "pendiente")
+        // FIX BUG 9: cargar DOS tipos de citas:
+        // 1. Citas PENDIENTES → para aceptar/rechazar
+        // 2. Citas ACEPTADAS con estadoPago=pagado → para revisar comprobante
+        listenerPendientes = db.collection("citas")
+                .whereEqualTo("idDoctor", miUid)
+                .whereIn("estado", Arrays.asList("pendiente", "aceptada"))
                 .addSnapshotListener((snap, error) -> {
                     if (error != null || snap == null) return;
                     contenedorSolicitudes.removeAllViews();
 
                     if (snap.isEmpty()) {
-                        tvMensajeVacio.setText("✅ No tienes solicitudes pendientes.");
                         tvMensajeVacio.setVisibility(View.VISIBLE);
-                    } else {
-                        tvMensajeVacio.setVisibility(View.GONE);
-                        for (DocumentSnapshot doc : snap.getDocuments()) {
+                        return;
+                    }
+
+                    boolean hayItems = false;
+                    for (DocumentSnapshot doc : snap.getDocuments()) {
+                        String estado     = doc.getString("estado");
+                        String estadoPago = doc.getString("estadoPago");
+
+                        boolean esPendiente = "pendiente".equals(estado);
+                        // BUG 9 FIX: mostrar citas aceptadas SOLO si tienen comprobante pendiente
+                        boolean tieneComprobante = "aceptada".equals(estado) &&
+                                "pagado".equals(estadoPago);
+
+                        if (esPendiente || tieneComprobante) {
                             crearTarjeta(doc);
+                            hayItems = true;
                         }
                     }
+
+                    tvMensajeVacio.setVisibility(hayItems ? View.GONE : View.VISIBLE);
                 });
     }
 
@@ -91,35 +110,40 @@ public class VerCitasActivity extends AppCompatActivity {
         if (hora == null) hora = citaDoc.getString("hora");
         String tratamiento = citaDoc.getString("tratamiento");
         String idPaciente  = citaDoc.getString("idPaciente");
+        String estado      = citaDoc.getString("estado");
         String estadoPago  = citaDoc.getString("estadoPago");
 
-        Boolean triajeOk   = citaDoc.getBoolean("completado");
-        String nivelDolor  = citaDoc.getString("nivelDolor");
-        String primeraVis  = citaDoc.getString("primeraVisita");
+        Boolean triajeOk    = citaDoc.getBoolean("completado");
+        String nivelDolor   = citaDoc.getString("nivelDolor");
+        String primeraVis   = citaDoc.getString("primeraVisita");
         String medicamentos = citaDoc.getString("tomaMedicamentos");
-        String descripcion = citaDoc.getString("descripcionMolestia");
+        String descripcion  = citaDoc.getString("descripcionMolestia");
 
         View tarjeta = LayoutInflater.from(this)
                 .inflate(R.layout.item_solicitud, contenedorSolicitudes, false);
 
-        TextView tvInfo       = tarjeta.findViewById(R.id.tvInfoCita);
-        TextView tvTriaje     = tarjeta.findViewById(R.id.tvTriajeCita);
-        TextView tvEstPago    = tarjeta.findViewById(R.id.tvEstadoPagoCita);
+        TextView tvInfo     = tarjeta.findViewById(R.id.tvInfoCita);
+        TextView tvTriaje   = tarjeta.findViewById(R.id.tvTriajeCita);
+        TextView tvEstPago  = tarjeta.findViewById(R.id.tvEstadoPagoCita);
         MaterialButton btnVerComp = tarjeta.findViewById(R.id.btnVerComprobante);
-        Button btnAceptar    = tarjeta.findViewById(R.id.btnAceptar);
-        Button btnRechazar   = tarjeta.findViewById(R.id.btnRechazar);
+        Button btnAceptar   = tarjeta.findViewById(R.id.btnAceptar);
+        Button btnRechazar  = tarjeta.findViewById(R.id.btnRechazar);
 
         final String horaFinal  = hora;
         final String tratFinal  = tratamiento;
         final String fechaFinal = fecha;
+        final String idPacFinal = idPaciente;
 
-        tvInfo.setText("🦷 " + (tratamiento != null ? tratamiento : "Cita") +
+        // Si es cita ACEPTADA con comprobante, cambiar título de la tarjeta
+        boolean soloComprobante = "aceptada".equals(estado) && "pagado".equals(estadoPago);
+
+        tvInfo.setText((soloComprobante ? "💳 " : "🦷 ") +
+                (tratamiento != null ? tratamiento : "Cita") +
                 "\n📅 " + (fecha != null ? fecha : "--") +
                 "  🕐 " + (hora != null ? hora : "--") +
-                "\n👤 Cargando...");
+                (soloComprobante ? "\n✅ Cita aceptada — comprobante pendiente" : "\n👤 Cargando..."));
 
-        // Cargar nombre del paciente
-        if (idPaciente != null) {
+        if (!soloComprobante && idPaciente != null) {
             db.collection("usuarios").document(idPaciente).get()
                     .addOnSuccessListener(pac -> {
                         String nombre = pac.getString("Nombre");
@@ -131,22 +155,28 @@ public class VerCitasActivity extends AppCompatActivity {
                     });
         }
 
-        // Triaje
-        if (Boolean.TRUE.equals(triajeOk)) {
-            StringBuilder sb = new StringBuilder("📋 Triaje:\n");
-            if (nivelDolor != null)   sb.append("• Dolor: ").append(nivelDolor).append("\n");
-            if (primeraVis != null)   sb.append("• Visita: ").append(primeraVis).append("\n");
-            if (medicamentos != null) sb.append("• Medicamentos: ").append(medicamentos);
-            if (descripcion != null && !descripcion.isEmpty())
-                sb.append("\n• Molestia: ").append(descripcion);
-            tvTriaje.setText(sb.toString().trim());
-        } else {
-            tvTriaje.setText("⏳ Sin triaje completado.");
-            tvTriaje.setTextColor(0xFF888888);
+        // Triaje (solo en pendientes)
+        if (!soloComprobante) {
+            if (Boolean.TRUE.equals(triajeOk)) {
+                StringBuilder sb = new StringBuilder("📋 Triaje:\n");
+                if (nivelDolor != null)
+                    sb.append("• Dolor: ").append(nivelDolor).append("\n");
+                if (primeraVis != null)
+                    sb.append("• Visita: ").append(primeraVis).append("\n");
+                if (medicamentos != null)
+                    sb.append("• Medicamentos: ").append(medicamentos);
+                if (descripcion != null && !descripcion.isEmpty())
+                    sb.append("\n• Molestia: ").append(descripcion);
+                tvTriaje.setText(sb.toString().trim());
+                tvTriaje.setTextColor(0xFF333333);
+            } else {
+                tvTriaje.setText("⏳ Triaje pendiente del paciente.");
+                tvTriaje.setTextColor(0xFF888888);
+            }
+            tvTriaje.setVisibility(View.VISIBLE);
         }
-        tvTriaje.setVisibility(View.VISIBLE);
 
-        // Estado pago
+        // Estado del pago
         if ("pagado".equals(estadoPago)) {
             tvEstPago.setText("📤 Comprobante enviado — pendiente de revisión");
             tvEstPago.setVisibility(View.VISIBLE);
@@ -156,6 +186,11 @@ public class VerCitasActivity extends AppCompatActivity {
                 intent.putExtra("idCita", idCita);
                 startActivity(intent);
             });
+            // Si solo es comprobante, ocultar aceptar/rechazar
+            if (soloComprobante) {
+                btnAceptar.setVisibility(View.GONE);
+                btnRechazar.setVisibility(View.GONE);
+            }
         } else if ("confirmado".equals(estadoPago)) {
             tvEstPago.setText("✅ Anticipo confirmado");
             tvEstPago.setBackgroundColor(0xFFE8F5E9);
@@ -166,76 +201,65 @@ public class VerCitasActivity extends AppCompatActivity {
             tvEstPago.setBackgroundColor(0xFFFFEBEE);
             tvEstPago.setTextColor(0xFFB71C1C);
             tvEstPago.setVisibility(View.VISIBLE);
-        } else {
-            tvEstPago.setText("💰 Anticipo pendiente de pago");
+        } else if (!soloComprobante) {
+            tvEstPago.setText("💰 Anticipo: pendiente de pago");
             tvEstPago.setVisibility(View.VISIBLE);
         }
 
-        // ── ACEPTAR con ntfy ──
-        final String idPacienteFinal = idPaciente;
-        btnAceptar.setOnClickListener(v ->
-                new AlertDialog.Builder(this)
-                        .setTitle("Aceptar cita")
-                        .setMessage("¿Confirmas aceptar esta solicitud?")
-                        .setPositiveButton("Sí, aceptar", (d, w) -> {
-                            db.collection("citas").document(idCita)
-                                    .update("estado", "aceptada")
-                                    .addOnSuccessListener(aVoid -> {
-                                        Toast.makeText(this,
-                                                "✅ Cita aceptada",
-                                                Toast.LENGTH_SHORT).show();
-
-                                        // NTFY: notificar al paciente
-                                        if (idPacienteFinal != null) {
-                                            NtfyHelper.citaAceptada(
-                                                    idPacienteFinal,
-                                                    tratFinal != null ? tratFinal : "tu cita",
-                                                    fechaFinal != null ? fechaFinal : "--",
-                                                    horaFinal != null ? horaFinal : "--");
-
-                                            // Programar recordatorio 24h antes
-                                            if (fechaFinal != null) {
-                                                RecordatorioReceiver.programar(
-                                                        this, idCita,
-                                                        idPacienteFinal,
-                                                        tratFinal != null ? tratFinal : "Cita",
-                                                        fechaFinal,
+        // Botones aceptar/rechazar (solo en pendientes)
+        if (!soloComprobante) {
+            btnAceptar.setOnClickListener(v ->
+                    new AlertDialog.Builder(this)
+                            .setTitle("Aceptar cita")
+                            .setMessage("¿Confirmas aceptar esta solicitud?")
+                            .setPositiveButton("Sí, aceptar", (d, w) -> {
+                                db.collection("citas").document(idCita)
+                                        .update("estado", "aceptada")
+                                        .addOnSuccessListener(aVoid -> {
+                                            Toast.makeText(this, "✅ Cita aceptada",
+                                                    Toast.LENGTH_SHORT).show();
+                                            if (idPacFinal != null) {
+                                                NtfyHelper.citaAceptada(idPacFinal,
+                                                        tratFinal != null ? tratFinal : "tu cita",
+                                                        fechaFinal != null ? fechaFinal : "--",
                                                         horaFinal != null ? horaFinal : "--");
+                                                if (fechaFinal != null)
+                                                    RecordatorioReceiver.programar(this,
+                                                            idCita, idPacFinal,
+                                                            tratFinal != null ? tratFinal : "Cita",
+                                                            fechaFinal,
+                                                            horaFinal != null ? horaFinal : "--");
                                             }
-                                        }
-                                    });
-                        })
-                        .setNegativeButton("Cancelar", null)
-                        .show()
-        );
+                                        })
+                                        .addOnFailureListener(e ->
+                                                Toast.makeText(this, "Error al aceptar",
+                                                        Toast.LENGTH_SHORT).show());
+                            })
+                            .setNegativeButton("Cancelar", null).show()
+            );
 
-        // ── RECHAZAR con ntfy ──
-        btnRechazar.setOnClickListener(v ->
-                new AlertDialog.Builder(this)
-                        .setTitle("Rechazar solicitud")
-                        .setMessage("¿Rechazar? Rechazar NO suma falta al paciente.")
-                        .setPositiveButton("Sí, rechazar", (d, w) -> {
-                            db.collection("citas").document(idCita)
-                                    .update("estado", "rechazada")
-                                    .addOnSuccessListener(aVoid -> {
-                                        Toast.makeText(this,
-                                                "❌ Solicitud rechazada",
-                                                Toast.LENGTH_SHORT).show();
-
-                                        // NTFY: notificar al paciente
-                                        if (idPacienteFinal != null) {
-                                            NtfyHelper.citaRechazada(
-                                                    idPacienteFinal,
-                                                    tratFinal != null ? tratFinal : "tu cita");
-                                        }
-
-                                        // Cancelar recordatorio si existía
-                                        RecordatorioReceiver.cancelar(this, idCita);
-                                    });
-                        })
-                        .setNegativeButton("Cancelar", null)
-                        .show()
-        );
+            btnRechazar.setOnClickListener(v ->
+                    new AlertDialog.Builder(this)
+                            .setTitle("Rechazar solicitud")
+                            .setMessage("¿Rechazar? Rechazar NO suma falta al paciente.")
+                            .setPositiveButton("Sí, rechazar", (d, w) -> {
+                                db.collection("citas").document(idCita)
+                                        .update("estado", "rechazada")
+                                        .addOnSuccessListener(aVoid -> {
+                                            Toast.makeText(this, "❌ Solicitud rechazada",
+                                                    Toast.LENGTH_SHORT).show();
+                                            if (idPacFinal != null)
+                                                NtfyHelper.citaRechazada(idPacFinal,
+                                                        tratFinal != null ? tratFinal : "tu cita");
+                                            RecordatorioReceiver.cancelar(this, idCita);
+                                        })
+                                        .addOnFailureListener(e ->
+                                                Toast.makeText(this, "Error al rechazar",
+                                                        Toast.LENGTH_SHORT).show());
+                            })
+                            .setNegativeButton("Cancelar", null).show()
+            );
+        }
 
         contenedorSolicitudes.addView(tarjeta);
     }
@@ -243,6 +267,7 @@ public class VerCitasActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        if (listenerCitas != null) listenerCitas.remove();
+        if (listenerPendientes != null) listenerPendientes.remove();
+        if (listenerComprobantes != null) listenerComprobantes.remove();
     }
 }

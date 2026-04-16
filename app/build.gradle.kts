@@ -45,6 +45,7 @@ dependencies {
     implementation(libs.firebase.firestore)
     // FIX: RecyclerView necesario para FamiliaresActivity
     implementation("androidx.recyclerview:recyclerview:1.3.2")
+    implementation("androidx.core:core:1.12.0")
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)

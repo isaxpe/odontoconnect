@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="12dp"
-    app:cardCornerRadius="20dp"
+    app:cardCornerRadius="18dp"
     app:cardElevation="3dp"
     app:strokeColor="@color/gris_claro"
     app:strokeWidth="1dp">
@@ -37,7 +37,7 @@
                 android:id="@+id/tvTipoExpediente"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@drawable/gradient_header"
+                android:background="@color/navy"
                 android:paddingHorizontal="10dp"
                 android:paddingVertical="4dp"
                 android:text="NOTA"

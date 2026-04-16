@@ -4,53 +4,77 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:background="@color/fondo_app">
+    android:background="@color/blanco">
 
-    <LinearLayout
+    <!-- Header navy con ola -->
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1.1"
-        android:background="@drawable/gradient_header"
-        android:gravity="center"
-        android:orientation="vertical"
-        android:paddingBottom="32dp">
+        android:layout_weight="1"
+        android:background="@color/navy">
 
-        <ImageView
-            android:layout_width="100dp"
-            android:layout_height="100dp"
-            android:src="@drawable/logo_odontoconnect"
-            android:scaleType="fitCenter"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center"
+            android:paddingBottom="32dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="16dp"
-            android:text="OdontoConnect"
-            android:textColor="@color/blanco"
-            android:textSize="28sp"
-            android:textStyle="bold"/>
+            <FrameLayout
+                android:layout_width="72dp"
+                android:layout_height="72dp"
+                android:layout_gravity="center_horizontal">
+                <View
+                    android:layout_width="72dp"
+                    android:layout_height="72dp"
+                    android:background="@drawable/bg_logo_box"/>
+                <ImageView
+                    android:layout_width="48dp"
+                    android:layout_height="48dp"
+                    android:layout_gravity="center"
+                    android:src="@drawable/logo_odontoconnect"
+                    android:scaleType="fitCenter"/>
+            </FrameLayout>
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:text="Tu salud dental, en tus manos"
-            android:textColor="#CCE8FF"
-            android:textSize="14sp"/>
-    </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="14dp"
+                android:text="OdontoConnect"
+                android:textColor="@color/blanco"
+                android:textSize="24sp"
+                android:textStyle="bold"/>
 
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:text="Tu salud dental, en tus manos"
+                android:textColor="#99FFFFFF"
+                android:textSize="13sp"/>
+        </LinearLayout>
+
+        <!-- Ola inferior -->
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:layout_gravity="bottom"
+            android:background="@drawable/bg_wave_bottom"/>
+    </FrameLayout>
+
+    <!-- Formulario -->
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1.2"
-        android:background="@color/fondo_app">
+        android:layout_weight="1.3"
+        android:background="@color/blanco">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingHorizontal="28dp"
-            android:paddingTop="32dp"
+            android:paddingTop="8dp"
             android:paddingBottom="24dp">
 
             <TextView
@@ -58,62 +82,77 @@
                 android:layout_height="wrap_content"
                 android:text="Bienvenido de vuelta"
                 android:textColor="@color/texto_primario"
-                android:textSize="22sp"
+                android:textSize="20sp"
                 android:textStyle="bold"
-                android:layout_marginBottom="6dp"/>
+                android:layout_marginBottom="4dp"/>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Inicia sesion en tu cuenta"
-                android:textColor="@color/texto_secundario"
+                android:textColor="@color/texto_hint"
+                android:textSize="13sp"
+                android:layout_marginBottom="24dp"/>
+
+            <!-- Correo -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CORREO"
+                android:textColor="@color/texto_hint"
+                android:textSize="9sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.1"
+                android:layout_marginBottom="6dp"/>
+
+            <EditText
+                android:id="@+id/etEmail"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/bg_input_smartie"
+                android:paddingHorizontal="14dp"
+                android:inputType="textEmailAddress"
+                android:hint="usuario@gmail.com"
+                android:textColorHint="@color/texto_hint"
+                android:textColor="@color/texto_primario"
+                android:textSize="14sp"
+                android:layout_marginBottom="16dp"/>
+
+            <!-- Contraseña -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="CONTRASENA"
+                android:textColor="@color/texto_hint"
+                android:textSize="9sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.1"
+                android:layout_marginBottom="6dp"/>
+
+            <EditText
+                android:id="@+id/etPassword"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:background="@drawable/bg_input_smartie"
+                android:paddingHorizontal="14dp"
+                android:inputType="textPassword"
+                android:hint="••••••••"
+                android:textColorHint="@color/texto_hint"
+                android:textColor="@color/texto_primario"
                 android:textSize="14sp"
                 android:layout_marginBottom="28dp"/>
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/InputModerno"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                android:hint="Correo electronico"
-                app:startIconDrawable="@android:drawable/ic_dialog_email"
-                app:startIconTint="@color/azul_primario">
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etEmail"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textEmailAddress"
-                    android:textSize="15sp"/>
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                style="@style/InputModerno"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="28dp"
-                android:hint="Contrasena"
-                app:passwordToggleEnabled="true"
-                app:startIconDrawable="@android:drawable/ic_lock_idle_lock"
-                app:startIconTint="@color/azul_primario">
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/etPassword"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="textPassword"
-                    android:textSize="15sp"/>
-            </com.google.android.material.textfield.TextInputLayout>
 
             <Button
                 android:id="@+id/btnIngresar"
                 android:layout_width="match_parent"
-                android:layout_height="56dp"
+                android:layout_height="54dp"
                 android:text="Ingresar"
-                android:textSize="16sp"
+                android:textSize="15sp"
                 android:textStyle="bold"
                 android:textColor="@color/blanco"
-                android:background="@drawable/gradient_button"
+                android:background="@drawable/bg_btn_navy"
                 android:stateListAnimator="@null"
-                android:layout_marginBottom="20dp"/>
+                android:layout_marginBottom="16dp"/>
 
             <LinearLayout
                 android:layout_width="match_parent"
@@ -123,16 +162,16 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="¿No tienes cuenta? "
-                    android:textColor="@color/texto_secundario"
-                    android:textSize="14sp"/>
+                    android:text="No tienes cuenta? "
+                    android:textColor="@color/texto_hint"
+                    android:textSize="13sp"/>
                 <TextView
                     android:id="@+id/tvRegistrarse"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Registrate"
-                    android:textColor="@color/azul_primario"
-                    android:textSize="14sp"
+                    android:textColor="@color/navy"
+                    android:textSize="13sp"
                     android:textStyle="bold"
                     android:clickable="true"
                     android:focusable="true"/>

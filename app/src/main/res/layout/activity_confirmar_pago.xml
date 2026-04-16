@@ -14,7 +14,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/gradient_header"
+            android:background="@color/navy"
             android:orientation="vertical"
             android:paddingTop="44dp"
             android:paddingBottom="20dp"
@@ -48,7 +48,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                app:cardCornerRadius="20dp"
+                app:cardCornerRadius="18dp"
                 app:cardElevation="3dp">
 
                 <LinearLayout
@@ -103,7 +103,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="20dp"
-                app:cardCornerRadius="20dp"
+                app:cardCornerRadius="18dp"
                 app:cardElevation="3dp">
 
                 <ImageView
@@ -123,7 +123,7 @@
                 android:layout_marginBottom="10dp"
                 android:text="✅  Confirmar Pago"
                 android:textSize="16sp"
-                android:background="@drawable/gradient_button" android:stateListAnimator="@null"
+                android:background="@drawable/bg_btn_navy" android:stateListAnimator="@null"
                 app:cornerRadius="14dp"/>
 
             <com.google.android.material.button.MaterialButton

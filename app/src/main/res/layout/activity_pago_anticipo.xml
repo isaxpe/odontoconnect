@@ -15,7 +15,7 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@drawable/gradient_header"
+            android:background="@color/navy"
             android:orientation="vertical"
             android:paddingTop="44dp"
             android:paddingBottom="20dp"
@@ -79,7 +79,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                app:cardCornerRadius="20dp"
+                app:cardCornerRadius="18dp"
                 app:cardElevation="4dp"
                 app:cardBackgroundColor="#EEF6FF">
 
@@ -115,7 +115,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                app:cardCornerRadius="20dp"
+                app:cardCornerRadius="18dp"
                 app:cardElevation="4dp">
 
                 <LinearLayout
@@ -150,7 +150,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                app:cardCornerRadius="20dp"
+                app:cardCornerRadius="18dp"
                 app:cardElevation="4dp">
 
                 <LinearLayout
@@ -213,7 +213,7 @@
                 android:layout_marginBottom="10dp"
                 android:text="ENVIAR COMPROBANTE AL DOCTOR"
                 android:textSize="15sp"
-                android:background="@drawable/gradient_button" android:stateListAnimator="@null"
+                android:background="@drawable/bg_btn_navy" android:stateListAnimator="@null"
                 app:cornerRadius="14dp"/>
 
             <com.google.android.material.button.MaterialButton

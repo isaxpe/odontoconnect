@@ -1,48 +1,50 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Paleta azul moderna 2026 -->
-    <color name="azul_primario">#1A6BFF</color>
-    <color name="azul_oscuro">#0047CC</color>
-    <color name="azul_medio">#2979FF</color>
-    <color name="azul_claro">#E8F0FF</color>
-    <color name="azul_muy_claro">#F0F5FF</color>
-    <color name="azul_acento">#00B4FF</color>
+    <!-- Paleta principal Smartie -->
+    <color name="navy">#1B3A6B</color>
+    <color name="navy_dark">#122850</color>
+    <color name="navy_light">#E8EDF5</color>
+    <color name="gold">#E8A830</color>
+    <color name="gold_light">#FEF3D0</color>
+    <color name="teal">#3DBFAC</color>
+    <color name="teal_light">#D1F5F0</color>
 
-    <!-- Gradiente azul (usado en headers via Java) -->
-    <color name="gradiente_inicio">#1A6BFF</color>
-    <color name="gradiente_fin">#00B4FF</color>
+    <!-- Compatibilidad con código existente -->
+    <color name="azul_primario">#1B3A6B</color>
+    <color name="azul_oscuro">#122850</color>
+    <color name="azul_medio">#2A4F8A</color>
+    <color name="azul_claro">#E8EDF5</color>
+    <color name="azul_muy_claro">#F0F4FF</color>
+    <color name="azul_acento">#3DBFAC</color>
+    <color name="azul_nav">#1B3A6B</color>
 
-    <!-- Fondos modernos -->
-    <color name="fondo_app">#F4F7FF</color>
+    <!-- Fondos -->
+    <color name="fondo_app">#F5F7FA</color>
     <color name="fondo_card">#FFFFFF</color>
-    <color name="fondo_input">#F0F4FF</color>
+    <color name="fondo_input">#F5F7FA</color>
 
     <!-- Textos -->
-    <color name="texto_primario">#0A1628</color>
-    <color name="texto_secundario">#4A6080</color>
-    <color name="texto_hint">#A0B4CC</color>
+    <color name="texto_primario">#1A1A2E</color>
+    <color name="texto_secundario">#6B7280</color>
+    <color name="texto_hint">#9CA3AF</color>
 
-    <!-- Estados modernos -->
-    <color name="color_aceptada">#1A6BFF</color>
-    <color name="color_pendiente">#FF9F1C</color>
-    <color name="color_rechazada">#FF4757</color>
-    <color name="color_cancelada">#A0B4CC</color>
-    <color name="color_bloqueado">#FF4757</color>
-    <color name="color_exitoso">#2ED573</color>
+    <!-- Estados -->
+    <color name="color_aceptada">#3DBFAC</color>
+    <color name="color_pendiente">#E8A830</color>
+    <color name="color_rechazada">#EF4444</color>
+    <color name="color_cancelada">#9CA3AF</color>
+    <color name="color_bloqueado">#EF4444</color>
+    <color name="color_exitoso">#3DBFAC</color>
 
-    <!-- Superficies con tono azul suave -->
-    <color name="surface_blue">#EEF3FF</color>
-    <color name="surface_green">#EDFFF4</color>
-    <color name="surface_orange">#FFF5E6</color>
-    <color name="surface_red">#FFF0F0</color>
+    <!-- Superficies -->
+    <color name="surface_blue">#E8EDF5</color>
+    <color name="surface_green">#D1F5F0</color>
+    <color name="surface_orange">#FEF3D0</color>
+    <color name="surface_red">#FEE2E2</color>
 
     <!-- Otros -->
     <color name="blanco">#FFFFFF</color>
     <color name="negro">#000000</color>
-    <color name="gris_claro">#E4EBFF</color>
-    <color name="gris_medio">#C0CEDF</color>
-    <color name="azul_nav">#1A6BFF</color>
-
-    <!-- Sombra suave -->
-    <color name="sombra">#1A1A6BFF</color>
+    <color name="gris_claro">#E8E8E8</color>
+    <color name="gris_medio">#D1D5DB</color>
 </resources>

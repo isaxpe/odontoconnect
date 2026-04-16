@@ -6,138 +6,148 @@
     android:layout_height="match_parent"
     android:background="@color/fondo_app">
 
-    <!-- Header gradiente -->
-    <LinearLayout
+    <!-- Header navy con ola -->
+    <FrameLayout
         android:id="@+id/headerPaciente"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/gradient_header"
-        android:orientation="vertical"
-        android:paddingTop="48dp"
-        android:paddingBottom="20dp"
-        android:paddingHorizontal="20dp"
+        android:background="@color/navy"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <!-- Fila nombre + avatar -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:gravity="center_vertical"
-            android:layout_marginBottom="14dp">
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_height="wrap_content"
-                android:layout_weight="1"
-                android:orientation="vertical">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Bienvenido"
-                    android:textColor="#CCE8FF"
-                    android:textSize="12sp"/>
-
-                <TextView
-                    android:id="@+id/tvNombrePaciente"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Cargando..."
-                    android:textColor="@color/blanco"
-                    android:textSize="20sp"
-                    android:textStyle="bold"/>
-
-                <TextView
-                    android:id="@+id/tvIdPaciente"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="2dp"
-                    android:text="ID: --"
-                    android:textColor="#CCE8FF"
-                    android:textSize="11sp"/>
-            </LinearLayout>
-
-            <!-- Badge estado/faltas -->
-            <LinearLayout
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_icon_circle"
-                android:orientation="vertical"
-                android:gravity="center"
-                android:padding="10dp"
-                android:minWidth="56dp">
-
-                <TextView
-                    android:id="@+id/tvEstadoPaciente"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="ACTIVO"
-                    android:textColor="@color/blanco"
-                    android:textSize="11sp"
-                    android:textStyle="bold"/>
-                <TextView
-                    android:id="@+id/tvContadorFaltas"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="faltas"
-                    android:textColor="#CCE8FF"
-                    android:textSize="9sp"/>
-            </LinearLayout>
-        </LinearLayout>
-
-        <!-- Card próxima cita -->
-        <LinearLayout
-            android:id="@+id/cardInfoPaciente"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@drawable/bg_card_glass"
             android:orientation="vertical"
-            android:padding="14dp">
+            android:paddingTop="48dp"
+            android:paddingBottom="44dp"
+            android:paddingHorizontal="20dp">
 
-            <TextView
-                android:layout_width="wrap_content"
+            <!-- Fila nombre + avatar -->
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="PROXIMA CITA"
-                android:textColor="#CCE8FF"
-                android:textSize="9sp"
-                android:textStyle="bold"
-                android:letterSpacing="0.1"
-                android:layout_marginBottom="4dp"/>
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="16dp">
 
-            <TextView
-                android:id="@+id/tvDetallesProximaCita"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Sin citas proximas"
-                android:textColor="@color/blanco"
-                android:textSize="15sp"
-                android:textStyle="bold"/>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Bienvenido"
+                        android:textColor="#99FFFFFF"
+                        android:textSize="11sp"/>
+
+                    <TextView
+                        android:id="@+id/tvNombrePaciente"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Cargando..."
+                        android:textColor="@color/blanco"
+                        android:textSize="19sp"
+                        android:textStyle="bold"
+                        android:layout_marginTop="1dp"/>
+
+                    <TextView
+                        android:id="@+id/tvIdPaciente"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="2dp"
+                        android:text="ID: --"
+                        android:textColor="#66FFFFFF"
+                        android:textSize="10sp"/>
+                </LinearLayout>
+
+                <!-- Avatar dorado -->
+                <LinearLayout
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:background="@drawable/bg_avatar"
+                    android:gravity="center"
+                    android:orientation="vertical">
+                    <TextView
+                        android:id="@+id/tvEstadoPaciente"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="--"
+                        android:textColor="@color/navy"
+                        android:textSize="10sp"
+                        android:textStyle="bold"/>
+                    <TextView
+                        android:id="@+id/tvContadorFaltas"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="faltas"
+                        android:textColor="@color/navy_dark"
+                        android:textSize="7sp"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Card próxima cita glass -->
+            <LinearLayout
+                android:id="@+id/cardInfoPaciente"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Agenda tu primera cita"
-                android:textColor="#CCE8FF"
-                android:textSize="12sp"
-                android:layout_marginTop="2dp"/>
+                android:background="@drawable/bg_card_glass"
+                android:orientation="vertical"
+                android:padding="14dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="PROXIMA CITA"
+                    android:textColor="#99FFFFFF"
+                    android:textSize="9sp"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.1"
+                    android:layout_marginBottom="5dp"/>
+
+                <TextView
+                    android:id="@+id/tvDetallesProximaCita"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sin citas proximas"
+                    android:textColor="@color/blanco"
+                    android:textSize="14sp"
+                    android:textStyle="bold"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Agenda tu primera cita"
+                    android:textColor="#99FFFFFF"
+                    android:textSize="11sp"
+                    android:layout_marginTop="3dp"/>
+            </LinearLayout>
+
+            <!-- Advertencia penalización -->
+            <TextView
+                android:id="@+id/tvAdvertenciaPenalizacion"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/bg_tag_red"
+                android:padding="10dp"
+                android:text=""
+                android:textColor="#991B1B"
+                android:textSize="11sp"
+                android:visibility="gone"/>
         </LinearLayout>
 
-        <!-- Banner advertencia -->
-        <TextView
-            android:id="@+id/tvAdvertenciaPenalizacion"
+        <!-- Ola inferior -->
+        <View
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:background="#33FF4757"
-            android:padding="10dp"
-            android:text=""
-            android:textColor="@color/blanco"
-            android:textSize="12sp"
-            android:visibility="gone"/>
-    </LinearLayout>
+            android:layout_height="36dp"
+            android:layout_gravity="bottom"
+            android:background="@drawable/bg_wave_bottom"/>
+    </FrameLayout>
 
     <!-- Contenido -->
     <ScrollView
@@ -153,7 +163,7 @@
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:paddingHorizontal="18dp"
-            android:paddingTop="20dp"
+            android:paddingTop="8dp"
             android:paddingBottom="12dp">
 
             <TextView
@@ -161,11 +171,10 @@
                 android:layout_height="wrap_content"
                 android:text="Acciones rapidas"
                 android:textColor="@color/texto_primario"
-                android:textSize="15sp"
+                android:textSize="14sp"
                 android:textStyle="bold"
                 android:layout_marginBottom="12dp"/>
 
-            <!-- Botones acciones -->
             <LinearLayout
                 android:id="@+id/layoutBotones"
                 android:layout_width="match_parent"
@@ -174,33 +183,32 @@
                 android:weightSum="3"
                 android:layout_marginBottom="20dp">
 
-                <!-- Agendar -->
+                <!-- Agendar navy -->
                 <LinearLayout
                     android:id="@+id/btnAbrirAgendar"
                     android:layout_width="0dp"
-                    android:layout_height="90dp"
+                    android:layout_height="88dp"
                     android:layout_weight="1"
                     android:layout_marginEnd="8dp"
-                    android:background="@drawable/gradient_button"
+                    android:background="@drawable/bg_btn_navy"
                     android:orientation="vertical"
                     android:gravity="center"
-                    android:padding="12dp"
                     android:clickable="true"
                     android:focusable="true">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="+"
-                        android:textColor="@color/blanco"
-                        android:textSize="26sp"
+                        android:textColor="@color/gold"
+                        android:textSize="28sp"
                         android:textStyle="bold"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:layout_marginTop="4dp"
+                        android:layout_marginTop="2dp"
                         android:text="Agendar"
                         android:textColor="@color/blanco"
-                        android:textSize="11sp"
+                        android:textSize="10sp"
                         android:textStyle="bold"/>
                 </LinearLayout>
 
@@ -208,26 +216,25 @@
                 <LinearLayout
                     android:id="@+id/btnFamiliares"
                     android:layout_width="0dp"
-                    android:layout_height="90dp"
+                    android:layout_height="88dp"
                     android:layout_weight="1"
                     android:layout_marginEnd="8dp"
-                    android:background="@drawable/bg_card_modern"
+                    android:background="@drawable/bg_card_white"
                     android:orientation="vertical"
                     android:gravity="center"
-                    android:padding="12dp"
                     android:clickable="true"
                     android:focusable="true">
                     <View
-                        android:layout_width="28dp"
-                        android:layout_height="28dp"
-                        android:background="@drawable/bg_status_aceptada"/>
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:background="@drawable/bg_icon_circle_teal"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="6dp"
                         android:text="Familiares"
                         android:textColor="@color/texto_primario"
-                        android:textSize="11sp"
+                        android:textSize="10sp"
                         android:textStyle="bold"/>
                 </LinearLayout>
 
@@ -235,25 +242,24 @@
                 <LinearLayout
                     android:id="@+id/btnMisCitas"
                     android:layout_width="0dp"
-                    android:layout_height="90dp"
+                    android:layout_height="88dp"
                     android:layout_weight="1"
-                    android:background="@drawable/bg_card_modern"
+                    android:background="@drawable/bg_card_white"
                     android:orientation="vertical"
                     android:gravity="center"
-                    android:padding="12dp"
                     android:clickable="true"
                     android:focusable="true">
                     <View
-                        android:layout_width="28dp"
-                        android:layout_height="28dp"
-                        android:background="@drawable/bg_status_pendiente"/>
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:background="@drawable/bg_icon_circle_gold"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="6dp"
                         android:text="Mis Citas"
                         android:textColor="@color/texto_primario"
-                        android:textSize="11sp"
+                        android:textSize="10sp"
                         android:textStyle="bold"/>
                 </LinearLayout>
             </LinearLayout>
@@ -264,7 +270,7 @@
                 android:layout_height="wrap_content"
                 android:text="Resumen"
                 android:textColor="@color/texto_primario"
-                android:textSize="15sp"
+                android:textSize="14sp"
                 android:textStyle="bold"
                 android:layout_marginBottom="12dp"/>
 
@@ -276,70 +282,70 @@
 
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="64dp"
                     android:layout_weight="1"
                     android:layout_marginEnd="8dp"
-                    android:background="@drawable/bg_card_modern"
+                    android:background="@drawable/bg_card_white"
                     android:orientation="vertical"
-                    android:padding="14dp">
+                    android:gravity="center">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0"
-                        android:textColor="@color/azul_primario"
-                        android:textSize="22sp"
+                        android:textColor="@color/navy"
+                        android:textSize="20sp"
                         android:textStyle="bold"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Faltas"
-                        android:textColor="@color/texto_secundario"
-                        android:textSize="11sp"/>
+                        android:textColor="@color/texto_hint"
+                        android:textSize="9sp"/>
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="64dp"
                     android:layout_weight="1"
                     android:layout_marginEnd="8dp"
-                    android:background="@drawable/bg_card_modern"
+                    android:background="@drawable/bg_card_white"
                     android:orientation="vertical"
-                    android:padding="14dp">
+                    android:gravity="center">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0"
-                        android:textColor="#18a856"
-                        android:textSize="22sp"
+                        android:textColor="@color/teal"
+                        android:textSize="20sp"
                         android:textStyle="bold"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Citas"
-                        android:textColor="@color/texto_secundario"
-                        android:textSize="11sp"/>
+                        android:textColor="@color/texto_hint"
+                        android:textSize="9sp"/>
                 </LinearLayout>
 
                 <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_height="wrap_content"
+                    android:layout_height="64dp"
                     android:layout_weight="1"
-                    android:background="@drawable/bg_card_modern"
+                    android:background="@drawable/bg_card_white"
                     android:orientation="vertical"
-                    android:padding="14dp">
+                    android:gravity="center">
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="0"
-                        android:textColor="@color/color_pendiente"
-                        android:textSize="22sp"
+                        android:textColor="@color/gold"
+                        android:textSize="20sp"
                         android:textStyle="bold"/>
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="Pendiente"
-                        android:textColor="@color/texto_secundario"
-                        android:textSize="11sp"/>
+                        android:textColor="@color/texto_hint"
+                        android:textSize="9sp"/>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>
@@ -350,8 +356,8 @@
         android:layout_width="0dp"
         android:layout_height="64dp"
         android:background="@color/blanco"
-        app:itemIconTint="@color/azul_primario"
-        app:itemTextColor="@color/azul_primario"
+        app:itemIconTint="@color/navy"
+        app:itemTextColor="@color/navy"
         app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

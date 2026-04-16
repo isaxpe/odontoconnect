@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginBottom="14dp"
-    app:cardCornerRadius="20dp"
+    app:cardCornerRadius="18dp"
     app:cardElevation="4dp"
     app:strokeColor="@color/gris_claro"
     app:strokeWidth="1dp">
@@ -96,7 +96,7 @@
                 android:layout_weight="1"
                 android:layout_marginStart="6dp"
                 android:text="Aceptar"
-                android:background="@drawable/gradient_button" android:stateListAnimator="@null"
+                android:background="@drawable/bg_btn_navy" android:stateListAnimator="@null"
                 app:cornerRadius="12dp"/>
         </LinearLayout>
     </LinearLayout>

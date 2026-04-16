@@ -88,8 +88,8 @@
         android:layout_width="match_parent"
         android:layout_height="60dp"
         android:background="#00569B"
-        app:itemIconTint="#FFFFFF"
-        app:itemTextColor="#FFFFFF"
+        app:itemIconTint="@color/navy"
+        app:itemTextColor="@color/navy"
         app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:menu="@menu/bottom_nav_menu_paciente" />

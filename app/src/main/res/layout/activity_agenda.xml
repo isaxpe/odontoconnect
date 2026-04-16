@@ -11,7 +11,7 @@
         android:id="@+id/headerAgenda"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/gradient_header"
+        android:background="@color/navy"
         android:orientation="vertical"
         android:paddingTop="44dp"
         android:paddingBottom="20dp"
@@ -83,7 +83,7 @@
                 android:layout_marginBottom="12dp"
                 android:text="GUARDAR AGENDA"
                 android:textSize="15sp"
-                android:background="@drawable/gradient_button" android:stateListAnimator="@null"
+                android:background="@drawable/bg_btn_navy" android:stateListAnimator="@null"
                 app:cornerRadius="14dp"/>
 
         </LinearLayout>
@@ -93,9 +93,9 @@
         android:id="@+id/bottomNavigation"
         android:layout_width="0dp"
         android:layout_height="60dp"
-        android:background="@drawable/gradient_header"
-        app:itemIconTint="@color/blanco"
-        app:itemTextColor="@color/blanco"
+        android:background="@color/navy"
+        app:itemIconTint="@color/navy"
+        app:itemTextColor="@color/navy"
         app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

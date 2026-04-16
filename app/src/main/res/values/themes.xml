@@ -1,93 +1,101 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <style name="Theme.Odontoconnect" parent="Theme.MaterialComponents.Light.NoActionBar">
-        <item name="colorPrimary">@color/azul_primario</item>
-        <item name="colorPrimaryVariant">@color/azul_oscuro</item>
+        <item name="colorPrimary">@color/navy</item>
+        <item name="colorPrimaryVariant">@color/navy_dark</item>
         <item name="colorOnPrimary">@color/blanco</item>
-        <item name="colorSecondary">@color/azul_acento</item>
-        <item name="colorOnSecondary">@color/blanco</item>
+        <item name="colorSecondary">@color/gold</item>
+        <item name="colorOnSecondary">@color/navy</item>
         <item name="android:windowBackground">@color/fondo_app</item>
-        <item name="android:statusBarColor">@color/azul_oscuro</item>
+        <item name="android:statusBarColor">@color/navy_dark</item>
         <item name="android:navigationBarColor">@color/blanco</item>
-        <item name="materialButtonStyle">@style/BotonModerno</item>
-        <item name="materialCardViewStyle">@style/CardModerno</item>
-        <!-- Animaciones de transición suaves -->
+        <item name="materialButtonStyle">@style/BotonNavy</item>
+        <item name="materialCardViewStyle">@style/CardSmartie</item>
         <item name="android:windowAnimationStyle">@style/TransicionSuave</item>
     </style>
 
-    <!-- Botón principal moderno con sombra y gradiente -->
-    <style name="BotonModerno" parent="Widget.MaterialComponents.Button">
-        <item name="backgroundTint">@color/azul_primario</item>
+    <style name="BotonNavy" parent="Widget.MaterialComponents.Button">
+        <item name="backgroundTint">@color/navy</item>
         <item name="android:textColor">@color/blanco</item>
-        <item name="cornerRadius">16dp</item>
+        <item name="cornerRadius">14dp</item>
         <item name="android:textStyle">bold</item>
-        <item name="android:letterSpacing">0.03</item>
-        <item name="android:textSize">15sp</item>
-        <item name="elevation">4dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="elevation">0dp</item>
         <item name="android:stateListAnimator">@null</item>
     </style>
 
-    <!-- Botón outline moderno -->
-    <style name="BotonOutlineAzul" parent="Widget.MaterialComponents.Button.OutlinedButton">
-        <item name="strokeColor">@color/azul_primario</item>
-        <item name="strokeWidth">1.5dp</item>
-        <item name="android:textColor">@color/azul_primario</item>
-        <item name="cornerRadius">16dp</item>
+    <style name="BotonGold" parent="Widget.MaterialComponents.Button">
+        <item name="backgroundTint">@color/gold</item>
+        <item name="android:textColor">@color/navy</item>
+        <item name="cornerRadius">14dp</item>
         <item name="android:textStyle">bold</item>
+        <item name="android:textSize">14sp</item>
+        <item name="elevation">0dp</item>
+        <item name="android:stateListAnimator">@null</item>
     </style>
 
-    <!-- Card moderna con sombra suave -->
-    <style name="CardModerno" parent="Widget.MaterialComponents.CardView">
-        <item name="cardCornerRadius">20dp</item>
+    <style name="BotonOutlineAzul" parent="Widget.MaterialComponents.Button.OutlinedButton">
+        <item name="strokeColor">@color/navy</item>
+        <item name="strokeWidth">1.5dp</item>
+        <item name="android:textColor">@color/navy</item>
+        <item name="cornerRadius">14dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="elevation">0dp</item>
+    </style>
+
+    <style name="CardSmartie" parent="Widget.MaterialComponents.CardView">
+        <item name="cardCornerRadius">18dp</item>
         <item name="cardElevation">0dp</item>
         <item name="cardBackgroundColor">@color/fondo_card</item>
         <item name="strokeColor">@color/gris_claro</item>
         <item name="strokeWidth">1dp</item>
     </style>
 
-    <!-- Card con fondo azul suave -->
-    <style name="CardAzulSuave" parent="Widget.MaterialComponents.CardView">
-        <item name="cardCornerRadius">20dp</item>
-        <item name="cardElevation">0dp</item>
-        <item name="cardBackgroundColor">@color/surface_blue</item>
-        <item name="strokeWidth">0dp</item>
-    </style>
-
-    <!-- TextInputLayout moderno -->
-    <style name="InputModerno" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
-        <item name="boxStrokeColor">@color/azul_primario</item>
+    <style name="InputSmartie" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/navy</item>
         <item name="boxStrokeWidth">1.5dp</item>
-        <item name="boxCornerRadiusTopStart">14dp</item>
-        <item name="boxCornerRadiusTopEnd">14dp</item>
-        <item name="boxCornerRadiusBottomStart">14dp</item>
-        <item name="boxCornerRadiusBottomEnd">14dp</item>
-        <item name="hintTextColor">@color/azul_primario</item>
+        <item name="boxCornerRadiusTopStart">12dp</item>
+        <item name="boxCornerRadiusTopEnd">12dp</item>
+        <item name="boxCornerRadiusBottomStart">12dp</item>
+        <item name="boxCornerRadiusBottomEnd">12dp</item>
+        <item name="hintTextColor">@color/navy</item>
         <item name="boxBackgroundColor">@color/fondo_input</item>
     </style>
 
-    <!-- Estilo para botones hora agenda -->
+    <!-- Compatibilidad -->
+    <style name="InputModerno" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
+        <item name="boxStrokeColor">@color/navy</item>
+        <item name="boxStrokeWidth">1.5dp</item>
+        <item name="boxCornerRadiusTopStart">12dp</item>
+        <item name="boxCornerRadiusTopEnd">12dp</item>
+        <item name="boxCornerRadiusBottomStart">12dp</item>
+        <item name="boxCornerRadiusBottomEnd">12dp</item>
+        <item name="hintTextColor">@color/navy</item>
+        <item name="boxBackgroundColor">@color/fondo_input</item>
+    </style>
+
+    <style name="BotonAzul" parent="Widget.MaterialComponents.Button">
+        <item name="backgroundTint">@color/navy</item>
+        <item name="android:textColor">@color/blanco</item>
+        <item name="cornerRadius">14dp</item>
+        <item name="android:textStyle">bold</item>
+        <item name="elevation">0dp</item>
+        <item name="android:stateListAnimator">@null</item>
+    </style>
+
     <style name="HoraBtn" parent="Widget.AppCompat.Button">
         <item name="android:layout_height">50dp</item>
         <item name="android:layout_margin">3dp</item>
         <item name="android:textSize">12sp</item>
-        <item name="android:textColor">@color/azul_primario</item>
-        <item name="android:backgroundTint">@color/surface_blue</item>
+        <item name="android:textColor">@color/navy</item>
+        <item name="android:backgroundTint">@color/navy_light</item>
         <item name="android:padding">0dp</item>
     </style>
 
-    <!-- Animación suave entre pantallas -->
     <style name="TransicionSuave" parent="@android:style/Animation.Activity">
         <item name="android:activityOpenEnterAnimation">@anim/slide_in_right</item>
         <item name="android:activityOpenExitAnimation">@anim/slide_out_left</item>
         <item name="android:activityCloseEnterAnimation">@anim/slide_in_left</item>
         <item name="android:activityCloseExitAnimation">@anim/slide_out_right</item>
-    </style>
-
-    <!-- Tema para BottomNav moderno -->
-    <style name="BotonAzul" parent="Widget.MaterialComponents.Button">
-        <item name="backgroundTint">@color/azul_primario</item>
-        <item name="android:textColor">@color/blanco</item>
-        <item name="cornerRadius">14dp</item>
-        <item name="android:textStyle">bold</item>
     </style>
 </resources>

@@ -6,36 +6,153 @@
     android:layout_height="match_parent"
     android:background="@color/fondo_app">
 
-    <LinearLayout
+    <FrameLayout
         android:id="@+id/headerLayout"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="@drawable/gradient_header"
-        android:orientation="vertical"
-        android:paddingTop="48dp"
-        android:paddingBottom="24dp"
-        android:paddingHorizontal="20dp"
+        android:background="@color/navy"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Panel del Doctor"
-            android:textColor="#CCE8FF"
-            android:textSize="12sp"/>
-
-        <TextView
-            android:id="@+id/tvBienvenida"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Dr. Bienvenido"
-            android:textColor="@color/blanco"
-            android:textSize="22sp"
-            android:textStyle="bold"
-            android:layout_marginTop="2dp"/>
-    </LinearLayout>
+            android:orientation="vertical"
+            android:paddingTop="48dp"
+            android:paddingBottom="44dp"
+            android:paddingHorizontal="20dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:layout_marginBottom="16dp">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:orientation="vertical">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Panel Doctor"
+                        android:textColor="#99FFFFFF"
+                        android:textSize="11sp"/>
+                    <TextView
+                        android:id="@+id/tvBienvenida"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Dr. Bienvenido"
+                        android:textColor="@color/blanco"
+                        android:textSize="19sp"
+                        android:textStyle="bold"
+                        android:layout_marginTop="1dp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:background="@drawable/bg_avatar"
+                    android:gravity="center">
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Dr"
+                        android:textColor="@color/navy"
+                        android:textSize="12sp"
+                        android:textStyle="bold"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Stats dentro del header -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:weightSum="3">
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="70dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/bg_stat_navy"
+                    android:orientation="vertical"
+                    android:gravity="center">
+                    <TextView
+                        android:id="@+id/tvCitasConfirmadasValor"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textColor="@color/gold"
+                        android:textSize="22sp"
+                        android:textStyle="bold"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Hoy"
+                        android:textColor="#99FFFFFF"
+                        android:textSize="9sp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="70dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="8dp"
+                    android:background="@drawable/bg_stat_navy"
+                    android:orientation="vertical"
+                    android:gravity="center">
+                    <TextView
+                        android:id="@+id/tvPacientesTotalesValor"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textColor="@color/teal"
+                        android:textSize="22sp"
+                        android:textStyle="bold"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Pacientes"
+                        android:textColor="#99FFFFFF"
+                        android:textSize="9sp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="70dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_stat_navy"
+                    android:orientation="vertical"
+                    android:gravity="center">
+                    <TextView
+                        android:id="@+id/tvSolicitudesPendientesValor"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textColor="@color/blanco"
+                        android:textSize="22sp"
+                        android:textStyle="bold"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Pendientes"
+                        android:textColor="#99FFFFFF"
+                        android:textSize="9sp"/>
+                </LinearLayout>
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:layout_gravity="bottom"
+            android:background="@drawable/bg_wave_bottom"/>
+    </FrameLayout>
 
     <ScrollView
         android:layout_width="0dp"
@@ -51,146 +168,140 @@
             android:orientation="vertical"
             android:padding="18dp">
 
-            <!-- Stats row -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:weightSum="3"
-                android:layout_marginBottom="20dp">
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="80dp"
-                    android:layout_weight="1"
-                    android:layout_marginEnd="8dp"
-                    android:background="@drawable/bg_stat_blue"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    android:padding="12dp">
-                    <TextView
-                        android:id="@+id/tvCitasConfirmadasValor"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="0"
-                        android:textColor="@color/azul_primario"
-                        android:textSize="26sp"
-                        android:textStyle="bold"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Hoy"
-                        android:textColor="@color/texto_secundario"
-                        android:textSize="11sp"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="80dp"
-                    android:layout_weight="1"
-                    android:layout_marginEnd="8dp"
-                    android:background="@drawable/bg_stat_green"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    android:padding="12dp">
-                    <TextView
-                        android:id="@+id/tvPacientesTotalesValor"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="0"
-                        android:textColor="#18a856"
-                        android:textSize="26sp"
-                        android:textStyle="bold"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Pacientes"
-                        android:textColor="@color/texto_secundario"
-                        android:textSize="11sp"/>
-                </LinearLayout>
-
-                <LinearLayout
-                    android:layout_width="0dp"
-                    android:layout_height="80dp"
-                    android:layout_weight="1"
-                    android:background="@drawable/bg_stat_orange"
-                    android:orientation="vertical"
-                    android:gravity="center"
-                    android:padding="12dp">
-                    <TextView
-                        android:id="@+id/tvSolicitudesPendientesValor"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="0"
-                        android:textColor="#e07800"
-                        android:textSize="26sp"
-                        android:textStyle="bold"/>
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="Pendientes"
-                        android:textColor="@color/texto_secundario"
-                        android:textSize="11sp"/>
-                </LinearLayout>
-            </LinearLayout>
-
-            <!-- Acciones -->
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Acciones"
                 android:textColor="@color/texto_primario"
-                android:textSize="15sp"
+                android:textSize="14sp"
                 android:textStyle="bold"
                 android:layout_marginBottom="12dp"/>
 
-            <Button
+            <!-- Acción principal gold -->
+            <LinearLayout
                 android:id="@+id/btnCitasHoy"
                 android:layout_width="match_parent"
-                android:layout_height="54dp"
-                android:text="Citas de Hoy"
-                android:textColor="@color/blanco"
-                android:textStyle="bold"
-                android:textSize="15sp"
-                android:background="@drawable/gradient_button"
-                android:stateListAnimator="@null"
-                android:layout_marginBottom="10dp"/>
+                android:layout_height="58dp"
+                android:background="@drawable/bg_btn_gold"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="18dp"
+                android:layout_marginBottom="10dp"
+                android:clickable="true"
+                android:focusable="true">
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Citas de Hoy"
+                    android:textColor="@color/navy"
+                    android:textSize="14sp"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="›"
+                    android:textColor="@color/navy_dark"
+                    android:textSize="20sp"
+                    android:textStyle="bold"/>
+            </LinearLayout>
 
-            <Button
+            <!-- Acciones secundarias -->
+            <LinearLayout
                 android:id="@+id/btnVerCitas"
                 android:layout_width="match_parent"
-                android:layout_height="54dp"
-                android:text="Ver Solicitudes"
-                android:textColor="@color/azul_primario"
-                android:textStyle="bold"
-                android:textSize="15sp"
-                android:background="@drawable/bg_card_modern"
-                android:stateListAnimator="@null"
-                android:layout_marginBottom="10dp"/>
+                android:layout_height="56dp"
+                android:background="@drawable/bg_card_white"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="18dp"
+                android:layout_marginBottom="8dp"
+                android:clickable="true"
+                android:focusable="true">
+                <View
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:background="@drawable/bg_icon_circle_teal"
+                    android:layout_marginEnd="12dp"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Ver Solicitudes"
+                    android:textColor="@color/texto_primario"
+                    android:textSize="13sp"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="›"
+                    android:textColor="@color/texto_hint"
+                    android:textSize="18sp"/>
+            </LinearLayout>
 
-            <Button
+            <LinearLayout
                 android:id="@+id/btnConfigurarAgenda"
                 android:layout_width="match_parent"
-                android:layout_height="54dp"
-                android:text="Configurar Agenda"
-                android:textColor="@color/azul_primario"
-                android:textStyle="bold"
-                android:textSize="15sp"
-                android:background="@drawable/bg_card_modern"
-                android:stateListAnimator="@null"
-                android:layout_marginBottom="10dp"/>
+                android:layout_height="56dp"
+                android:background="@drawable/bg_card_white"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="18dp"
+                android:layout_marginBottom="8dp"
+                android:clickable="true"
+                android:focusable="true">
+                <View
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:background="@drawable/bg_icon_circle_navy"
+                    android:layout_marginEnd="12dp"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Configurar Agenda"
+                    android:textColor="@color/texto_primario"
+                    android:textSize="13sp"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="›"
+                    android:textColor="@color/texto_hint"
+                    android:textSize="18sp"/>
+            </LinearLayout>
 
-            <Button
+            <LinearLayout
                 android:id="@+id/btnGestionTratamientos"
                 android:layout_width="match_parent"
-                android:layout_height="54dp"
-                android:text="Gestionar Tratamientos"
-                android:textColor="@color/azul_primario"
-                android:textStyle="bold"
-                android:textSize="15sp"
-                android:background="@drawable/bg_card_modern"
-                android:stateListAnimator="@null"
-                android:layout_marginBottom="16dp"/>
+                android:layout_height="56dp"
+                android:background="@drawable/bg_card_white"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="18dp"
+                android:layout_marginBottom="16dp"
+                android:clickable="true"
+                android:focusable="true">
+                <View
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:background="@drawable/bg_icon_circle_gold"
+                    android:layout_marginEnd="12dp"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Gestionar Tratamientos"
+                    android:textColor="@color/texto_primario"
+                    android:textSize="13sp"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="›"
+                    android:textColor="@color/texto_hint"
+                    android:textSize="18sp"/>
+            </LinearLayout>
 
             <Button
                 android:id="@+id/btnCerrarSesion"
@@ -209,8 +320,8 @@
         android:layout_width="0dp"
         android:layout_height="64dp"
         android:background="@color/blanco"
-        app:itemIconTint="@color/azul_primario"
-        app:itemTextColor="@color/azul_primario"
+        app:itemIconTint="@color/navy"
+        app:itemTextColor="@color/navy"
         app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"

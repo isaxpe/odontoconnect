@@ -217,7 +217,7 @@
                 android:text="GUARDAR Y CONTINUAR"
                 android:textSize="15sp"
                 android:background="@drawable/gradient_button" android:stateListAnimator="@null"
-                app:cornerRadius="16dp"/>
+                app:cornerRadius="14dp"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnOmitirBienvenida"
@@ -228,7 +228,7 @@
                 android:text="Omitir por ahora"
                 android:textColor="@color/texto_secundario"
                 app:strokeColor="@color/gris_claro"
-                app:cornerRadius="16dp"/>
+                app:cornerRadius="14dp"/>
 
         </LinearLayout>
     </ScrollView>

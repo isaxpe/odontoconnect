@@ -6,7 +6,6 @@
     android:orientation="vertical"
     android:background="@color/fondo_app">
 
-    <!-- Header gradiente -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -28,7 +27,7 @@
             android:layout_marginTop="12dp"
             android:text="Unete a OdontoConnect"
             android:textColor="@color/blanco"
-            android:textSize="22sp"
+            android:textSize="20sp"
             android:textStyle="bold"/>
 
         <TextView

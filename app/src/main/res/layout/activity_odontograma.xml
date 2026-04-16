@@ -172,7 +172,7 @@
                 android:text="GUARDAR ODONTOGRAMA"
                 android:textSize="15sp"
                 android:background="@drawable/gradient_button" android:stateListAnimator="@null"
-                app:cornerRadius="16dp"/>
+                app:cornerRadius="14dp"/>
 
         </LinearLayout>
     </ScrollView>

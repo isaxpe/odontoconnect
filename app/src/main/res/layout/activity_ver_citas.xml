@@ -6,15 +6,16 @@
     android:layout_height="match_parent"
     android:background="@color/fondo_app">
 
+    <!-- Header -->
     <LinearLayout
         android:id="@+id/headerVerCitas"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:background="@drawable/gradient_header"
         android:orientation="vertical"
-        android:paddingTop="48dp"
+        android:paddingTop="44dp"
         android:paddingBottom="20dp"
-        android:paddingHorizontal="24dp"
+        android:paddingHorizontal="20dp"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -22,26 +23,28 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="Solicitudes"
+            android:text="Solicitudes de Cita"
             android:textColor="@color/blanco"
-            android:textSize="24sp"
+            android:textSize="22sp"
             android:textStyle="bold"/>
+
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="4dp"
-            android:text="Acepta o rechaza cada solicitud"
-            android:textColor="#CCE8FF"
+            android:text="Revisa y acepta o rechaza cada solicitud"
+            android:textColor="#90CAF9"
             android:textSize="13sp"/>
     </LinearLayout>
 
+    <!-- Mensaje vacío -->
     <TextView
         android:id="@+id/tvMensajeVacio"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:gravity="center"
         android:padding="32dp"
-        android:text="Sin solicitudes pendientes"
+        android:text="✅ No tienes solicitudes pendientes."
         android:textColor="@color/texto_secundario"
         android:textSize="15sp"
         android:visibility="gone"
@@ -49,6 +52,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"/>
 
+    <!-- Lista de solicitudes -->
     <ScrollView
         android:layout_width="0dp"
         android:layout_height="0dp"
@@ -65,17 +69,18 @@
             android:orientation="vertical"/>
     </ScrollView>
 
+    <!-- BottomNavigation -->
     <com.google.android.material.bottomnavigation.BottomNavigationView
         android:id="@+id/bottomNavigation"
         android:layout_width="0dp"
-        android:layout_height="64dp"
-        android:background="@color/blanco"
-        app:itemIconTint="@color/azul_primario"
-        app:itemTextColor="@color/azul_primario"
+        android:layout_height="60dp"
+        android:background="@drawable/gradient_header"
+        app:itemIconTint="@color/blanco"
+        app:itemTextColor="@color/blanco"
         app:labelVisibilityMode="labeled"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:menu="@menu/bottom_nav_menu"
-        app:elevation="8dp"/>
+        app:menu="@menu/bottom_nav_menu"/>
+
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -6,9 +6,6 @@
     android:orientation="vertical"
     android:background="@color/fondo_app">
 
-    <!-- Header con gradiente -->
-
-    <!-- Formulario con esquinas redondeadas arriba -->
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
@@ -19,21 +16,19 @@
         android:paddingBottom="32dp">
 
         <ImageView
-            android:layout_width="187dp"
-            android:layout_height="160dp"
-            android:layout_marginBottom="4dp"
-            android:scaleType="fitCenter"
-            android:src="@drawable/logo_odontoconnect" />
+            android:layout_width="100dp"
+            android:layout_height="100dp"
+            android:src="@drawable/logo_odontoconnect"
+            android:scaleType="fitCenter"/>
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:letterSpacing="0.02"
             android:text="OdontoConnect"
             android:textColor="@color/blanco"
-            android:textSize="30sp"
-            android:textStyle="bold" />
+            android:textSize="28sp"
+            android:textStyle="bold"/>
 
         <TextView
             android:layout_width="wrap_content"
@@ -41,7 +36,7 @@
             android:layout_marginTop="6dp"
             android:text="Tu salud dental, en tus manos"
             android:textColor="#CCE8FF"
-            android:textSize="14sp" />
+            android:textSize="14sp"/>
     </LinearLayout>
 
     <ScrollView
@@ -75,7 +70,6 @@
                 android:textSize="14sp"
                 android:layout_marginBottom="28dp"/>
 
-            <!-- Campo correo -->
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/InputModerno"
                 android:layout_width="match_parent"
@@ -84,16 +78,14 @@
                 android:hint="Correo electronico"
                 app:startIconDrawable="@android:drawable/ic_dialog_email"
                 app:startIconTint="@color/azul_primario">
-
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/etEmail"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:inputType="textEmailAddress"
-                    android:textSize="15sp" />
+                    android:textSize="15sp"/>
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- Campo contraseña -->
             <com.google.android.material.textfield.TextInputLayout
                 style="@style/InputModerno"
                 android:layout_width="match_parent"
@@ -111,7 +103,6 @@
                     android:textSize="15sp"/>
             </com.google.android.material.textfield.TextInputLayout>
 
-            <!-- Botón login con gradiente -->
             <Button
                 android:id="@+id/btnIngresar"
                 android:layout_width="match_parent"
@@ -129,14 +120,12 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:orientation="horizontal">
-
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="¿No tienes cuenta? "
                     android:textColor="@color/texto_secundario"
                     android:textSize="14sp"/>
-
                 <TextView
                     android:id="@+id/tvRegistrarse"
                     android:layout_width="wrap_content"

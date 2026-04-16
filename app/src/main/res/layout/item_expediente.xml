@@ -37,7 +37,7 @@
                 android:id="@+id/tvTipoExpediente"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/azul_primario"
+                android:background="@drawable/gradient_header"
                 android:paddingHorizontal="10dp"
                 android:paddingVertical="4dp"
                 android:text="NOTA"

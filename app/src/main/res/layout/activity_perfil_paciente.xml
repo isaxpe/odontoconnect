@@ -177,7 +177,7 @@
                 android:layout_marginTop="16dp"
                 android:text="  Mi Expediente Clínico"
                 android:background="@drawable/gradient_button" android:stateListAnimator="@null"
-                app:cornerRadius="16dp"/>
+                app:cornerRadius="14dp"/>
             <Button android:id="@+id/btnCerrarSesionPaciente" android:layout_width="match_parent" android:layout_height="52dp" android:layout_marginHorizontal="16dp" android:layout_marginTop="20dp" android:backgroundTint="#00569B" android:text="Cerrar Sesión" android:textColor="#FFFFFF" android:textStyle="bold"/>
             <Button android:id="@+id/btnEliminarCuenta" android:layout_width="match_parent" android:layout_height="52dp" android:layout_marginHorizontal="16dp" android:layout_marginTop="8dp" android:layout_marginBottom="20dp" android:backgroundTint="#B00020" android:text="Eliminar Cuenta" android:textColor="#FFFFFF" android:textStyle="bold"/>
 

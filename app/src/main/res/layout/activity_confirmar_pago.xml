@@ -124,7 +124,7 @@
                 android:text="✅  Confirmar Pago"
                 android:textSize="16sp"
                 android:background="@drawable/gradient_button" android:stateListAnimator="@null"
-                app:cornerRadius="16dp"/>
+                app:cornerRadius="14dp"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnRechazarPago"
@@ -135,7 +135,7 @@
                 android:text="❌  Rechazar Comprobante"
                 android:textColor="@color/color_rechazada"
                 app:strokeColor="@color/color_rechazada"
-                app:cornerRadius="16dp"/>
+                app:cornerRadius="14dp"/>
 
         </LinearLayout>
     </LinearLayout>

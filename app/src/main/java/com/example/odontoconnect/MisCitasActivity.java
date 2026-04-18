@@ -10,7 +10,6 @@ import android.widget.TextView;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.button.MaterialButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FieldValue;
@@ -47,26 +46,8 @@ public class MisCitasActivity extends AppCompatActivity {
         cerrarCitasVencidas();
         cargarMisCitas();
 
-        BottomNavigationView bottomNav = findViewById(R.id.bottomNavigationPaciente);
-        if (bottomNav != null) {
-            bottomNav.setSelectedItemId(R.id.nav_paciente_citas);
-            bottomNav.setOnItemSelectedListener(item -> {
-                int id = item.getItemId();
-                if (id == R.id.nav_paciente_inicio) {
-                    startActivity(new Intent(this, PacienteMainActivity.class));
-                    overridePendingTransition(0, 0); finish(); return true;
-                } else if (id == R.id.nav_paciente_citas) {
-                    return true;
-                } else if (id == R.id.nav_paciente_agendar) {
-                    startActivity(new Intent(this, AgendarCitaActivity.class));
-                    overridePendingTransition(0, 0); return true;
-                } else if (id == R.id.nav_paciente_perfil) {
-                    startActivity(new Intent(this, PerfilPacienteActivity.class));
-                    overridePendingTransition(0, 0); return true;
-                }
-                return false;
-            });
-        }
+        BottomNavHelper.setupPaciente(this, BottomNavHelper.PacienteTab.CITAS);
+
     }
 
     // Auto-cerrar citas pendientes cuya fecha ya pasó

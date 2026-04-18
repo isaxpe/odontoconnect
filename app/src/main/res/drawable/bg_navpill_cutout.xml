@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Se coloca detras del FAB, del mismo color del fondo de la pantalla,
+     para crear el efecto de recorte concavo en el pill navy -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+    <solid android:color="@color/fondo_app"/>
+</shape>

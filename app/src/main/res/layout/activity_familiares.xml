@@ -4,94 +4,106 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F4F4EC">
+    android:background="@color/fondo_app">
 
-    <!-- Header -->
-    <LinearLayout
+    <FrameLayout
         android:id="@+id/headerFamiliares"
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:background="#00569B"
-        android:orientation="vertical"
-        android:paddingTop="40dp"
-        android:paddingBottom="20dp"
-        android:paddingHorizontal="20dp"
-        app:layout_constraintTop_toTopOf="parent">
+        android:background="@color/navy"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
 
-        <TextView
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="Mis Familiares"
-            android:textColor="#FFFFFF"
-            android:textSize="22sp"
-            android:textStyle="bold" />
+            android:orientation="vertical"
+            android:paddingTop="48dp"
+            android:paddingBottom="44dp"
+            android:paddingHorizontal="20dp">
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="Agenda citas para tus seres queridos"
-            android:textColor="#B3D1F0"
-            android:textSize="13sp"
-            android:layout_marginTop="4dp" />
-    </LinearLayout>
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Agenda familiar"
+                android:textColor="#99FFFFFF"
+                android:textSize="11sp"/>
 
-    <!-- Lista -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Mis Familiares"
+                android:textColor="@color/blanco"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:layout_marginTop="2dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Agenda citas para tu familia"
+                android:textColor="#99FFFFFF"
+                android:textSize="12sp"
+                android:layout_marginTop="2dp"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:layout_gravity="bottom"
+            android:background="@drawable/bg_wave_bottom"/>
+    </FrameLayout>
+
+    <TextView
+        android:id="@+id/tvSinFamiliares"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:gravity="center"
+        android:padding="40dp"
+        android:text="Aun no tienes familiares registrados"
+        android:textColor="@color/texto_secundario"
+        android:textSize="14sp"
+        android:visibility="gone"
+        app:layout_constraintTop_toBottomOf="@id/headerFamiliares"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"/>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rvFamiliares"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        android:padding="16dp"
+        android:clipToPadding="false"
+        android:paddingHorizontal="18dp"
+        android:paddingTop="14dp"
+        android:paddingBottom="120dp"
+        android:layoutAnimation="@anim/layout_fall_down"
         app:layout_constraintTop_toBottomOf="@id/headerFamiliares"
         app:layout_constraintBottom_toTopOf="@id/bottomNavigationPaciente"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
+        app:layout_constraintEnd_toEndOf="parent"/>
 
-    <!-- Mensaje vacío -->
-    <LinearLayout
-        android:id="@+id/layoutSinFamiliares"
-        android:layout_width="0dp"
-        android:layout_height="0dp"
-        android:gravity="center"
-        android:orientation="vertical"
-        app:layout_constraintTop_toBottomOf="@id/headerFamiliares"
-        app:layout_constraintBottom_toTopOf="@id/bottomNavigationPaciente"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <TextView
-            android:id="@+id/tvSinFamiliares"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="👨‍👩‍👧 Aún no tienes familiares registrados.\nToca + para agregar uno."
-            android:textAlignment="center"
-            android:textColor="#888888"
-            android:textSize="15sp"
-            android:lineSpacingMultiplier="1.4" />
-    </LinearLayout>
-
-    <!-- FAB agregar -->
+    <!-- FAB dorado real arriba a la izquierda para no chocar con el FAB celeste central -->
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/fabAgregarFamiliar"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginEnd="20dp"
-        android:layout_marginBottom="80dp"
         android:src="@android:drawable/ic_input_add"
-        app:backgroundTint="#00569B"
-        app:tint="#FFFFFF"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/bottomNavigationPaciente" />
+        app:backgroundTint="@color/gold"
+        app:tint="@color/navy"
+        app:elevation="6dp"
+        android:layout_marginStart="24dp"
+        android:layout_marginBottom="32dp"
+        app:layout_constraintBottom_toTopOf="@id/bottomNavigationPaciente"
+        app:layout_constraintStart_toStartOf="parent"/>
 
-    <!-- BottomNavigation -->
-    <com.google.android.material.bottomnavigation.BottomNavigationView
+    <include
         android:id="@+id/bottomNavigationPaciente"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="#00569B"
-        app:itemIconTint="@color/navy"
-        app:itemTextColor="@color/navy"
-        app:labelVisibilityMode="labeled"
+        layout="@layout/bottomnav_paciente_pill"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:menu="@menu/bottom_nav_menu_paciente" />
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

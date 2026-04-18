@@ -9,7 +9,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.firestore.DocumentSnapshot;
@@ -51,28 +50,8 @@ public class PacienteMainActivity extends AppCompatActivity {
             cargarProximaCita(uid);
         }
 
-        BottomNavigationView bottomNav = findViewById(R.id.bottomNavigationPaciente);
-        if (bottomNav != null) {
-            bottomNav.setSelectedItemId(R.id.nav_paciente_inicio);
-            bottomNav.setOnItemSelectedListener(item -> {
-                int id = item.getItemId();
-                if (id == R.id.nav_paciente_inicio) {
-                    return true;
-                } else if (id == R.id.nav_paciente_citas) {
-                    startActivity(new Intent(this, MisCitasActivity.class));
-                    overridePendingTransition(0, 0);
-                    return true;
-                } else if (id == R.id.nav_paciente_agendar) {
-                    intentarAgendar();
-                    return true;
-                } else if (id == R.id.nav_paciente_perfil) {
-                    startActivity(new Intent(this, PerfilPacienteActivity.class));
-                    overridePendingTransition(0, 0);
-                    return true;
-                }
-                return false;
-            });
-        }
+        BottomNavHelper.setupPaciente(this, BottomNavHelper.PacienteTab.INICIO);
+
     }
 
     private void configurarBotones() {

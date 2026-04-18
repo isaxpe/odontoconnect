@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- FAB celeste con gradiente y borde blanco grueso como en la imagen -->
+<shape xmlns:android="http://schemas.android.com/apk/res/android"
+    android:shape="oval">
+    <gradient
+        android:type="linear"
+        android:angle="270"
+        android:startColor="#4DBCEF"
+        android:endColor="#2EA6E8"/>
+    <stroke
+        android:width="5dp"
+        android:color="#FFFFFF"/>
+</shape>

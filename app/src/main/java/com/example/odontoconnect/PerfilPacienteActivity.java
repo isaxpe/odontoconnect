@@ -2,6 +2,7 @@ package com.example.odontoconnect;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -11,7 +12,6 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.ListenerRegistration;
@@ -21,8 +21,10 @@ public class PerfilPacienteActivity extends AppCompatActivity {
 
     private TextView tvNombrePerfilPaciente, tvIdPerfilPaciente,
             tvCorreoPerfilPaciente, tvTelefonoPerfil, tvFechaNacPerfil,
-            tvTipoSangrePerfil, tvAlergiasPerfil, tvFaltasNumeroPerfil,
-            tvTotalCitasPerfil, tvEstadoNumeroPerfil, tvEstadoTextoPerfil,
+            tvTipoSangrePerfil, tvAlergiasPerfil,
+            tvMedicamentosPerfil, tvEnfermedadesPerfil, tvEmergenciaPerfil,
+            tvFaltasNumeroPerfil, tvTotalCitasPerfil,
+            tvEstadoNumeroPerfil, tvEstadoTextoPerfil,
             tvProximaCitaPerfil, tvFamiliaresPerfil;
     private Button btnCerrarSesionPaciente, btnEliminarCuenta;
 
@@ -30,7 +32,6 @@ public class PerfilPacienteActivity extends AppCompatActivity {
     private FirebaseFirestore db;
     private String userId;
 
-    // C: SnapshotListener para actualizaciones en tiempo real
     private ListenerRegistration listenerPerfil;
 
     @Override
@@ -49,6 +50,9 @@ public class PerfilPacienteActivity extends AppCompatActivity {
         tvFechaNacPerfil       = findViewById(R.id.tvFechaNacPerfil);
         tvTipoSangrePerfil     = findViewById(R.id.tvTipoSangrePerfil);
         tvAlergiasPerfil       = findViewById(R.id.tvAlergiasPerfil);
+        tvMedicamentosPerfil   = findViewById(R.id.tvMedicamentosPerfil);
+        tvEnfermedadesPerfil   = findViewById(R.id.tvEnfermedadesPerfil);
+        tvEmergenciaPerfil     = findViewById(R.id.tvEmergenciaPerfil);
         tvFaltasNumeroPerfil   = findViewById(R.id.tvFaltasNumeroPerfil);
         tvTotalCitasPerfil     = findViewById(R.id.tvTotalCitasPerfil);
         tvEstadoNumeroPerfil   = findViewById(R.id.tvEstadoNumeroPerfil);
@@ -63,7 +67,6 @@ public class PerfilPacienteActivity extends AppCompatActivity {
             tvCorreoPerfilPaciente.setText(mAuth.getCurrentUser().getEmail());
         }
 
-        // C: SnapshotListener en lugar de .get() — se actualiza si el doctor cambia faltas
         cargarPerfilEnTiempoReal();
         cargarCitas();
         cargarFamiliares();
@@ -86,7 +89,7 @@ public class PerfilPacienteActivity extends AppCompatActivity {
                     mAuth.sendPasswordResetEmail(mAuth.getCurrentUser().getEmail())
                             .addOnSuccessListener(aVoid ->
                                     Toast.makeText(this,
-                                            "📧 Revisa tu correo",
+                                            "Revisa tu correo",
                                             Toast.LENGTH_LONG).show());
                 }
             });
@@ -100,38 +103,19 @@ public class PerfilPacienteActivity extends AppCompatActivity {
 
         btnEliminarCuenta.setOnClickListener(v ->
                 new AlertDialog.Builder(this)
-                        .setTitle("⚠️ Eliminar cuenta")
-                        .setMessage("Se eliminarán todos tus datos, citas, " +
-                                "familiares y expediente. ¿Seguro?")
-                        .setPositiveButton("Sí, eliminar todo",
+                        .setTitle("Eliminar cuenta")
+                        .setMessage("Se eliminaran todos tus datos, citas, " +
+                                "familiares y expediente. Seguro?")
+                        .setPositiveButton("Si, eliminar todo",
                                 (d, w) -> eliminarCuentaCompleta())
                         .setNegativeButton("Cancelar", null)
                         .show()
         );
 
-        BottomNavigationView bottomNav = findViewById(R.id.bottomNavigationPaciente);
-        if (bottomNav != null) {
-            bottomNav.setSelectedItemId(R.id.nav_paciente_perfil);
-            bottomNav.setOnItemSelectedListener(item -> {
-                int id = item.getItemId();
-                if (id == R.id.nav_paciente_inicio) {
-                    startActivity(new Intent(this, PacienteMainActivity.class));
-                    overridePendingTransition(0, 0); finish(); return true;
-                } else if (id == R.id.nav_paciente_citas) {
-                    startActivity(new Intent(this, MisCitasActivity.class));
-                    overridePendingTransition(0, 0); finish(); return true;
-                } else if (id == R.id.nav_paciente_agendar) {
-                    startActivity(new Intent(this, AgendarCitaActivity.class));
-                    overridePendingTransition(0, 0); finish(); return true;
-                } else if (id == R.id.nav_paciente_perfil) {
-                    return true;
-                }
-                return false;
-            });
-        }
+        BottomNavHelper.setupPaciente(this, BottomNavHelper.PacienteTab.PERFIL);
+
     }
 
-    // C: FIX — SnapshotListener para actualizaciones en tiempo real
     private void cargarPerfilEnTiempoReal() {
         listenerPerfil = db.collection("usuarios").document(userId)
                 .addSnapshotListener((doc, error) -> {
@@ -144,16 +128,16 @@ public class PerfilPacienteActivity extends AppCompatActivity {
 
                     Long faltas = doc.getLong("faltas");
                     Boolean bloq = doc.getBoolean("bloqueado");
-                    Long nivel  = doc.getLong("nivelPenalizacion");
-                    Long rest   = doc.getLong("restriccionHasta");
                     if (faltas == null) faltas = 0L;
                     if (bloq == null) bloq = false;
-                    if (nivel == null) nivel = 0L;
 
                     String tel  = doc.getString("telefono");
                     String fnac = doc.getString("fechaNacimiento");
                     String sang = doc.getString("tipoSangre");
                     String aler = doc.getString("alergias");
+                    String meds = doc.getString("medicamentos");
+                    String enfr = doc.getString("enfermedadesCronicas");
+                    String emer = doc.getString("contactoEmergencia");
 
                     tvNombrePerfilPaciente.setText(nombre != null ? nombre : "Paciente");
                     tvIdPerfilPaciente.setText("ID: " + idPac);
@@ -165,43 +149,53 @@ public class PerfilPacienteActivity extends AppCompatActivity {
                             sang != null && !sang.isEmpty() ? sang : "No registrado");
                     tvAlergiasPerfil.setText(
                             aler != null && !aler.isEmpty() ? aler : "Ninguna registrada");
+
+                    if (tvMedicamentosPerfil != null)
+                        tvMedicamentosPerfil.setText(
+                                meds != null && !meds.isEmpty() ? meds : "Ninguno");
+                    if (tvEnfermedadesPerfil != null)
+                        tvEnfermedadesPerfil.setText(
+                                enfr != null && !enfr.isEmpty() ? enfr : "Ninguna");
+                    if (tvEmergenciaPerfil != null)
+                        tvEmergenciaPerfil.setText(
+                                emer != null && !emer.isEmpty() ? emer : "No registrado");
+
                     tvFaltasNumeroPerfil.setText(String.valueOf(faltas));
 
-                    if (bloq || faltas >= 3) {
-                        tvEstadoNumeroPerfil.setText("✗");
-                        tvEstadoNumeroPerfil.setTextColor(0xFFB71C1C);
-                        tvEstadoTextoPerfil.setText("Bloqueado");
-                        tvFaltasNumeroPerfil.setTextColor(0xFFB71C1C);
-                    } else if (nivel >= 2 && rest != null &&
-                            System.currentTimeMillis() < rest) {
+                    if (bloq) {
                         tvEstadoNumeroPerfil.setText("!");
-                        tvEstadoNumeroPerfil.setTextColor(0xFFF57C00);
-                        tvEstadoTextoPerfil.setText("Restringido");
-                        tvFaltasNumeroPerfil.setTextColor(0xFFF57C00);
+                        tvEstadoNumeroPerfil.setTextColor(0xFFD32F2F);
+                        tvEstadoTextoPerfil.setText("Bloqueado");
+                        tvFaltasNumeroPerfil.setTextColor(0xFFD32F2F);
                     } else {
-                        tvEstadoNumeroPerfil.setText("✓");
-                        tvEstadoNumeroPerfil.setTextColor(0xFF1565C0);
+                        tvEstadoNumeroPerfil.setText("OK");
+                        tvEstadoNumeroPerfil.setTextColor(0xFF1B3A6B);
                         tvEstadoTextoPerfil.setText("Activo");
                         tvFaltasNumeroPerfil.setTextColor(
-                                faltas > 0 ? 0xFFF57C00 : 0xFF1565C0);
+                                faltas > 0 ? 0xFFF57C00 : 0xFF1B3A6B);
                     }
                 });
     }
 
     private void configurarEdicion() {
+        // Nombre se edita tocando el texto
         tvNombrePerfilPaciente.setOnClickListener(v ->
                 mostrarDialogoEditar("Nombre", "nombre",
-                        tvNombrePerfilPaciente.getText().toString()));
+                        tvNombrePerfilPaciente.getText().toString(),
+                        InputType.TYPE_TEXT_FLAG_CAP_WORDS));
 
         View btnEditTel = findViewById(R.id.btnEditarTelefono);
         if (btnEditTel != null) btnEditTel.setOnClickListener(v ->
-                mostrarDialogoEditar("Teléfono", "telefono",
-                        tvTelefonoPerfil.getText().toString()));
+                mostrarDialogoEditar("Telefono", "telefono",
+                        tvTelefonoPerfil.getText().toString(),
+                        InputType.TYPE_CLASS_PHONE));
 
         View btnEditFecha = findViewById(R.id.btnEditarFechaNac);
         if (btnEditFecha != null) btnEditFecha.setOnClickListener(v ->
-                mostrarDialogoEditar("Fecha de nacimiento", "fechaNacimiento",
-                        tvFechaNacPerfil.getText().toString()));
+                mostrarDialogoEditar("Fecha de nacimiento (DD/MM/AAAA)",
+                        "fechaNacimiento",
+                        tvFechaNacPerfil.getText().toString(),
+                        InputType.TYPE_CLASS_DATETIME));
 
         View btnEditSangre = findViewById(R.id.btnEditarSangre);
         if (btnEditSangre != null) btnEditSangre.setOnClickListener(v ->
@@ -211,25 +205,55 @@ public class PerfilPacienteActivity extends AppCompatActivity {
         View btnEditAlergias = findViewById(R.id.btnEditarAlergias);
         if (btnEditAlergias != null) btnEditAlergias.setOnClickListener(v ->
                 mostrarDialogoEditar("Alergias", "alergias",
-                        tvAlergiasPerfil.getText().toString()));
+                        tvAlergiasPerfil.getText().toString(),
+                        InputType.TYPE_TEXT_FLAG_MULTI_LINE |
+                                InputType.TYPE_TEXT_FLAG_CAP_SENTENCES));
+
+        View btnEditMeds = findViewById(R.id.btnEditarMedicamentos);
+        if (btnEditMeds != null) btnEditMeds.setOnClickListener(v ->
+                mostrarDialogoEditar("Medicamentos", "medicamentos",
+                        tvMedicamentosPerfil != null ?
+                                tvMedicamentosPerfil.getText().toString() : "",
+                        InputType.TYPE_TEXT_FLAG_MULTI_LINE |
+                                InputType.TYPE_TEXT_FLAG_CAP_SENTENCES));
+
+        View btnEditEnf = findViewById(R.id.btnEditarEnfermedades);
+        if (btnEditEnf != null) btnEditEnf.setOnClickListener(v ->
+                mostrarDialogoEditar("Enfermedades cronicas",
+                        "enfermedadesCronicas",
+                        tvEnfermedadesPerfil != null ?
+                                tvEnfermedadesPerfil.getText().toString() : "",
+                        InputType.TYPE_TEXT_FLAG_MULTI_LINE |
+                                InputType.TYPE_TEXT_FLAG_CAP_SENTENCES));
+
+        View btnEditEmer = findViewById(R.id.btnEditarEmergencia);
+        if (btnEditEmer != null) btnEditEmer.setOnClickListener(v ->
+                mostrarDialogoEditar("Contacto de emergencia",
+                        "contactoEmergencia",
+                        tvEmergenciaPerfil != null ?
+                                tvEmergenciaPerfil.getText().toString() : "",
+                        InputType.TYPE_TEXT_FLAG_CAP_WORDS));
     }
 
     private void mostrarDialogoEditar(String titulo, String campo,
-                                       String valorActual) {
+                                       String valorActual, int inputType) {
         EditText input = new EditText(this);
+        input.setInputType(inputType);
         boolean esDefault = valorActual.equals("No registrado") ||
                 valorActual.equals("No registrada") ||
-                valorActual.equals("Ninguna registrada");
+                valorActual.equals("Ninguna registrada") ||
+                valorActual.equals("Ninguna") ||
+                valorActual.equals("Ninguno");
         input.setText(esDefault ? "" : valorActual);
         input.setHint(titulo);
-        input.setPadding(40, 20, 40, 20);
+        input.setPadding(40, 30, 40, 30);
 
         new AlertDialog.Builder(this)
                 .setTitle("Editar " + titulo)
                 .setView(input)
                 .setPositiveButton("Guardar", (d, w) -> {
                     String val = input.getText().toString().trim();
-                    if (!val.isEmpty()) guardarCampo(campo, val);
+                    guardarCampo(campo, val);
                 })
                 .setNegativeButton("Cancelar", null)
                 .show();
@@ -248,13 +272,16 @@ public class PerfilPacienteActivity extends AppCompatActivity {
         db.collection("usuarios").document(userId)
                 .update(campo, valor)
                 .addOnSuccessListener(aVoid -> {
-                    Toast.makeText(this, "✅ Actualizado", Toast.LENGTH_SHORT).show();
-                    // SnapshotListener actualiza la UI automáticamente
+                    Toast.makeText(this, "Actualizado", Toast.LENGTH_SHORT).show();
+                    // SnapshotListener actualiza la UI automaticamente
                     if ("nombre".equals(campo)) {
                         db.collection("usuarios").document(userId)
                                 .update("Nombre", valor);
                     }
-                });
+                })
+                .addOnFailureListener(e ->
+                        Toast.makeText(this, "Error: " + e.getMessage(),
+                                Toast.LENGTH_SHORT).show());
     }
 
     private void cargarCitas() {
@@ -273,12 +300,12 @@ public class PerfilPacienteActivity extends AppCompatActivity {
                         String hora = d.getString("horaDisplay");
                         if (hora == null) hora = d.getString("hora");
                         tvProximaCitaPerfil.setText(
-                                "🦷 " + (trat != null ? trat : "Cita") +
-                                "\n📅 " + (fech != null ? fech : "--") +
-                                "  🕐 " + (hora != null ? hora : "--"));
-                        tvProximaCitaPerfil.setTextColor(0xFF1565C0);
+                                (trat != null ? trat : "Cita") +
+                                "\n" + (fech != null ? fech : "--") +
+                                " - " + (hora != null ? hora : "--"));
+                        tvProximaCitaPerfil.setTextColor(0xFF1B3A6B);
                     } else {
-                        tvProximaCitaPerfil.setText("No tienes citas próximas.");
+                        tvProximaCitaPerfil.setText("No tienes citas proximas.");
                     }
                 });
     }
@@ -288,57 +315,49 @@ public class PerfilPacienteActivity extends AppCompatActivity {
                 .collection("familiares").get()
                 .addOnSuccessListener(snap -> {
                     if (snap.isEmpty()) {
-                        tvFamiliaresPerfil.setText("No tienes familiares registrados.");
+                        tvFamiliaresPerfil.setText("0 familiares registrados");
                         return;
                     }
                     StringBuilder sb = new StringBuilder();
+                    sb.append(snap.size()).append(" familiar(es) registrado(s)\n\n");
                     for (QueryDocumentSnapshot d : snap) {
                         String nom = d.getString("nombre");
                         String par = d.getString("parentesco");
-                        sb.append("👤 ").append(nom != null ? nom : "—")
-                          .append(" (").append(par != null ? par : "—").append(")\n");
+                        sb.append(nom != null ? nom : "--")
+                          .append(" (").append(par != null ? par : "--").append(")\n");
                     }
                     tvFamiliaresPerfil.setText(sb.toString().trim());
                 });
     }
 
     private void eliminarCuentaCompleta() {
-        // FIX: eliminar citas propias Y citas de familiares (idPacienteTitular)
         db.collection("citas").whereEqualTo("idPaciente", userId).get()
                 .addOnSuccessListener(citasSnap -> {
                     for (QueryDocumentSnapshot doc : citasSnap) doc.getReference().delete();
-
-                    db.collection("citas")
-                            .whereEqualTo("idPacienteTitular", userId).get()
-                            .addOnSuccessListener(titularSnap -> {
-                                for (QueryDocumentSnapshot doc : titularSnap)
+                    db.collection("usuarios").document(userId)
+                            .collection("familiares").get()
+                            .addOnSuccessListener(famSnap -> {
+                                for (QueryDocumentSnapshot doc : famSnap)
                                     doc.getReference().delete();
-
                                 db.collection("usuarios").document(userId)
-                                        .collection("familiares").get()
-                                        .addOnSuccessListener(famSnap -> {
-                                            for (QueryDocumentSnapshot doc : famSnap)
+                                        .collection("expediente").get()
+                                        .addOnSuccessListener(expSnap -> {
+                                            for (QueryDocumentSnapshot doc : expSnap)
                                                 doc.getReference().delete();
                                             db.collection("usuarios").document(userId)
-                                                    .collection("expediente").get()
-                                                    .addOnSuccessListener(expSnap -> {
-                                                        for (QueryDocumentSnapshot doc : expSnap)
-                                                            doc.getReference().delete();
-                                                        db.collection("usuarios").document(userId)
-                                                                .delete()
-                                                                .addOnSuccessListener(aVoid -> {
-                                                                    if (mAuth.getCurrentUser() != null) {
-                                                                        mAuth.getCurrentUser().delete()
-                                                                                .addOnSuccessListener(av -> {
-                                                                                    Toast.makeText(this,
-                                                                                            "Cuenta eliminada",
-                                                                                            Toast.LENGTH_SHORT).show();
-                                                                                    startActivity(new Intent(
-                                                                                            this, LoginActivity.class));
-                                                                                    finish();
-                                                                                });
-                                                                    }
-                                                                });
+                                                    .delete()
+                                                    .addOnSuccessListener(aVoid -> {
+                                                        if (mAuth.getCurrentUser() != null) {
+                                                            mAuth.getCurrentUser().delete()
+                                                                    .addOnSuccessListener(av -> {
+                                                                        Toast.makeText(this,
+                                                                                "Cuenta eliminada",
+                                                                                Toast.LENGTH_SHORT).show();
+                                                                        startActivity(new Intent(
+                                                                                this, LoginActivity.class));
+                                                                        finish();
+                                                                    });
+                                                        }
                                                     });
                                         });
                             });
@@ -348,7 +367,6 @@ public class PerfilPacienteActivity extends AppCompatActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        // C: cancelar listener al salir
         if (listenerPerfil != null) listenerPerfil.remove();
     }
 }

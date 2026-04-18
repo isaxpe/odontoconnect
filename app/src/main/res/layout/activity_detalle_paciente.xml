@@ -1,181 +1,295 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     android:background="@color/fondo_app">
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:background="@color/navy">
 
-        <!-- Header -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/navy"
             android:orientation="vertical"
-            android:paddingTop="44dp"
-            android:paddingBottom="20dp"
+            android:gravity="center_horizontal"
+            android:paddingTop="40dp"
+            android:paddingBottom="56dp"
             android:paddingHorizontal="20dp">
+
+            <FrameLayout
+                android:layout_width="78dp"
+                android:layout_height="78dp">
+                <View
+                    android:layout_width="78dp"
+                    android:layout_height="78dp"
+                    android:background="@drawable/bg_avatar"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="P"
+                    android:textColor="@color/navy"
+                    android:textSize="28sp"
+                    android:textStyle="bold"/>
+            </FrameLayout>
 
             <TextView
                 android:id="@+id/tvNombreDetalle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Paciente"
+                android:text="Nombre"
                 android:textColor="@color/blanco"
-                android:textSize="22sp"
-                android:textStyle="bold"/>
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_marginTop="12dp"/>
+
             <TextView
                 android:id="@+id/tvIdDetalle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
                 android:text="ID: --"
-                android:textColor="#90CAF9"
-                android:textSize="13sp"/>
+                android:textColor="#99FFFFFF"
+                android:textSize="11sp"
+                android:layout_marginTop="2dp"/>
+
             <TextView
                 android:id="@+id/tvEstadoDetalle"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="6dp"
-                android:text="🟢 Activo"
-                android:textColor="@color/blanco"
-                android:textSize="13sp"
-                android:textStyle="bold"/>
+                android:background="@drawable/bg_tag_teal"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="4dp"
+                android:text="Activo"
+                android:textColor="#0F766E"
+                android:textSize="11sp"
+                android:textStyle="bold"
+                android:layout_marginTop="10dp"/>
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:layout_gravity="bottom"
+            android:background="@drawable/bg_wave_bottom"/>
+    </FrameLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="16dp">
+            android:padding="18dp">
 
-            <!-- Botones principales — UN solo botón por acción -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
-                android:weightSum="2"
-                android:layout_marginBottom="12dp">
+                android:layout_marginBottom="14dp">
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnVerExpediente"
+                <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_height="48dp"
+                    android:layout_height="72dp"
                     android:layout_weight="1"
                     android:layout_marginEnd="6dp"
-                    android:text=" Expediente"
-                    android:textSize="13sp"
-                    android:background="@drawable/bg_btn_navy" android:stateListAnimator="@null"
-                    app:cornerRadius="12dp"/>
+                    android:background="@drawable/bg_card_white"
+                    android:orientation="vertical"
+                    android:gravity="center">
+                    <TextView
+                        android:id="@+id/tvFaltasDetalle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textColor="@color/color_rechazada"
+                        android:textSize="22sp"
+                        android:textStyle="bold"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Faltas"
+                        android:textColor="@color/texto_hint"
+                        android:textSize="10sp"/>
+                </LinearLayout>
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btnAbrirOdontograma"
+                <LinearLayout
                     android:layout_width="0dp"
-                    android:layout_height="48dp"
+                    android:layout_height="72dp"
                     android:layout_weight="1"
                     android:layout_marginStart="6dp"
-                    android:text=" Odontograma"
-                    android:textSize="13sp"
-                    app:backgroundTint="#2E7D32"
-                    app:cornerRadius="12dp"/>
-            </LinearLayout>
-
-            <!-- Info médica -->
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="14dp"
-                app:cardCornerRadius="18dp"
-                app:cardElevation="3dp">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
+                    android:background="@drawable/bg_card_white"
                     android:orientation="vertical"
-                    android:padding="16dp">
-
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="INFO MÉDICA" android:textColor="@color/azul_primario" android:textSize="12sp" android:textStyle="bold" android:layout_marginBottom="10dp"/>
-
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Teléfono" android:textColor="@color/texto_secundario" android:textSize="11sp"/>
-                    <TextView android:id="@+id/tvTelefonoDetalle" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="--" android:textColor="@color/texto_primario" android:textSize="14sp" android:textStyle="bold" android:layout_marginBottom="8dp"/>
-
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Correo" android:textColor="@color/texto_secundario" android:textSize="11sp"/>
-                    <TextView android:id="@+id/tvCorreoDetalle" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="--" android:textColor="@color/texto_primario" android:textSize="14sp" android:textStyle="bold" android:layout_marginBottom="8dp"/>
-
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Tipo de sangre" android:textColor="@color/texto_secundario" android:textSize="11sp"/>
-                    <TextView android:id="@+id/tvSangreDetalle" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="--" android:textColor="@color/texto_primario" android:textSize="14sp" android:textStyle="bold" android:layout_marginBottom="8dp"/>
-
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Alergias" android:textColor="@color/texto_secundario" android:textSize="11sp"/>
-                    <TextView android:id="@+id/tvAlergiasDetalle" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="--" android:textColor="@color/texto_primario" android:textSize="14sp" android:textStyle="bold" android:layout_marginBottom="8dp"/>
-
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Medicamentos" android:textColor="@color/texto_secundario" android:textSize="11sp"/>
-                    <TextView android:id="@+id/tvMedicamentosDetalle" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="--" android:textColor="@color/texto_primario" android:textSize="14sp" android:textStyle="bold"/>
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <!-- Penalizaciones -->
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="14dp"
-                app:cardCornerRadius="18dp"
-                app:cardElevation="3dp">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="16dp">
-
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="PENALIZACIONES" android:textColor="@color/azul_primario" android:textSize="12sp" android:textStyle="bold" android:layout_marginBottom="10dp"/>
-                    <TextView android:id="@+id/tvFaltasDetalle" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="0 faltas" android:textColor="@color/texto_primario" android:textSize="18sp" android:textStyle="bold" android:layout_marginBottom="12dp"/>
-
-                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:weightSum="2">
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/btnEditarFaltas"
-                            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                            android:layout_width="0dp" android:layout_height="40dp"
-                            android:layout_weight="1" android:layout_marginEnd="6dp"
-                            android:text="Editar faltas" android:textSize="12sp"
-                            android:textColor="@color/azul_primario"
-                            app:strokeColor="@color/azul_primario" app:cornerRadius="10dp"/>
-                        <com.google.android.material.button.MaterialButton
-                            android:id="@+id/btnDesbloquear"
-                            android:layout_width="0dp" android:layout_height="40dp"
-                            android:layout_weight="1" android:layout_marginStart="6dp"
-                            android:text="Desbloquear" android:textSize="12sp"
-                            app:backgroundTint="#2E7D32" app:cornerRadius="10dp"/>
-                    </LinearLayout>
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <!-- Historial citas -->
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="20dp"
-                app:cardCornerRadius="18dp"
-                app:cardElevation="3dp">
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="16dp">
-
-                    <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="HISTORIAL DE CITAS" android:textColor="@color/azul_primario" android:textSize="12sp" android:textStyle="bold" android:layout_marginBottom="8dp"/>
+                    android:gravity="center"
+                    android:padding="10dp">
                     <TextView
                         android:id="@+id/tvHistorialCitas"
-                        android:layout_width="match_parent"
+                        android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Cargando..."
-                        android:textColor="@color/texto_primario"
-                        android:textSize="13sp"
-                        android:lineSpacingMultiplier="1.6"/>
+                        android:text="0"
+                        android:textColor="@color/teal"
+                        android:textSize="22sp"
+                        android:textStyle="bold"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Citas totales"
+                        android:textColor="@color/texto_hint"
+                        android:textSize="10sp"/>
                 </LinearLayout>
-            </androidx.cardview.widget.CardView>
+            </LinearLayout>
 
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_card_white"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:layout_marginBottom="14dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="INFORMACION MEDICA"
+                    android:textColor="@color/texto_hint"
+                    android:textSize="9sp"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.1"
+                    android:layout_marginBottom="12dp"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingVertical="6dp">
+                    <TextView android:layout_width="100dp" android:layout_height="wrap_content"
+                        android:text="Correo" android:textColor="@color/texto_secundario" android:textSize="12sp"/>
+                    <TextView android:id="@+id/tvCorreoDetalle"
+                        android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+                        android:text="--" android:textColor="@color/texto_primario" android:textSize="13sp" android:textStyle="bold"/>
+                </LinearLayout>
+                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/gris_claro"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingVertical="6dp">
+                    <TextView android:layout_width="100dp" android:layout_height="wrap_content"
+                        android:text="Telefono" android:textColor="@color/texto_secundario" android:textSize="12sp"/>
+                    <TextView android:id="@+id/tvTelefonoDetalle"
+                        android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+                        android:text="--" android:textColor="@color/texto_primario" android:textSize="13sp" android:textStyle="bold"/>
+                </LinearLayout>
+                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/gris_claro"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingVertical="6dp">
+                    <TextView android:layout_width="100dp" android:layout_height="wrap_content"
+                        android:text="Tipo sangre" android:textColor="@color/texto_secundario" android:textSize="12sp"/>
+                    <TextView android:id="@+id/tvSangreDetalle"
+                        android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+                        android:text="--" android:textColor="@color/texto_primario" android:textSize="13sp" android:textStyle="bold"/>
+                </LinearLayout>
+                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/gris_claro"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="top"
+                    android:paddingVertical="6dp">
+                    <TextView android:layout_width="100dp" android:layout_height="wrap_content"
+                        android:text="Alergias" android:textColor="@color/texto_secundario" android:textSize="12sp"/>
+                    <TextView android:id="@+id/tvAlergiasDetalle"
+                        android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+                        android:text="--" android:textColor="@color/texto_primario" android:textSize="13sp" android:textStyle="bold"/>
+                </LinearLayout>
+                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/gris_claro"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="top"
+                    android:paddingVertical="6dp">
+                    <TextView android:layout_width="100dp" android:layout_height="wrap_content"
+                        android:text="Medicamentos" android:textColor="@color/texto_secundario" android:textSize="12sp"/>
+                    <TextView android:id="@+id/tvMedicamentosDetalle"
+                        android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1"
+                        android:text="--" android:textColor="@color/texto_primario" android:textSize="13sp" android:textStyle="bold"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnAbrirOdontograma"
+                android:layout_width="match_parent"
+                android:layout_height="56dp"
+                android:text="Abrir odontograma"
+                android:textColor="@color/navy"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                app:backgroundTint="@color/gold"
+                app:cornerRadius="14dp"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:layout_marginBottom="10dp"
+                android:stateListAnimator="@null"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnVerExpediente"
+                android:layout_width="match_parent"
+                android:layout_height="52dp"
+                android:text="Ver expediente clinico"
+                android:textColor="@color/blanco"
+                android:textStyle="bold"
+                app:backgroundTint="@color/navy"
+                app:cornerRadius="14dp"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:layout_marginBottom="10dp"
+                android:stateListAnimator="@null"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnEditarFaltas"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="Editar faltas"
+                android:textColor="@color/navy"
+                android:textStyle="bold"
+                app:strokeColor="@color/navy"
+                app:strokeWidth="1.5dp"
+                app:cornerRadius="12dp"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:layout_marginBottom="10dp"
+                android:stateListAnimator="@null"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnDesbloquear"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="Desbloquear paciente"
+                android:textColor="@color/blanco"
+                android:textStyle="bold"
+                app:backgroundTint="@color/color_rechazada"
+                app:cornerRadius="12dp"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:stateListAnimator="@null"
+                android:visibility="gone"/>
         </LinearLayout>
-    </LinearLayout>
-</ScrollView>
+    </ScrollView>
+</LinearLayout>

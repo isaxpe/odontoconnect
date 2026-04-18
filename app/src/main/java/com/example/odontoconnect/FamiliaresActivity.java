@@ -13,7 +13,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
@@ -56,35 +55,8 @@ public class FamiliaresActivity extends AppCompatActivity {
                 startActivity(new Intent(this, RegistrarFamiliarActivity.class))
         );
 
-        BottomNavigationView bottomNav = findViewById(R.id.bottomNavigationPaciente);
-        if (bottomNav != null) {
-            bottomNav.setOnItemSelectedListener(item -> {
-                int id = item.getItemId();
-                if (id == R.id.nav_paciente_inicio) {
-                    startActivity(new Intent(this, PacienteMainActivity.class));
-                    overridePendingTransition(0, 0);
-                    finish();
-                    return true;
-                } else if (id == R.id.nav_paciente_citas) {
-                    startActivity(new Intent(this, MisCitasActivity.class));
-                    overridePendingTransition(0, 0);
-                    finish();
-                    return true;
-                } else if (id == R.id.nav_paciente_agendar) {
-                    // FIX 9: finish() separado del return true
-                    startActivity(new Intent(this, AgendarCitaActivity.class));
-                    overridePendingTransition(0, 0);
-                    finish();
-                    return true;
-                } else if (id == R.id.nav_paciente_perfil) {
-                    startActivity(new Intent(this, PerfilPacienteActivity.class));
-                    overridePendingTransition(0, 0);
-                    finish();
-                    return true;
-                }
-                return false;
-            });
-        }
+        BottomNavHelper.setupPaciente(this, BottomNavHelper.PacienteTab.FAMILIARES);
+
     }
 
     @Override

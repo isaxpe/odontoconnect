@@ -9,7 +9,6 @@ import android.widget.TextView;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
@@ -32,26 +31,8 @@ public class PacientesActivity extends AppCompatActivity {
 
         cargarPacientes();
 
-        BottomNavigationView bottomNav = findViewById(R.id.bottomNavigation);
-        if (bottomNav != null) {
-            bottomNav.setSelectedItemId(R.id.nav_pacientes);
-            bottomNav.setOnItemSelectedListener(item -> {
-                int id = item.getItemId();
-                if (id == R.id.nav_inicio) {
-                    startActivity(new Intent(this, MainActivity.class));
-                    overridePendingTransition(0, 0); finish(); return true;
-                } else if (id == R.id.nav_agenda) {
-                    startActivity(new Intent(this, AgendaActivity.class));
-                    overridePendingTransition(0, 0); finish(); return true;
-                } else if (id == R.id.nav_pacientes) {
-                    return true;
-                } else if (id == R.id.nav_perfil) {
-                    startActivity(new Intent(this, PerfilDoctorActivity.class));
-                    overridePendingTransition(0, 0); finish(); return true;
-                }
-                return false;
-            });
-        }
+        BottomNavHelper.setupDoctor(this, BottomNavHelper.DoctorTab.PACIENTES);
+
     }
 
     private void cargarPacientes() {

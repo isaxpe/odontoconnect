@@ -4,13 +4,96 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F0F4F8">
+    android:background="@color/fondo_app">
+
+    <FrameLayout
+        android:id="@+id/headerPerfilP"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:background="@color/navy"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:paddingTop="40dp"
+            android:paddingBottom="64dp"
+            android:paddingHorizontal="20dp">
+
+            <FrameLayout
+                android:layout_width="84dp"
+                android:layout_height="84dp">
+                <View
+                    android:layout_width="84dp"
+                    android:layout_height="84dp"
+                    android:background="@drawable/bg_avatar"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:text="M"
+                    android:textColor="@color/navy"
+                    android:textSize="30sp"
+                    android:textStyle="bold"/>
+            </FrameLayout>
+
+            <TextView
+                android:id="@+id/tvNombrePerfilPaciente"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Nombre"
+                android:textColor="@color/blanco"
+                android:textSize="20sp"
+                android:textStyle="bold"
+                android:layout_marginTop="12dp"
+                android:clickable="true"
+                android:focusable="true"
+                android:background="?attr/selectableItemBackground"
+                android:paddingHorizontal="12dp"
+                android:paddingVertical="4dp"/>
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Toca tu nombre para editar"
+                android:textColor="#66FFFFFF"
+                android:textSize="10sp"
+                android:layout_marginTop="2dp"/>
+
+            <TextView
+                android:id="@+id/tvCorreoPerfilPaciente"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="correo"
+                android:textColor="#99FFFFFF"
+                android:textSize="12sp"
+                android:layout_marginTop="6dp"/>
+
+            <TextView
+                android:id="@+id/tvIdPerfilPaciente"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ID: --"
+                android:textColor="#66FFFFFF"
+                android:textSize="10sp"
+                android:layout_marginTop="1dp"/>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:layout_gravity="bottom"
+            android:background="@drawable/bg_wave_bottom"/>
+    </FrameLayout>
 
     <ScrollView
-        android:id="@+id/scrollPerfil"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/headerPerfilP"
         app:layout_constraintBottom_toTopOf="@id/bottomNavigationPaciente"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
@@ -18,181 +101,516 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:orientation="vertical"
+            android:animateLayoutChanges="true"
+            android:padding="18dp">
 
-            <!-- HEADER -->
+            <!-- Stats 3 cards -->
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="200dp"
-                android:background="#00569B"
-                android:gravity="center"
-                android:orientation="vertical">
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_marginBottom="14dp">
 
-                <FrameLayout android:layout_width="90dp" android:layout_height="90dp">
-                    <ImageView android:id="@+id/ivFotoPerfil" android:layout_width="90dp" android:layout_height="90dp" android:background="@drawable/bg_boton_redondo" android:src="@android:drawable/ic_menu_myplaces" android:scaleType="centerCrop" app:tint="#FFFFFF"/>
-                    <TextView android:id="@+id/tvCambiarFoto" android:layout_width="90dp" android:layout_height="26dp" android:layout_gravity="bottom" android:background="#AA000000" android:gravity="center" android:text="Cambiar" android:textColor="#FFFFFF" android:textSize="10sp"/>
-                </FrameLayout>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="72dp"
+                    android:layout_weight="1"
+                    android:layout_marginEnd="5dp"
+                    android:background="@drawable/bg_card_white"
+                    android:orientation="vertical"
+                    android:gravity="center">
+                    <TextView
+                        android:id="@+id/tvFaltasNumeroPerfil"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textColor="@color/color_rechazada"
+                        android:textSize="22sp"
+                        android:textStyle="bold"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Faltas"
+                        android:textColor="@color/texto_hint"
+                        android:textSize="10sp"/>
+                </LinearLayout>
 
-                <TextView android:id="@+id/tvNombrePerfilPaciente" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="10dp" android:text="Nombre Paciente" android:textColor="#FFFFFF" android:textSize="20sp" android:textStyle="bold"/>
-                <TextView android:id="@+id/tvIdPerfilPaciente" android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginTop="4dp" android:text="ID: ------" android:textColor="#B3D1F0" android:textSize="13sp"/>
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="72dp"
+                    android:layout_weight="1"
+                    android:layout_marginHorizontal="3dp"
+                    android:background="@drawable/bg_card_white"
+                    android:orientation="vertical"
+                    android:gravity="center">
+                    <TextView
+                        android:id="@+id/tvTotalCitasPerfil"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0"
+                        android:textColor="@color/teal"
+                        android:textSize="22sp"
+                        android:textStyle="bold"/>
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Citas"
+                        android:textColor="@color/texto_hint"
+                        android:textSize="10sp"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="0dp"
+                    android:layout_height="72dp"
+                    android:layout_weight="1"
+                    android:layout_marginStart="5dp"
+                    android:background="@drawable/bg_card_white"
+                    android:orientation="vertical"
+                    android:gravity="center">
+                    <TextView
+                        android:id="@+id/tvEstadoNumeroPerfil"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="OK"
+                        android:textColor="@color/gold"
+                        android:textSize="18sp"
+                        android:textStyle="bold"/>
+                    <TextView
+                        android:id="@+id/tvEstadoTextoPerfil"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Estado"
+                        android:textColor="@color/texto_hint"
+                        android:textSize="10sp"/>
+                </LinearLayout>
             </LinearLayout>
 
-            <!-- SECCIÓN: Información Básica -->
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="16dp" android:layout_marginTop="20dp" android:layout_marginBottom="8dp" android:text="INFORMACIÓN BÁSICA" android:textColor="#00569B" android:textSize="12sp" android:textStyle="bold"/>
+            <!-- Proxima cita -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_card_white"
+                android:orientation="vertical"
+                android:padding="14dp"
+                android:layout_marginBottom="14dp">
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="PROXIMA CITA"
+                    android:textColor="@color/texto_hint"
+                    android:textSize="9sp"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.1"/>
+                <TextView
+                    android:id="@+id/tvProximaCitaPerfil"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sin citas proximas"
+                    android:textColor="@color/texto_primario"
+                    android:textSize="14sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="4dp"/>
+            </LinearLayout>
 
-            <androidx.cardview.widget.CardView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginHorizontal="16dp" app:cardCornerRadius="18dp" app:cardElevation="3dp">
-                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="16dp">
+            <!-- CONTACTO -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Contacto"
+                android:textColor="@color/texto_primario"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="10dp"/>
 
-                    <LinearLayout android:layout_width="match_parent" android:layout_height="48dp" android:gravity="center_vertical" android:orientation="horizontal">
-                        <ImageView android:layout_width="20dp" android:layout_height="20dp" android:src="@android:drawable/ic_dialog_email" app:tint="#00569B"/>
-                        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:layout_marginStart="12dp">
-                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Correo electrónico" android:textColor="#888888" android:textSize="11sp"/>
-                            <TextView android:id="@+id/tvCorreoPerfilPaciente" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="correo@ejemplo.com" android:textColor="#1A2B4A" android:textSize="14sp" android:textStyle="bold"/>
-                        </LinearLayout>
-                    </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_card_white"
+                android:orientation="vertical"
+                android:padding="14dp"
+                android:layout_marginBottom="14dp">
 
-                    <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#F0F0F0" android:layout_marginVertical="4dp"/>
-
-                    <LinearLayout android:layout_width="match_parent" android:layout_height="48dp" android:gravity="center_vertical" android:orientation="horizontal">
-                        <ImageView android:layout_width="20dp" android:layout_height="20dp" android:src="@android:drawable/ic_menu_call" app:tint="#00569B"/>
-                        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:layout_marginStart="12dp">
-                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Teléfono" android:textColor="#888888" android:textSize="11sp"/>
-                            <TextView android:id="@+id/tvTelefonoPerfil" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="No registrado" android:textColor="#1A2B4A" android:textSize="14sp" android:textStyle="bold"/>
-                        </LinearLayout>
-                        <ImageView android:id="@+id/btnEditarTelefono" android:layout_width="24dp" android:layout_height="24dp" android:src="@android:drawable/ic_menu_edit" app:tint="#888888" android:clickable="true" android:focusable="true"/>
-                    </LinearLayout>
-
-                    <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#F0F0F0" android:layout_marginVertical="4dp"/>
-
-                    <LinearLayout android:layout_width="match_parent" android:layout_height="48dp" android:gravity="center_vertical" android:orientation="horizontal">
-                        <ImageView android:layout_width="20dp" android:layout_height="20dp" android:src="@android:drawable/ic_menu_today" app:tint="#00569B"/>
-                        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:layout_marginStart="12dp">
-                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Fecha de nacimiento" android:textColor="#888888" android:textSize="11sp"/>
-                            <TextView android:id="@+id/tvFechaNacPerfil" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="No registrada" android:textColor="#1A2B4A" android:textSize="14sp" android:textStyle="bold"/>
-                        </LinearLayout>
-                        <ImageView android:id="@+id/btnEditarFechaNac" android:layout_width="24dp" android:layout_height="24dp" android:src="@android:drawable/ic_menu_edit" app:tint="#888888" android:clickable="true" android:focusable="true"/>
-                    </LinearLayout>
-
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingVertical="6dp">
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:text="Telefono"
+                        android:textColor="@color/texto_hint"
+                        android:textSize="12sp"/>
+                    <TextView
+                        android:id="@+id/tvTelefonoPerfil"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="--"
+                        android:textColor="@color/texto_primario"
+                        android:textSize="13sp"
+                        android:textStyle="bold"/>
+                    <TextView
+                        android:id="@+id/btnEditarTelefono"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="10dp"
+                        android:paddingVertical="4dp"
+                        android:text="Editar"
+                        android:textColor="@color/navy"
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:background="?attr/selectableItemBackground"/>
                 </LinearLayout>
-            </androidx.cardview.widget.CardView>
 
-            <!-- SECCIÓN: Expediente Médico -->
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="16dp" android:layout_marginTop="20dp" android:layout_marginBottom="8dp" android:text="EXPEDIENTE MÉDICO" android:textColor="#00569B" android:textSize="12sp" android:textStyle="bold"/>
+                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/gris_claro"/>
 
-            <androidx.cardview.widget.CardView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginHorizontal="16dp" app:cardCornerRadius="18dp" app:cardElevation="3dp">
-                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="16dp">
-
-                    <LinearLayout android:layout_width="match_parent" android:layout_height="48dp" android:gravity="center_vertical" android:orientation="horizontal">
-                        <ImageView android:layout_width="20dp" android:layout_height="20dp" android:src="@android:drawable/ic_menu_info_details" app:tint="#D32F2F"/>
-                        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:layout_marginStart="12dp">
-                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Tipo de sangre" android:textColor="#888888" android:textSize="11sp"/>
-                            <TextView android:id="@+id/tvTipoSangrePerfil" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="No registrado" android:textColor="#1A2B4A" android:textSize="14sp" android:textStyle="bold"/>
-                        </LinearLayout>
-                        <ImageView android:id="@+id/btnEditarSangre" android:layout_width="24dp" android:layout_height="24dp" android:src="@android:drawable/ic_menu_edit" app:tint="#888888" android:clickable="true" android:focusable="true"/>
-                    </LinearLayout>
-
-                    <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#F0F0F0" android:layout_marginVertical="4dp"/>
-
-                    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center_vertical" android:orientation="horizontal" android:minHeight="48dp">
-                        <ImageView android:layout_width="20dp" android:layout_height="20dp" android:src="@android:drawable/ic_dialog_alert" app:tint="#F57C00"/>
-                        <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical" android:layout_marginStart="12dp">
-                            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Alergias" android:textColor="#888888" android:textSize="11sp"/>
-                            <TextView android:id="@+id/tvAlergiasPerfil" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Ninguna registrada" android:textColor="#1A2B4A" android:textSize="14sp" android:textStyle="bold"/>
-                        </LinearLayout>
-                        <ImageView android:id="@+id/btnEditarAlergias" android:layout_width="24dp" android:layout_height="24dp" android:src="@android:drawable/ic_menu_edit" app:tint="#888888" android:clickable="true" android:focusable="true"/>
-                    </LinearLayout>
-
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingVertical="6dp">
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:text="Fecha nac."
+                        android:textColor="@color/texto_hint"
+                        android:textSize="12sp"/>
+                    <TextView
+                        android:id="@+id/tvFechaNacPerfil"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="--"
+                        android:textColor="@color/texto_primario"
+                        android:textSize="13sp"
+                        android:textStyle="bold"/>
+                    <TextView
+                        android:id="@+id/btnEditarFechaNac"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="10dp"
+                        android:paddingVertical="4dp"
+                        android:text="Editar"
+                        android:textColor="@color/navy"
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:background="?attr/selectableItemBackground"/>
                 </LinearLayout>
-            </androidx.cardview.widget.CardView>
 
-            <!-- SECCIÓN: Estado de Cuenta -->
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="16dp" android:layout_marginTop="20dp" android:layout_marginBottom="8dp" android:text="ESTADO DE CUENTA" android:textColor="#00569B" android:textSize="12sp" android:textStyle="bold"/>
+                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/gris_claro"/>
 
-            <androidx.cardview.widget.CardView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginHorizontal="16dp" app:cardCornerRadius="18dp" app:cardElevation="3dp">
-                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="horizontal" android:padding="16dp" android:weightSum="3">
-                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:orientation="vertical">
-                        <TextView android:id="@+id/tvFaltasNumeroPerfil" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="0" android:textColor="#D32F2F" android:textSize="28sp" android:textStyle="bold"/>
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Faltas" android:textColor="#888888" android:textSize="12sp"/>
-                    </LinearLayout>
-                    <View android:layout_width="1dp" android:layout_height="match_parent" android:background="#F0F0F0"/>
-                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:orientation="vertical">
-                        <TextView android:id="@+id/tvTotalCitasPerfil" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="0" android:textColor="#00569B" android:textSize="28sp" android:textStyle="bold"/>
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Citas totales" android:textColor="#888888" android:textSize="12sp"/>
-                    </LinearLayout>
-                    <View android:layout_width="1dp" android:layout_height="match_parent" android:background="#F0F0F0"/>
-                    <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:gravity="center" android:orientation="vertical">
-                        <TextView android:id="@+id/tvEstadoNumeroPerfil" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="✓" android:textColor="#388E3C" android:textSize="28sp" android:textStyle="bold"/>
-                        <TextView android:id="@+id/tvEstadoTextoPerfil" android:layout_width="wrap_content" android:layout_height="wrap_content" android:text="Activo" android:textColor="#888888" android:textSize="12sp"/>
-                    </LinearLayout>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="top"
+                    android:paddingVertical="6dp">
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:text="Emergencia"
+                        android:textColor="@color/texto_hint"
+                        android:textSize="12sp"/>
+                    <TextView
+                        android:id="@+id/tvEmergenciaPerfil"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="--"
+                        android:textColor="@color/texto_primario"
+                        android:textSize="13sp"
+                        android:textStyle="bold"/>
+                    <TextView
+                        android:id="@+id/btnEditarEmergencia"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="10dp"
+                        android:paddingVertical="4dp"
+                        android:text="Editar"
+                        android:textColor="@color/navy"
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:background="?attr/selectableItemBackground"/>
                 </LinearLayout>
-            </androidx.cardview.widget.CardView>
+            </LinearLayout>
 
-            <!-- SECCIÓN: Próxima Cita -->
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="16dp" android:layout_marginTop="20dp" android:layout_marginBottom="8dp" android:text="PRÓXIMA CITA" android:textColor="#00569B" android:textSize="12sp" android:textStyle="bold"/>
+            <!-- INFO MEDICA -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Informacion medica"
+                android:textColor="@color/texto_primario"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:layout_marginBottom="10dp"/>
 
-            <androidx.cardview.widget.CardView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginHorizontal="16dp" app:cardCornerRadius="18dp" app:cardElevation="3dp" app:cardBackgroundColor="#EBF3FF">
-                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="16dp">
-                    <TextView android:id="@+id/tvProximaCitaPerfil" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="No tienes citas próximas agendadas." android:textColor="#4A6080" android:textSize="14sp" android:gravity="center" android:lineSpacingMultiplier="1.4"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_card_white"
+                android:orientation="vertical"
+                android:padding="14dp"
+                android:layout_marginBottom="14dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="center_vertical"
+                    android:paddingVertical="6dp">
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:text="Tipo sangre"
+                        android:textColor="@color/texto_hint"
+                        android:textSize="12sp"/>
+                    <TextView
+                        android:id="@+id/tvTipoSangrePerfil"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="--"
+                        android:textColor="@color/texto_primario"
+                        android:textSize="13sp"
+                        android:textStyle="bold"/>
+                    <TextView
+                        android:id="@+id/btnEditarSangre"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="10dp"
+                        android:paddingVertical="4dp"
+                        android:text="Editar"
+                        android:textColor="@color/navy"
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:background="?attr/selectableItemBackground"/>
                 </LinearLayout>
-            </androidx.cardview.widget.CardView>
 
-            <!-- SECCIÓN: Familiares -->
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="16dp" android:layout_marginTop="20dp" android:layout_marginBottom="8dp" android:text="FAMILIARES REGISTRADOS" android:textColor="#00569B" android:textSize="12sp" android:textStyle="bold"/>
+                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/gris_claro"/>
 
-            <androidx.cardview.widget.CardView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginHorizontal="16dp" app:cardCornerRadius="18dp" app:cardElevation="3dp">
-                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="16dp">
-                    <TextView android:id="@+id/tvFamiliaresPerfil" android:layout_width="match_parent" android:layout_height="wrap_content" android:text="No tienes familiares registrados." android:textColor="#4A6080" android:textSize="14sp" android:lineSpacingMultiplier="1.5"/>
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="top"
+                    android:paddingVertical="6dp">
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:text="Alergias"
+                        android:textColor="@color/texto_hint"
+                        android:textSize="12sp"/>
+                    <TextView
+                        android:id="@+id/tvAlergiasPerfil"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="--"
+                        android:textColor="@color/texto_primario"
+                        android:textSize="13sp"
+                        android:textStyle="bold"/>
+                    <TextView
+                        android:id="@+id/btnEditarAlergias"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="10dp"
+                        android:paddingVertical="4dp"
+                        android:text="Editar"
+                        android:textColor="@color/navy"
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:background="?attr/selectableItemBackground"/>
                 </LinearLayout>
-            </androidx.cardview.widget.CardView>
 
-            <!-- SECCIÓN: Seguridad -->
-            <TextView android:layout_width="wrap_content" android:layout_height="wrap_content" android:layout_marginStart="16dp" android:layout_marginTop="20dp" android:layout_marginBottom="8dp" android:text="SEGURIDAD Y CUENTA" android:textColor="#00569B" android:textSize="12sp" android:textStyle="bold"/>
+                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/gris_claro"/>
 
-            <androidx.cardview.widget.CardView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginHorizontal="16dp" app:cardCornerRadius="18dp" app:cardElevation="3dp">
-                <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical" android:padding="8dp">
-
-                    <LinearLayout android:id="@+id/btnCambiarPassword" android:layout_width="match_parent" android:layout_height="52dp" android:gravity="center_vertical" android:orientation="horizontal" android:padding="8dp" android:background="?attr/selectableItemBackground" android:clickable="true" android:focusable="true">
-                        <ImageView android:layout_width="20dp" android:layout_height="20dp" android:src="@android:drawable/ic_lock_lock" app:tint="#00569B"/>
-                        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginStart="12dp" android:text="Cambiar contraseña" android:textColor="#1A2B4A" android:textSize="14sp"/>
-                        <ImageView android:layout_width="16dp" android:layout_height="16dp" android:src="@android:drawable/arrow_up_float" app:tint="#CCCCCC"/>
-                    </LinearLayout>
-
-                    <View android:layout_width="match_parent" android:layout_height="1dp" android:background="#F0F0F0" android:layout_marginHorizontal="8dp"/>
-
-                    <LinearLayout android:id="@+id/btnNotificaciones" android:layout_width="match_parent" android:layout_height="52dp" android:gravity="center_vertical" android:orientation="horizontal" android:padding="8dp" android:background="?attr/selectableItemBackground" android:clickable="true" android:focusable="true">
-                        <ImageView android:layout_width="20dp" android:layout_height="20dp" android:src="@android:drawable/ic_popup_reminder" app:tint="#00569B"/>
-                        <TextView android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:layout_marginStart="12dp" android:text="Notificaciones" android:textColor="#1A2B4A" android:textSize="14sp"/>
-                        <Switch android:id="@+id/switchNotificaciones" android:layout_width="wrap_content" android:layout_height="wrap_content" android:checked="true"/>
-                    </LinearLayout>
-
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="top"
+                    android:paddingVertical="6dp">
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:text="Medicamentos"
+                        android:textColor="@color/texto_hint"
+                        android:textSize="12sp"/>
+                    <TextView
+                        android:id="@+id/tvMedicamentosPerfil"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="--"
+                        android:textColor="@color/texto_primario"
+                        android:textSize="13sp"
+                        android:textStyle="bold"/>
+                    <TextView
+                        android:id="@+id/btnEditarMedicamentos"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="10dp"
+                        android:paddingVertical="4dp"
+                        android:text="Editar"
+                        android:textColor="@color/navy"
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:background="?attr/selectableItemBackground"/>
                 </LinearLayout>
-            </androidx.cardview.widget.CardView>
 
-            <!-- Botones -->
-            <com.google.android.material.button.MaterialButton
+                <View android:layout_width="match_parent" android:layout_height="1dp" android:background="@color/gris_claro"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:gravity="top"
+                    android:paddingVertical="6dp">
+                    <TextView
+                        android:layout_width="100dp"
+                        android:layout_height="wrap_content"
+                        android:text="Enfermedades"
+                        android:textColor="@color/texto_hint"
+                        android:textSize="12sp"/>
+                    <TextView
+                        android:id="@+id/tvEnfermedadesPerfil"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:text="--"
+                        android:textColor="@color/texto_primario"
+                        android:textSize="13sp"
+                        android:textStyle="bold"/>
+                    <TextView
+                        android:id="@+id/btnEditarEnfermedades"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingStart="10dp"
+                        android:paddingVertical="4dp"
+                        android:text="Editar"
+                        android:textColor="@color/navy"
+                        android:textSize="11sp"
+                        android:textStyle="bold"
+                        android:clickable="true"
+                        android:focusable="true"
+                        android:background="?attr/selectableItemBackground"/>
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- Expediente -->
+            <LinearLayout
                 android:id="@+id/btnMiExpediente"
                 android:layout_width="match_parent"
                 android:layout_height="54dp"
-                android:layout_marginHorizontal="16dp"
-                android:layout_marginTop="16dp"
-                android:text="  Mi Expediente Clínico"
-                android:background="@drawable/bg_btn_navy" android:stateListAnimator="@null"
-                app:cornerRadius="14dp"/>
-            <Button android:id="@+id/btnCerrarSesionPaciente" android:layout_width="match_parent" android:layout_height="52dp" android:layout_marginHorizontal="16dp" android:layout_marginTop="20dp" android:backgroundTint="#00569B" android:text="Cerrar Sesión" android:textColor="#FFFFFF" android:textStyle="bold"/>
-            <Button android:id="@+id/btnEliminarCuenta" android:layout_width="match_parent" android:layout_height="52dp" android:layout_marginHorizontal="16dp" android:layout_marginTop="8dp" android:layout_marginBottom="20dp" android:backgroundTint="#B00020" android:text="Eliminar Cuenta" android:textColor="#FFFFFF" android:textStyle="bold"/>
+                android:background="@drawable/bg_card_white"
+                android:orientation="horizontal"
+                android:gravity="center_vertical"
+                android:paddingHorizontal="16dp"
+                android:layout_marginBottom="8dp"
+                android:clickable="true"
+                android:focusable="true">
+                <View
+                    android:layout_width="8dp"
+                    android:layout_height="8dp"
+                    android:background="@drawable/bg_icon_circle_teal"
+                    android:layout_marginEnd="12dp"/>
+                <TextView
+                    android:layout_width="0dp"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:text="Mi expediente"
+                    android:textColor="@color/texto_primario"
+                    android:textSize="13sp"
+                    android:textStyle="bold"/>
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="›"
+                    android:textColor="@color/texto_hint"
+                    android:textSize="18sp"/>
+            </LinearLayout>
 
+            <TextView
+                android:id="@+id/tvFamiliaresPerfil"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_card_white"
+                android:padding="14dp"
+                android:text="0 familiares registrados"
+                android:textColor="@color/texto_secundario"
+                android:textSize="13sp"
+                android:layout_marginBottom="18dp"/>
+
+            <!-- BOTONES FINALES - todos con MaterialButton para que se vean bien -->
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnCambiarPassword"
+                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="Cambiar contrasena"
+                android:textColor="@color/navy"
+                android:textStyle="bold"
+                app:strokeColor="@color/navy"
+                app:strokeWidth="1.5dp"
+                app:cornerRadius="12dp"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:layout_marginBottom="10dp"
+                android:stateListAnimator="@null"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnCerrarSesionPaciente"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="Cerrar sesion"
+                android:textColor="@color/blanco"
+                android:textStyle="bold"
+                app:backgroundTint="@color/navy"
+                app:cornerRadius="12dp"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:layout_marginBottom="10dp"
+                android:stateListAnimator="@null"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnEliminarCuenta"
+                android:layout_width="match_parent"
+                android:layout_height="50dp"
+                android:text="Eliminar cuenta"
+                android:textColor="@color/color_rechazada"
+                android:textStyle="bold"
+                app:backgroundTint="@color/surface_red"
+                app:cornerRadius="12dp"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:stateListAnimator="@null"/>
         </LinearLayout>
     </ScrollView>
 
-    <com.google.android.material.bottomnavigation.BottomNavigationView
+    <include
         android:id="@+id/bottomNavigationPaciente"
-        android:layout_width="match_parent"
-        android:layout_height="60dp"
-        android:background="#00569B"
-        app:itemIconTint="@color/navy"
-        app:itemTextColor="@color/navy"
-        app:labelVisibilityMode="labeled"
+        layout="@layout/bottomnav_paciente_pill"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:menu="@menu/bottom_nav_menu_paciente"/>
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

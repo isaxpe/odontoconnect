@@ -1,69 +1,81 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="10dp"
-    app:cardCornerRadius="18dp"
-    app:cardElevation="3dp"
-    app:strokeColor="@color/gris_claro"
-    app:strokeWidth="1dp">
+    android:orientation="horizontal"
+    android:gravity="center_vertical"
+    android:background="@drawable/bg_card_white"
+    android:padding="14dp"
+    android:layout_marginBottom="10dp">
+
+    <!-- Icono dorado -->
+    <FrameLayout
+        android:layout_width="40dp"
+        android:layout_height="40dp">
+        <View
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:background="@drawable/bg_icon_circle_gold"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="T"
+            android:textColor="@color/gold"
+            android:textSize="15sp"
+            android:textStyle="bold"/>
+    </FrameLayout>
 
     <LinearLayout
-        android:layout_width="match_parent"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:padding="14dp"
-        android:gravity="center_vertical">
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:layout_marginStart="14dp">
 
-        <LinearLayout
-            android:layout_width="0dp"
+        <TextView
+            android:id="@+id/tvNombreTratItem"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:orientation="vertical">
+            android:text="Tratamiento"
+            android:textColor="@color/texto_primario"
+            android:textSize="14sp"
+            android:textStyle="bold"/>
 
-            <TextView
-                android:id="@+id/tvNombreTratItem"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Tratamiento"
-                android:textColor="@color/texto_primario"
-                android:textSize="15sp"
-                android:textStyle="bold"/>
-
-            <TextView
-                android:id="@+id/tvDuracionTratItem"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="1 hr · 60 min"
-                android:textColor="@color/texto_secundario"
-                android:textSize="13sp"/>
-        </LinearLayout>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnEditarTrat"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+        <TextView
+            android:id="@+id/tvDuracionTratItem"
             android:layout_width="wrap_content"
-            android:layout_height="36dp"
-            android:layout_marginEnd="6dp"
-            android:text="Editar"
-            android:textSize="12sp"
-            android:textColor="@color/azul_primario"
-            app:strokeColor="@color/azul_primario"
-            app:cornerRadius="10dp"/>
-
-        <com.google.android.material.button.MaterialButton
-            android:id="@+id/btnEliminarTrat"
-            style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-            android:layout_width="wrap_content"
-            android:layout_height="36dp"
-            android:text="Borrar"
-            android:textSize="12sp"
-            android:textColor="@color/color_rechazada"
-            app:strokeColor="@color/color_rechazada"
-            app:cornerRadius="10dp"/>
-
+            android:layout_height="wrap_content"
+            android:text="Duracion"
+            android:textColor="@color/texto_hint"
+            android:textSize="11sp"
+            android:layout_marginTop="1dp"/>
     </LinearLayout>
-</com.google.android.material.card.MaterialCardView>
+
+    <Button
+        android:id="@+id/btnEditarTrat"
+        android:layout_width="wrap_content"
+        android:layout_height="36dp"
+        android:minWidth="0dp"
+        android:paddingHorizontal="12dp"
+        android:text="Editar"
+        android:textColor="@color/navy"
+        android:textSize="11sp"
+        android:textStyle="bold"
+        android:background="@color/navy_light"
+        android:stateListAnimator="@null"
+        android:layout_marginEnd="6dp"/>
+
+    <Button
+        android:id="@+id/btnEliminarTrat"
+        android:layout_width="wrap_content"
+        android:layout_height="36dp"
+        android:minWidth="0dp"
+        android:paddingHorizontal="12dp"
+        android:text="Borrar"
+        android:textColor="@color/color_rechazada"
+        android:textSize="11sp"
+        android:textStyle="bold"
+        android:backgroundTint="@color/surface_red"
+        android:stateListAnimator="@null"/>
+</LinearLayout>

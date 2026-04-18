@@ -1,232 +1,217 @@
 <?xml version="1.0" encoding="utf-8"?>
-<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/fondo_app"
-    android:fillViewport="true">
+    android:orientation="vertical"
+    android:background="@color/fondo_app">
 
-    <LinearLayout
+    <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical">
+        android:background="@color/navy">
 
-        <!-- Header -->
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/navy"
             android:orientation="vertical"
-            android:paddingTop="44dp"
-            android:paddingBottom="20dp"
+            android:paddingTop="48dp"
+            android:paddingBottom="44dp"
             android:paddingHorizontal="20dp">
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Pagar Anticipo"
-                android:textColor="@color/blanco"
-                android:textSize="22sp"
-                android:textStyle="bold"/>
+                android:text="Pago de anticipo"
+                android:textColor="#99FFFFFF"
+                android:textSize="11sp"/>
 
             <TextView
-                android:id="@+id/tvNombreTratamiento"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="4dp"
-                android:text="Cargando..."
-                android:textColor="#90CAF9"
-                android:textSize="14sp"/>
+                android:text="Pagar cita"
+                android:textColor="@color/blanco"
+                android:textSize="22sp"
+                android:textStyle="bold"
+                android:layout_marginTop="2dp"/>
         </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="36dp"
+            android:layout_gravity="bottom"
+            android:background="@drawable/bg_wave_bottom"/>
+    </FrameLayout>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
-            android:padding="20dp">
+            android:padding="18dp">
 
-            <!-- B: Banner de rechazo -->
-            <TextView
-                android:id="@+id/tvMensajeRechazo"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#FFEBEE"
-                android:padding="14dp"
-                android:text=""
-                android:textColor="#B71C1C"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                android:lineSpacingMultiplier="1.4"
-                android:visibility="gone"
-                android:layout_marginBottom="16dp"/>
+                android:background="@drawable/bg_card_white"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:layout_marginBottom="14dp">
 
-            <!-- Estado del pago -->
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="TRATAMIENTO"
+                    android:textColor="@color/texto_hint"
+                    android:textSize="9sp"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.1"/>
+
+                <TextView
+                    android:id="@+id/tvNombreTratamiento"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="--"
+                    android:textColor="@color/texto_primario"
+                    android:textSize="15sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="4dp"/>
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:background="@color/gris_claro"
+                    android:layout_marginTop="12dp"
+                    android:layout_marginBottom="12dp"/>
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="MONTO A PAGAR"
+                    android:textColor="@color/texto_hint"
+                    android:textSize="9sp"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.1"/>
+
+                <TextView
+                    android:id="@+id/tvMontoPagar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="$0"
+                    android:textColor="@color/gold"
+                    android:textSize="30sp"
+                    android:textStyle="bold"
+                    android:layout_marginTop="2dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_card_white"
+                android:orientation="vertical"
+                android:padding="16dp"
+                android:layout_marginBottom="14dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="DATOS BANCARIOS"
+                    android:textColor="@color/texto_hint"
+                    android:textSize="9sp"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.1"
+                    android:layout_marginBottom="8dp"/>
+
+                <TextView
+                    android:id="@+id/tvDatosBancarios"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="--"
+                    android:textColor="@color/texto_primario"
+                    android:textSize="13sp"
+                    android:lineSpacingExtra="4dp"/>
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:background="@drawable/bg_card_white"
+                android:orientation="vertical"
+                android:padding="14dp"
+                android:layout_marginBottom="14dp">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="COMPROBANTE DE PAGO"
+                    android:textColor="@color/texto_hint"
+                    android:textSize="9sp"
+                    android:textStyle="bold"
+                    android:letterSpacing="0.1"
+                    android:layout_marginBottom="10dp"/>
+
+                <ImageView
+                    android:id="@+id/ivComprobante"
+                    android:layout_width="match_parent"
+                    android:layout_height="240dp"
+                    android:background="@color/fondo_input"
+                    android:scaleType="fitCenter"
+                    android:layout_marginBottom="8dp"/>
+
+                <TextView
+                    android:id="@+id/tvFotoEstado"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Sin foto"
+                    android:textColor="@color/texto_hint"
+                    android:textSize="11sp"
+                    android:layout_marginBottom="10dp"/>
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/btnSeleccionarFoto"
+                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+                    android:layout_width="match_parent"
+                    android:layout_height="48dp"
+                    android:text="Seleccionar foto"
+                    android:textColor="@color/navy"
+                    android:textStyle="bold"
+                    app:strokeColor="@color/navy"
+                    app:strokeWidth="1.5dp"
+                    app:cornerRadius="12dp"
+                    android:insetTop="0dp"
+                    android:insetBottom="0dp"
+                    android:stateListAnimator="@null"/>
+            </LinearLayout>
+
             <TextView
                 android:id="@+id/tvEstadoPago"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="#E8F5E9"
-                android:padding="14dp"
-                android:text=""
-                android:textColor="#2E7D32"
-                android:textSize="14sp"
+                android:background="@drawable/bg_tag_gold"
+                android:padding="12dp"
+                android:text="Pendiente de envio"
+                android:textColor="#92400E"
+                android:textSize="12sp"
                 android:textStyle="bold"
-                android:visibility="gone"
-                android:layout_marginBottom="16dp"/>
-
-            <!-- Monto -->
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                app:cardCornerRadius="18dp"
-                app:cardElevation="4dp"
-                app:cardBackgroundColor="#EEF6FF">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="18dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="MONTO DEL ANTICIPO"
-                        android:textColor="@color/azul_primario"
-                        android:textSize="12sp"
-                        android:textStyle="bold"
-                        android:layout_marginBottom="8dp"/>
-
-                    <TextView
-                        android:id="@+id/tvMontoPagar"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Calculando..."
-                        android:textColor="@color/texto_primario"
-                        android:textSize="18sp"
-                        android:textStyle="bold"
-                        android:lineSpacingMultiplier="1.4"/>
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <!-- Datos bancarios -->
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                app:cardCornerRadius="18dp"
-                app:cardElevation="4dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="18dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="DATOS PARA TRANSFERENCIA"
-                        android:textColor="@color/azul_primario"
-                        android:textSize="12sp"
-                        android:textStyle="bold"
-                        android:layout_marginBottom="10dp"/>
-
-                    <TextView
-                        android:id="@+id/tvDatosBancarios"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Cargando..."
-                        android:textColor="@color/texto_primario"
-                        android:textSize="15sp"
-                        android:lineSpacingMultiplier="1.8"
-                        android:fontFamily="monospace"/>
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
-
-            <!-- Subir comprobante -->
-            <androidx.cardview.widget.CardView
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginBottom="16dp"
-                app:cardCornerRadius="18dp"
-                app:cardElevation="4dp">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:orientation="vertical"
-                    android:padding="18dp">
-
-                    <TextView
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:text="SUBE TU COMPROBANTE"
-                        android:textColor="@color/azul_primario"
-                        android:textSize="12sp"
-                        android:textStyle="bold"
-                        android:layout_marginBottom="8dp"/>
-
-                    <TextView
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Realiza la transferencia y sube una captura del comprobante."
-                        android:textColor="@color/texto_secundario"
-                        android:textSize="13sp"
-                        android:lineSpacingMultiplier="1.4"
-                        android:layout_marginBottom="14dp"/>
-
-                    <ImageView
-                        android:id="@+id/ivComprobante"
-                        android:layout_width="match_parent"
-                        android:layout_height="200dp"
-                        android:scaleType="centerCrop"
-                        android:visibility="gone"
-                        android:layout_marginBottom="10dp"/>
-
-                    <TextView
-                        android:id="@+id/tvFotoEstado"
-                        android:layout_width="match_parent"
-                        android:layout_height="wrap_content"
-                        android:text="Ningún comprobante seleccionado"
-                        android:textColor="@color/texto_secundario"
-                        android:textSize="13sp"
-                        android:layout_marginBottom="12dp"/>
-
-                    <com.google.android.material.button.MaterialButton
-                        android:id="@+id/btnSeleccionarFoto"
-                        style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                        android:layout_width="match_parent"
-                        android:layout_height="48dp"
-                        android:text="📷  Seleccionar comprobante"
-                        android:textColor="@color/azul_primario"
-                        app:strokeColor="@color/azul_primario"
-                        app:cornerRadius="12dp"/>
-                </LinearLayout>
-            </androidx.cardview.widget.CardView>
+                android:gravity="center"
+                android:layout_marginBottom="14dp"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnEnviarComprobante"
                 android:layout_width="match_parent"
                 android:layout_height="54dp"
-                android:layout_marginBottom="10dp"
-                android:text="ENVIAR COMPROBANTE AL DOCTOR"
-                android:textSize="15sp"
-                android:background="@drawable/bg_btn_navy" android:stateListAnimator="@null"
-                app:cornerRadius="14dp"/>
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnOmitirPago"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                android:layout_width="match_parent"
-                android:layout_height="48dp"
-                android:layout_marginBottom="20dp"
-                android:text="Pagar después"
-                android:textColor="@color/texto_secundario"
-                app:strokeColor="@color/gris_claro"
-                app:cornerRadius="14dp"/>
-
+                android:text="Enviar comprobante"
+                android:textColor="@color/blanco"
+                android:textStyle="bold"
+                app:backgroundTint="@color/navy"
+                app:cornerRadius="14dp"
+                android:insetTop="0dp"
+                android:insetBottom="0dp"
+                android:stateListAnimator="@null"/>
         </LinearLayout>
-    </LinearLayout>
-</ScrollView>
+    </ScrollView>
+</LinearLayout>

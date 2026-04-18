@@ -6,100 +6,103 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.material.button.MaterialButton;
-import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
-import com.google.firebase.firestore.ListenerRegistration;
 import com.google.firebase.firestore.QueryDocumentSnapshot;
 
 public class ListaComprobantesActivity extends AppCompatActivity {
 
     private LinearLayout contenedor;
-    private TextView tvSinComprobantes;
+    private TextView tvVacio;
     private FirebaseFirestore db;
-    private String miUid;
-    private ListenerRegistration listener;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_lista_comprobantes);
 
-        db    = FirebaseFirestore.getInstance();
-        miUid = FirebaseAuth.getInstance().getCurrentUser().getUid();
+        // Usa el layout de ver_citas como contenedor (existe y tiene contenedorSolicitudes)
+        // o crea un layout propio mas adelante. Aqui reusamos el patron estandar.
+        setContentView(R.layout.activity_ver_citas);
 
-        contenedor        = findViewById(R.id.contenedorComprobantes);
-        tvSinComprobantes = findViewById(R.id.tvSinComprobantes);
+        db = FirebaseFirestore.getInstance();
+
+        // Usamos el contenedor de solicitudes como lista de comprobantes
+        contenedor = findViewById(R.id.contenedorSolicitudes);
+        tvVacio    = findViewById(R.id.tvMensajeVacio);
+
+        if (tvVacio != null) {
+            tvVacio.setText("No hay comprobantes recibidos");
+        }
 
         cargarComprobantes();
     }
 
     private void cargarComprobantes() {
-        listener = db.collection("citas")
-                .whereEqualTo("idDoctor", miUid)
-                .whereEqualTo("estadoPago", "comprobante_enviado")
-                .addSnapshotListener((snap, error) -> {
-                    if (error != null || snap == null) return;
+        db.collection("citas")
+                .whereEqualTo("estadoPago", "esperando_confirmacion")
+                .get()
+                .addOnSuccessListener(snap -> {
+                    if (contenedor == null) return;
                     contenedor.removeAllViews();
 
                     if (snap.isEmpty()) {
-                        tvSinComprobantes.setVisibility(View.VISIBLE);
+                        if (tvVacio != null) tvVacio.setVisibility(View.VISIBLE);
                         return;
                     }
-                    tvSinComprobantes.setVisibility(View.GONE);
 
+                    if (tvVacio != null) tvVacio.setVisibility(View.GONE);
+
+                    LayoutInflater inflater = LayoutInflater.from(this);
                     for (QueryDocumentSnapshot doc : snap) {
-                        String idCita      = doc.getId();
-                        String tratamiento = doc.getString("tratamiento");
-                        String fecha       = doc.getString("fecha");
-                        String idPaciente  = doc.getString("idPaciente");
-                        Double precio      = doc.getDouble("precioTratamiento");
+                        View tarjeta = inflater.inflate(
+                                R.layout.item_comprobante, contenedor, false);
 
-                        View tarjeta = LayoutInflater.from(this)
-                                .inflate(R.layout.item_comprobante,
-                                        contenedor, false);
+                        TextView tvNombre = tarjeta.findViewById(R.id.tvNombreComprobante);
+                        TextView tvInfo   = tarjeta.findViewById(R.id.tvInfoComprobante);
 
-                        TextView tvTrat   = tarjeta.findViewById(R.id.tvTratComp);
-                        TextView tvFecha  = tarjeta.findViewById(R.id.tvFechaComp2);
-                        TextView tvPac    = tarjeta.findViewById(R.id.tvPacienteComp);
-                        TextView tvMonto  = tarjeta.findViewById(R.id.tvMontoComp2);
-                        MaterialButton btnVer = tarjeta.findViewById(R.id.btnVerComp);
+                        String trat    = doc.getString("tratamiento");
+                        String fecha   = doc.getString("fecha");
+                        String hora    = doc.getString("horaDisplay");
+                        if (hora == null) hora = doc.getString("hora");
+                        String paciente = doc.getString("nombrePaciente");
+                        Object monto   = doc.get("montoAnticipo");
 
-                        tvTrat.setText(tratamiento != null ? tratamiento : "Cita");
-                        tvFecha.setText("📅 " + (fecha != null ? fecha : "--"));
-                        if (precio != null && precio > 0)
-                            tvMonto.setText(String.format("💲 Anticipo: $%.2f",
-                                    precio * 0.20));
-
-                        if (idPaciente != null) {
-                            db.collection("usuarios").document(idPaciente).get()
-                                    .addOnSuccessListener(pacDoc -> {
-                                        String nombre = pacDoc.getString("Nombre");
-                                        if (nombre == null)
-                                            nombre = pacDoc.getString("nombre");
-                                        tvPac.setText("👤 " +
-                                                (nombre != null ? nombre : "Paciente"));
-                                    });
+                        if (tvNombre != null) {
+                            tvNombre.setText(paciente != null ? paciente : "Paciente");
                         }
 
-                        btnVer.setOnClickListener(v -> {
-                            Intent intent = new Intent(this,
-                                    VerComprobanteActivity.class);
-                            intent.putExtra("idCita", idCita);
+                        if (tvInfo != null) {
+                            StringBuilder sb = new StringBuilder();
+                            if (trat  != null) sb.append(trat).append("\n");
+                            if (fecha != null) sb.append(fecha);
+                            if (hora  != null) sb.append(" - ").append(hora).append("\n");
+                            if (monto != null) sb.append("$").append(monto);
+                            tvInfo.setText(sb.toString().trim());
+                        }
+
+                        // Al tocar el comprobante, abrir la activity de confirmar pago
+                        final String citaId = doc.getId();
+                        tarjeta.setOnClickListener(v -> {
+                            Intent intent = new Intent(this, ConfirmarPagoActivity.class);
+                            intent.putExtra("idCita", citaId);
                             startActivity(intent);
                         });
 
                         contenedor.addView(tarjeta);
                     }
-                });
+                })
+                .addOnFailureListener(e ->
+                        Toast.makeText(this, "Error: " + e.getMessage(),
+                                Toast.LENGTH_SHORT).show());
     }
 
     @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if (listener != null) listener.remove();
+    protected void onResume() {
+        super.onResume();
+        // Recargar al volver de confirmar pago
+        cargarComprobantes();
     }
 }

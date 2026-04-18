@@ -1,88 +1,99 @@
 <?xml version="1.0" encoding="utf-8"?>
-<com.google.android.material.card.MaterialCardView
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_marginBottom="12dp"
-    app:cardCornerRadius="18dp"
-    app:cardElevation="4dp"
-    app:strokeColor="@color/gris_claro"
-    app:strokeWidth="1dp">
+    android:orientation="vertical"
+    android:background="@drawable/bg_card_white"
+    android:padding="16dp"
+    android:layout_marginBottom="10dp">
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="vertical"
-        android:padding="18dp">
-
-        <TextView
-            android:id="@+id/tvTratamientoPaciente"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:text="Tratamiento"
-            android:textColor="@color/texto_primario"
-            android:textSize="17sp"
-            android:textStyle="bold"/>
-
-        <TextView
-            android:id="@+id/tvFechaHoraPaciente"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="6dp"
-            android:text="📅 Fecha  🕐 Hora"
-            android:textColor="@color/texto_secundario"
-            android:textSize="13sp"/>
+        android:orientation="horizontal"
+        android:gravity="center_vertical">
 
         <LinearLayout
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:layout_marginTop="14dp"
-            android:orientation="horizontal"
-            android:gravity="center_vertical">
+            android:layout_weight="1"
+            android:orientation="vertical"
+            android:layout_marginEnd="10dp">
 
             <TextView
-                android:id="@+id/tvEstadoCita"
+                android:id="@+id/tvTratamientoPaciente"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:background="@color/color_pendiente"
-                android:paddingHorizontal="14dp"
-                android:paddingVertical="6dp"
-                android:text="PENDIENTE"
-                android:textColor="@color/blanco"
-                android:textSize="12sp"
-                android:textStyle="bold"
-                app:cornerRadius="8dp"/>
+                android:text="Tratamiento"
+                android:textColor="@color/texto_primario"
+                android:textSize="14sp"
+                android:textStyle="bold"/>
 
-            <View
-                android:layout_width="0dp"
-                android:layout_height="1dp"
-                android:layout_weight="1"/>
-
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/btnCancelarCita"
-                style="@style/Widget.MaterialComponents.Button.OutlinedButton"
+            <TextView
+                android:id="@+id/tvFechaHoraPaciente"
                 android:layout_width="wrap_content"
-                android:layout_height="34dp"
-                android:text="Cancelar"
+                android:layout_height="wrap_content"
+                android:text="Fecha - Hora"
+                android:textColor="@color/texto_secundario"
                 android:textSize="12sp"
-                android:textColor="@color/color_rechazada"
-                android:visibility="gone"
-                app:strokeColor="@color/color_rechazada"
-                app:cornerRadius="10dp"/>
+                android:layout_marginTop="2dp"/>
         </LinearLayout>
 
-        <!-- NUEVO: Botón pagar anticipo -->
+        <!-- Tag estado más pequeño y sin cortarse -->
+        <TextView
+            android:id="@+id/tvEstadoCita"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_tag_gold"
+            android:paddingHorizontal="10dp"
+            android:paddingVertical="5dp"
+            android:text="Pendiente"
+            android:textColor="#92400E"
+            android:textSize="9sp"
+            android:textStyle="bold"
+            android:maxLines="1"
+            android:ellipsize="none"
+            android:includeFontPadding="false"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="12dp">
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btnPagarAnticipo"
-            android:layout_width="match_parent"
+            android:layout_width="0dp"
             android:layout_height="42dp"
-            android:layout_marginTop="10dp"
-            android:text="💳 Pagar anticipo"
-            android:textSize="13sp"
-            android:visibility="gone"
-            android:background="@drawable/bg_btn_navy" android:stateListAnimator="@null"
-            app:cornerRadius="10dp"/>
+            android:layout_weight="1"
+            android:layout_marginEnd="5dp"
+            android:text="Pagar"
+            android:textColor="@color/navy"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:backgroundTint="@color/gold"
+            app:cornerRadius="10dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:stateListAnimator="@null"
+            android:visibility="gone"/>
 
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btnCancelarCita"
+            android:layout_width="0dp"
+            android:layout_height="42dp"
+            android:layout_weight="1"
+            android:layout_marginStart="5dp"
+            android:text="Cancelar"
+            android:textColor="@color/color_rechazada"
+            android:textSize="12sp"
+            android:textStyle="bold"
+            app:backgroundTint="@color/surface_red"
+            app:cornerRadius="10dp"
+            android:insetTop="0dp"
+            android:insetBottom="0dp"
+            android:stateListAnimator="@null"/>
     </LinearLayout>
-</com.google.android.material.card.MaterialCardView>
+</LinearLayout>

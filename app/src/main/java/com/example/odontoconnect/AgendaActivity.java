@@ -11,7 +11,6 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
 
@@ -69,26 +68,8 @@ public class AgendaActivity extends AppCompatActivity {
             btnGuardarAgenda.setOnClickListener(v -> guardarAgenda());
         }
 
-        BottomNavigationView bottomNav = findViewById(R.id.bottomNavigation);
-        if (bottomNav != null) {
-            bottomNav.setSelectedItemId(R.id.nav_agenda);
-            bottomNav.setOnItemSelectedListener(item -> {
-                int id = item.getItemId();
-                if (id == R.id.nav_inicio) {
-                    startActivity(new Intent(this, MainActivity.class));
-                    overridePendingTransition(0, 0); finish(); return true;
-                } else if (id == R.id.nav_agenda) {
-                    return true;
-                } else if (id == R.id.nav_pacientes) {
-                    startActivity(new Intent(this, PacientesActivity.class));
-                    overridePendingTransition(0, 0); finish(); return true;
-                } else if (id == R.id.nav_perfil) {
-                    startActivity(new Intent(this, PerfilDoctorActivity.class));
-                    overridePendingTransition(0, 0); finish(); return true;
-                }
-                return false;
-            });
-        }
+        BottomNavHelper.setupDoctor(this, BottomNavHelper.DoctorTab.AGENDA);
+
     }
 
     private void generarBotonesHoras() {

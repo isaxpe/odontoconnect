@@ -2,6 +2,7 @@ package com.example.odontoconnect;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.InputType;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -11,9 +12,9 @@ import android.widget.Toast;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
-import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.firestore.FirebaseFirestore;
+import com.google.firebase.firestore.ListenerRegistration;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -28,6 +29,7 @@ public class PerfilDoctorActivity extends AppCompatActivity {
     private Button btnCerrarSesionPerfil;
     private FirebaseAuth mAuth;
     private FirebaseFirestore db;
+    private ListenerRegistration listenerPerfil;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -56,13 +58,17 @@ public class PerfilDoctorActivity extends AppCompatActivity {
             tvCorreoDoctor.setText(mAuth.getCurrentUser().getEmail());
         }
 
-        cargarPerfilDoctor();
+        cargarPerfilEnTiempoReal();
         cargarEstadisticas();
-
-        // Editar datos del consultorio
         configurarEdicion();
 
-        // Acciones rápidas
+        // Permitir editar nombre tocando el texto del header
+        tvNombreDoctor.setOnClickListener(v -> {
+            String actual = tvNombreDoctor.getText().toString().replace("Dr. ", "");
+            mostrarDialogoEditar("Nombre", "nombre", actual,
+                    InputType.TYPE_TEXT_FLAG_CAP_WORDS);
+        });
+
         View btnIrAgenda = findViewById(R.id.btnIrAgenda);
         if (btnIrAgenda != null) btnIrAgenda.setOnClickListener(v ->
                 startActivity(new Intent(this, AgendaActivity.class)));
@@ -83,7 +89,7 @@ public class PerfilDoctorActivity extends AppCompatActivity {
                     mAuth.sendPasswordResetEmail(mAuth.getCurrentUser().getEmail())
                             .addOnSuccessListener(aVoid ->
                                     Toast.makeText(this,
-                                            "📧 Revisa tu correo",
+                                            "Revisa tu correo",
                                             Toast.LENGTH_LONG).show()
                             );
                 }
@@ -96,77 +102,64 @@ public class PerfilDoctorActivity extends AppCompatActivity {
             finish();
         });
 
-        // BottomNavigation
-        BottomNavigationView bottomNav = findViewById(R.id.bottomNavigation);
-        if (bottomNav != null) {
-            bottomNav.setSelectedItemId(R.id.nav_perfil);
-            bottomNav.setOnItemSelectedListener(item -> {
-                int id = item.getItemId();
-                if (id == R.id.nav_inicio) {
-                    startActivity(new Intent(this, MainActivity.class));
-                    overridePendingTransition(0, 0); finish(); return true;
-                } else if (id == R.id.nav_agenda) {
-                    startActivity(new Intent(this, AgendaActivity.class));
-                    overridePendingTransition(0, 0); finish(); return true;
-                } else if (id == R.id.nav_pacientes) {
-                    startActivity(new Intent(this, PacientesActivity.class));
-                    overridePendingTransition(0, 0); finish(); return true;
-                } else if (id == R.id.nav_perfil) {
-                    return true;
-                }
-                return false;
-            });
-        }
+        BottomNavHelper.setupDoctor(this, BottomNavHelper.DoctorTab.PERFIL);
+
     }
 
     private void configurarEdicion() {
         View btnEditTel = findViewById(R.id.btnEditarTelefonoDoctor);
         if (btnEditTel != null) btnEditTel.setOnClickListener(v ->
-                mostrarDialogoEditar("Teléfono", "telefono",
-                        tvTelefonoDoctor.getText().toString()));
+                mostrarDialogoEditar("Telefono", "telefono",
+                        tvTelefonoDoctor.getText().toString(),
+                        InputType.TYPE_CLASS_PHONE));
 
         View btnEditDir = findViewById(R.id.btnEditarDireccionDoctor);
         if (btnEditDir != null) btnEditDir.setOnClickListener(v ->
-                mostrarDialogoEditar("Dirección", "direccion",
-                        tvDireccionDoctor.getText().toString()));
+                mostrarDialogoEditar("Direccion", "direccion",
+                        tvDireccionDoctor.getText().toString(),
+                        InputType.TYPE_TEXT_FLAG_CAP_SENTENCES));
 
         View btnEditEsp = findViewById(R.id.btnEditarEspecialidad);
         if (btnEditEsp != null) btnEditEsp.setOnClickListener(v ->
                 mostrarDialogoEditar("Especialidad", "especialidad",
-                        tvEspecialidadPerfil.getText().toString()));
+                        tvEspecialidadPerfil.getText().toString(),
+                        InputType.TYPE_TEXT_FLAG_CAP_WORDS));
 
-        // NUEVO: editar datos bancarios
         View btnEditBanco = findViewById(R.id.btnEditarBanco);
         if (btnEditBanco != null) btnEditBanco.setOnClickListener(v ->
                 mostrarDialogoEditar("Nombre del banco", "banco",
-                        tvBancoDoctor.getText().toString()));
+                        tvBancoDoctor.getText().toString(),
+                        InputType.TYPE_TEXT_FLAG_CAP_WORDS));
 
         View btnEditClabe = findViewById(R.id.btnEditarClabe);
         if (btnEditClabe != null) btnEditClabe.setOnClickListener(v ->
-                mostrarDialogoEditar("CLABE interbancaria (18 dígitos)",
-                        "clabe", tvClabeDoctor.getText().toString()));
+                mostrarDialogoEditar("CLABE interbancaria (18 digitos)",
+                        "clabe", tvClabeDoctor.getText().toString(),
+                        InputType.TYPE_CLASS_NUMBER));
 
         View btnEditTitular = findViewById(R.id.btnEditarTitular);
         if (btnEditTitular != null) btnEditTitular.setOnClickListener(v ->
-                mostrarDialogoEditar("Nombre del titular de la cuenta",
-                        "titularCuenta", tvTitularDoctor.getText().toString()));
+                mostrarDialogoEditar("Titular de la cuenta",
+                        "titularCuenta", tvTitularDoctor.getText().toString(),
+                        InputType.TYPE_TEXT_FLAG_CAP_WORDS));
     }
 
     private void mostrarDialogoEditar(String titulo, String campo,
-                                       String valorActual) {
+                                       String valorActual, int inputType) {
         EditText input = new EditText(this);
+        input.setInputType(inputType);
         boolean esDefault = valorActual.equals("No registrado") ||
                 valorActual.equals("No registrada");
         input.setText(esDefault ? "" : valorActual);
         input.setHint(titulo);
-        input.setPadding(40, 20, 40, 20);
+        input.setPadding(40, 30, 40, 30);
 
         new AlertDialog.Builder(this)
                 .setTitle("Editar " + titulo)
                 .setView(input)
                 .setPositiveButton("Guardar", (d, w) -> {
                     String val = input.getText().toString().trim();
-                    if (!val.isEmpty()) guardarCampo(campo, val);
+                    guardarCampo(campo, val);
                 })
                 .setNegativeButton("Cancelar", null)
                 .show();
@@ -179,17 +172,13 @@ public class PerfilDoctorActivity extends AppCompatActivity {
         db.collection("usuarios").document(uid)
                 .update(campo, valor)
                 .addOnSuccessListener(aVoid -> {
-                    Toast.makeText(this, "✅ Actualizado", Toast.LENGTH_SHORT).show();
-                    switch (campo) {
-                        case "telefono":     tvTelefonoDoctor.setText(valor); break;
-                        case "direccion":    tvDireccionDoctor.setText(valor); break;
-                        case "especialidad":
-                            tvEspecialidadPerfil.setText(valor);
-                            tvEspecialidadDoctor.setText(valor); break;
-                        case "banco":        tvBancoDoctor.setText(valor); break;
-                        case "clabe":        tvClabeDoctor.setText(valor); break;
-                        case "titularCuenta": tvTitularDoctor.setText(valor); break;
+                    Toast.makeText(this, "Actualizado", Toast.LENGTH_SHORT).show();
+                    // Si cambian el nombre, actualizar tambien en el campo Nombre (mayuscula)
+                    if ("nombre".equals(campo)) {
+                        db.collection("usuarios").document(uid)
+                                .update("Nombre", valor);
                     }
+                    // El SnapshotListener actualiza la UI automaticamente
                 })
                 .addOnFailureListener(e ->
                         Toast.makeText(this, "Error: " + e.getMessage(),
@@ -197,13 +186,13 @@ public class PerfilDoctorActivity extends AppCompatActivity {
                 );
     }
 
-    private void cargarPerfilDoctor() {
+    private void cargarPerfilEnTiempoReal() {
         if (mAuth.getCurrentUser() == null) return;
         String uid = mAuth.getCurrentUser().getUid();
 
-        db.collection("usuarios").document(uid).get()
-                .addOnSuccessListener(doc -> {
-                    if (!doc.exists()) return;
+        listenerPerfil = db.collection("usuarios").document(uid)
+                .addSnapshotListener((doc, error) -> {
+                    if (error != null || doc == null || !doc.exists()) return;
 
                     String nombre      = doc.getString("Nombre");
                     if (nombre == null) nombre = doc.getString("nombre");
@@ -216,20 +205,23 @@ public class PerfilDoctorActivity extends AppCompatActivity {
 
                     tvNombreDoctor.setText("Dr. " + (nombre != null ? nombre : "Doctor"));
                     tvEspecialidadDoctor.setText(
-                            especialidad != null ? especialidad : "Odontólogo General");
+                            especialidad != null ? especialidad : "Odontologo General");
                     tvTelefonoDoctor.setText(
-                            telefono != null ? telefono : "No registrado");
+                            telefono != null && !telefono.isEmpty() ? telefono : "No registrado");
                     tvDireccionDoctor.setText(
-                            direccion != null ? direccion : "No registrada");
+                            direccion != null && !direccion.isEmpty() ? direccion : "No registrada");
                     tvEspecialidadPerfil.setText(
-                            especialidad != null ? especialidad : "No registrada");
+                            especialidad != null && !especialidad.isEmpty() ? especialidad : "No registrada");
 
                     if (tvBancoDoctor != null)
-                        tvBancoDoctor.setText(banco != null ? banco : "No registrado");
+                        tvBancoDoctor.setText(
+                                banco != null && !banco.isEmpty() ? banco : "No registrado");
                     if (tvClabeDoctor != null)
-                        tvClabeDoctor.setText(clabe != null ? clabe : "No registrada");
+                        tvClabeDoctor.setText(
+                                clabe != null && !clabe.isEmpty() ? clabe : "No registrada");
                     if (tvTitularDoctor != null)
-                        tvTitularDoctor.setText(titular != null ? titular : "No registrado");
+                        tvTitularDoctor.setText(
+                                titular != null && !titular.isEmpty() ? titular : "No registrado");
                 });
     }
 
@@ -255,5 +247,11 @@ public class PerfilDoctorActivity extends AppCompatActivity {
                     if (value != null && tvPendientesDoctor != null)
                         tvPendientesDoctor.setText(String.valueOf(value.size()));
                 });
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (listenerPerfil != null) listenerPerfil.remove();
     }
 }

@@ -11,6 +11,8 @@
         <item name="android:navigationBarColor">@color/blanco</item>
         <item name="materialButtonStyle">@style/BotonNavy</item>
         <item name="materialCardViewStyle">@style/CardSmartie</item>
+
+        <!-- Solo transicion entre activities con slides laterales (seguro para cualquier API) -->
         <item name="android:windowAnimationStyle">@style/TransicionSuave</item>
     </style>
 
@@ -62,7 +64,6 @@
         <item name="boxBackgroundColor">@color/fondo_input</item>
     </style>
 
-    <!-- Compatibilidad -->
     <style name="InputModerno" parent="Widget.MaterialComponents.TextInputLayout.OutlinedBox">
         <item name="boxStrokeColor">@color/navy</item>
         <item name="boxStrokeWidth">1.5dp</item>

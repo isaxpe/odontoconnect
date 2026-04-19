@@ -55,7 +55,7 @@
         <activity android:name=".FamiliaresActivity"          android:exported="false"/>
         <activity android:name=".RegistrarFamiliarActivity"   android:exported="false"/>
         <activity android:name=".PagoAnticipoActivity"        android:exported="false"/>
-
+        <activity android:name=".ReagendarCitaActivity"/>
         <receiver android:name=".RecordatorioReceiver" android:exported="false"/>
 
     </application>

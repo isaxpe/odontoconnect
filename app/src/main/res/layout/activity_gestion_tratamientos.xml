@@ -42,7 +42,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Gestiona precios y duraciones"
+                android:text="Gestiona tus servicios"
                 android:textColor="#99FFFFFF"
                 android:textSize="12sp"
                 android:layout_marginTop="2dp"/>
@@ -70,101 +70,102 @@
             android:animateLayoutChanges="true"
             android:padding="18dp">
 
-            <!-- Card agregar -->
+            <!-- Form nuevo tratamiento -->
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:layout_marginBottom="18dp"
                 android:background="@drawable/bg_card_white"
                 android:orientation="vertical"
-                android:padding="16dp"
-                android:layout_marginBottom="18dp">
+                android:padding="16dp">
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="AGREGAR TRATAMIENTO"
+                    android:layout_marginBottom="10dp"
+                    android:letterSpacing="0.1"
+                    android:text="NUEVO TRATAMIENTO"
                     android:textColor="@color/texto_hint"
                     android:textSize="9sp"
-                    android:textStyle="bold"
-                    android:letterSpacing="0.1"
-                    android:layout_marginBottom="10dp"/>
+                    android:textStyle="bold" />
 
                 <EditText
                     android:id="@+id/etNombreTrat"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
+                    android:layout_marginBottom="10dp"
                     android:background="@drawable/bg_input_smartie"
+                    android:hint="Nombre del tratamiento"
+                    android:inputType="textCapSentences"
                     android:paddingHorizontal="14dp"
-                    android:hint="Nombre"
-                    android:textColorHint="@color/texto_hint"
                     android:textColor="@color/texto_primario"
-                    android:textSize="13sp"
-                    android:inputType="textCapWords"
-                    android:layout_marginBottom="10dp"/>
+                    android:textColorHint="@color/texto_hint"
+                    android:textSize="13sp" />
 
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal"
-                    android:layout_marginBottom="10dp">
+                    android:layout_marginBottom="10dp"
+                    android:orientation="horizontal">
 
                     <EditText
                         android:id="@+id/etHorasTrat"
                         android:layout_width="0dp"
                         android:layout_height="50dp"
+                        android:layout_marginEnd="5dp"
                         android:layout_weight="1"
-                        android:layout_marginEnd="6dp"
                         android:background="@drawable/bg_input_smartie"
-                        android:paddingHorizontal="14dp"
                         android:hint="Horas"
-                        android:textColorHint="@color/texto_hint"
+                        android:inputType="number"
+                        android:paddingHorizontal="14dp"
                         android:textColor="@color/texto_primario"
-                        android:textSize="13sp"
-                        android:inputType="number"/>
+                        android:textColorHint="@color/texto_hint"
+                        android:textSize="13sp" />
 
                     <EditText
                         android:id="@+id/etMinutosTrat"
                         android:layout_width="0dp"
                         android:layout_height="50dp"
+                        android:layout_marginStart="5dp"
                         android:layout_weight="1"
-                        android:layout_marginStart="6dp"
                         android:background="@drawable/bg_input_smartie"
-                        android:paddingHorizontal="14dp"
                         android:hint="Minutos"
-                        android:textColorHint="@color/texto_hint"
+                        android:inputType="number"
+                        android:paddingHorizontal="14dp"
                         android:textColor="@color/texto_primario"
-                        android:textSize="13sp"
-                        android:inputType="number"/>
+                        android:textColorHint="@color/texto_hint"
+                        android:textSize="13sp" />
                 </LinearLayout>
 
                 <EditText
                     android:id="@+id/etPrecioTrat"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
+                    android:layout_marginBottom="14dp"
                     android:background="@drawable/bg_input_smartie"
-                    android:paddingHorizontal="14dp"
-                    android:hint="Precio en pesos"
-                    android:textColorHint="@color/texto_hint"
-                    android:textColor="@color/texto_primario"
-                    android:textSize="13sp"
+                    android:hint="Precio ($)"
                     android:inputType="numberDecimal"
-                    android:layout_marginBottom="14dp"/>
+                    android:paddingHorizontal="14dp"
+                    android:textColor="@color/texto_primario"
+                    android:textColorHint="@color/texto_hint"
+                    android:textSize="13sp" />
 
                 <Button
                     android:id="@+id/btnAgregarTratamiento"
                     android:layout_width="match_parent"
                     android:layout_height="48dp"
-                    android:text="Agregar"
-                    android:textColor="@color/navy"
-                    android:textStyle="bold"
                     android:background="@drawable/bg_btn_gold"
-                    android:stateListAnimator="@null"/>
+                    android:stateListAnimator="@null"
+                    android:text="Agregar tratamiento"
+                    android:textColor="@color/azul_muy_claro"
+                    android:textStyle="bold" />
             </LinearLayout>
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Mis tratamientos"
+                android:text="Tratamientos activos"
                 android:textColor="@color/texto_primario"
                 android:textSize="14sp"
                 android:textStyle="bold"
@@ -176,7 +177,7 @@
                 android:layout_height="wrap_content"
                 android:gravity="center"
                 android:padding="24dp"
-                android:text="No tienes tratamientos"
+                android:text="No hay tratamientos registrados"
                 android:textColor="@color/texto_secundario"
                 android:textSize="13sp"
                 android:visibility="gone"/>

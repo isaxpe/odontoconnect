@@ -89,7 +89,8 @@ public class MisCitasActivity extends AppCompatActivity {
                         String estado     = doc.getString("estado");
                         String estadoPago = doc.getString("estadoPago");
 
-                        if ("pendiente".equals(estado) || "aceptada".equals(estado)) {
+                        if ("pendiente".equals(estado) || "aceptada".equals(estado) ||
+                                "reagendada_por_urgencia".equals(estado)) {
                             activas.add(doc);
                             if ("aceptada".equals(estado) &&
                                     (estadoPago == null ||
@@ -170,6 +171,10 @@ public class MisCitasActivity extends AppCompatActivity {
             case "rechazada": tvEstado.setBackgroundColor(0xFFB71C1C); break;
             case "cancelada":
             case "vencida":   tvEstado.setBackgroundColor(0xFF757575); break;
+            case "reagendada_por_urgencia":
+                tvEstado.setText("CEDIDA POR URGENCIA");
+                tvEstado.setBackgroundColor(0xFFD32F2F);
+                break;
             default:          tvEstado.setBackgroundColor(0xFFF59E0B); break;
         }
 
@@ -185,27 +190,40 @@ public class MisCitasActivity extends AppCompatActivity {
             }
         }
 
-        // Botón pagar anticipo
+        // Botón pagar anticipo (o Reagendar si la cita fue cedida por urgencia)
         if (btnPagar != null) {
-            if ("aceptada".equals(estado)) {
+            if ("reagendada_por_urgencia".equals(estado)) {
+                // La cita original fue cedida a un urgente - ofrecer reagendar
+                btnPagar.setVisibility(View.VISIBLE);
+                btnPagar.setText("Reagendar (+20%)");
+                btnPagar.setEnabled(true);
+                btnPagar.setBackgroundTintList(
+                        android.content.res.ColorStateList.valueOf(0xFFE8A830));
+                btnPagar.setTextColor(0xFF1B3A6B);
+                btnPagar.setOnClickListener(v -> {
+                    Intent intent = new Intent(this, ReagendarCitaActivity.class);
+                    intent.putExtra("idCita", idCita);
+                    startActivity(intent);
+                });
+            } else if ("aceptada".equals(estado)) {
                 btnPagar.setVisibility(View.VISIBLE);
                 if (estadoPago == null) {
-                    btnPagar.setText("💳 Pagar anticipo");
+                    btnPagar.setText("Pagar anticipo");
                     btnPagar.setEnabled(true);
                     btnPagar.setBackgroundTintList(
                             android.content.res.ColorStateList.valueOf(0xFF1565C0));
                 } else if ("rechazado".equals(estadoPago)) {
-                    btnPagar.setText("❌ Comprobante rechazado — Reenviar");
+                    btnPagar.setText("Comprobante rechazado - Reenviar");
                     btnPagar.setEnabled(true);
                     btnPagar.setBackgroundTintList(
                             android.content.res.ColorStateList.valueOf(0xFFB71C1C));
                 } else if ("pagado".equals(estadoPago)) {
-                    btnPagar.setText("📤 Comprobante enviado — en revisión");
+                    btnPagar.setText("Comprobante enviado - en revision");
                     btnPagar.setEnabled(false);
                     btnPagar.setBackgroundTintList(
                             android.content.res.ColorStateList.valueOf(0xFF757575));
                 } else if ("confirmado".equals(estadoPago)) {
-                    btnPagar.setText("✅ Anticipo confirmado");
+                    btnPagar.setText("Anticipo confirmado");
                     btnPagar.setEnabled(false);
                     btnPagar.setBackgroundTintList(
                             android.content.res.ColorStateList.valueOf(0xFF2E7D32));

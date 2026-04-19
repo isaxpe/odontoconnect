@@ -138,10 +138,16 @@
                     android:gravity="top">
                     <FrameLayout android:layout_width="28dp" android:layout_height="28dp">
                         <View android:layout_width="28dp" android:layout_height="28dp"
-                            android:background="@drawable/bg_icon_circle_gold"/>
-                        <TextView android:layout_width="wrap_content" android:layout_height="wrap_content"
-                            android:layout_gravity="center" android:text="3"
-                            android:textColor="@color/gold" android:textSize="12sp" android:textStyle="bold"/>
+                            android:background="@drawable/bg_btn_outline"/>
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:text="3"
+                            android:textColor="@color/azul_nav"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
                     </FrameLayout>
                     <TextView android:layout_width="0dp" android:layout_height="wrap_content"
                         android:layout_weight="1" android:text="Vuelve aqui y toca Ya verifique"
@@ -154,10 +160,10 @@
                 android:id="@+id/tvEstadoVerificacion"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:background="@drawable/bg_tag_gold"
+                android:background="@drawable/bg_stat_blue"
                 android:padding="12dp"
                 android:text="Esperando verificacion..."
-                android:textColor="#92400E"
+                android:textColor="#3F51B5"
                 android:textSize="12sp"
                 android:textStyle="bold"
                 android:gravity="center"

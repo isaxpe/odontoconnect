@@ -125,19 +125,30 @@ public class PagoAnticipoActivity extends AppCompatActivity {
                     String tratamiento = citaDoc.getString("tratamiento");
                     String idDoctor    = citaDoc.getString("idDoctor");
                     Double precio      = citaDoc.getDouble("precioTratamiento");
+                    // URGENCIA: si la cita tiene recargo aplicado, usar montoFinal como base
+                    Boolean esUrgente  = citaDoc.getBoolean("esUrgente");
+                    Boolean recargoAplicado = citaDoc.getBoolean("recargoAplicado");
+                    Double montoFinal  = citaDoc.getDouble("montoFinal");
 
                     // Mostrar nombre del tratamiento
                     if (tvNombreTratamiento != null)
                         tvNombreTratamiento.setText(
                                 tratamiento != null ? tratamiento : "Consulta");
 
-                    // Calcular y mostrar anticipo (20%)
+                    // Calcular y mostrar anticipo (20% del total)
                     if (tvMontoPagar != null) {
-                        if (precio != null && precio > 0) {
-                            double anticipo = precio * 0.20;
+                        // Si el doctor aplico recargo por urgencia, usar montoFinal
+                        Double precioBase = Boolean.TRUE.equals(recargoAplicado) &&
+                                montoFinal != null && montoFinal > 0
+                                ? montoFinal : precio;
+
+                        if (precioBase != null && precioBase > 0) {
+                            double anticipo = precioBase * 0.20;
+                            String etiqueta = Boolean.TRUE.equals(recargoAplicado)
+                                    ? " MXN (20% anticipo - incluye recargo urgencia)"
+                                    : " MXN (20% de anticipo)";
                             tvMontoPagar.setText("$" + String.format(
-                                    Locale.getDefault(), "%.2f", anticipo) +
-                                    " MXN (20% de anticipo)");
+                                    Locale.getDefault(), "%.2f", anticipo) + etiqueta);
                         } else {
                             tvMontoPagar.setText("Consulta el monto con el doctor");
                         }
@@ -218,7 +229,13 @@ public class PagoAnticipoActivity extends AppCompatActivity {
         db.collection("citas").document(idCita).get()
                 .addOnSuccessListener(citaDoc -> {
                     Double precio = citaDoc.getDouble("precioTratamiento");
-                    double anticipo = precio != null ? precio * 0.20 : 0;
+                    Boolean recargoAplicado = citaDoc.getBoolean("recargoAplicado");
+                    Double montoFinal = citaDoc.getDouble("montoFinal");
+                    // Si hay recargo, el anticipo se calcula sobre el montoFinal
+                    Double base = Boolean.TRUE.equals(recargoAplicado) &&
+                            montoFinal != null && montoFinal > 0
+                            ? montoFinal : precio;
+                    double anticipo = base != null ? base * 0.20 : 0;
 
                     Map<String, Object> datos = new HashMap<>();
                     datos.put("comprobanteBase64", fotoBase64);

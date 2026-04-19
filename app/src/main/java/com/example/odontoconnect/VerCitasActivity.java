@@ -19,15 +19,20 @@ import com.google.firebase.firestore.FirebaseFirestore;
 import com.google.firebase.firestore.ListenerRegistration;
 
 import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 public class VerCitasActivity extends AppCompatActivity {
+
+    // Porcentaje extra que se cobra por una cita urgente (+20%)
+    private static final double RECARGO_URGENCIA = 0.20;
 
     private LinearLayout contenedorSolicitudes;
     private TextView tvMensajeVacio;
     private FirebaseFirestore db;
     private FirebaseAuth mAuth;
     private ListenerRegistration listenerPendientes;
-    private ListenerRegistration listenerComprobantes;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,16 +47,12 @@ public class VerCitasActivity extends AppCompatActivity {
         cargarCitas();
 
         BottomNavHelper.setupDoctor(this, BottomNavHelper.DoctorTab.INICIO);
-
     }
 
     private void cargarCitas() {
         if (mAuth.getCurrentUser() == null) return;
         String miUid = mAuth.getCurrentUser().getUid();
 
-        // FIX BUG 9: cargar DOS tipos de citas:
-        // 1. Citas PENDIENTES → para aceptar/rechazar
-        // 2. Citas ACEPTADAS con estadoPago=pagado → para revisar comprobante
         listenerPendientes = db.collection("citas")
                 .whereEqualTo("idDoctor", miUid)
                 .whereIn("estado", Arrays.asList("pendiente", "aceptada"))
@@ -70,7 +71,6 @@ public class VerCitasActivity extends AppCompatActivity {
                         String estadoPago = doc.getString("estadoPago");
 
                         boolean esPendiente = "pendiente".equals(estado);
-                        // BUG 9 FIX: mostrar citas aceptadas SOLO si tienen comprobante pendiente
                         boolean tieneComprobante = "aceptada".equals(estado) &&
                                 "pagado".equals(estadoPago);
 
@@ -99,10 +99,17 @@ public class VerCitasActivity extends AppCompatActivity {
         String primeraVis   = citaDoc.getString("primeraVisita");
         String medicamentos = citaDoc.getString("tomaMedicamentos");
         String descripcion  = citaDoc.getString("descripcionMolestia");
+        Double precioTrat   = citaDoc.getDouble("precioTratamiento");
+
+        // Detectar urgencia por nivelDolor (del triaje) o por flag esUrgente
+        Boolean flagUrgente = citaDoc.getBoolean("esUrgente");
+        boolean esUrgenteCita = Boolean.TRUE.equals(flagUrgente) ||
+                UrgenciaHelper.esUrgente(nivelDolor);
 
         View tarjeta = LayoutInflater.from(this)
                 .inflate(R.layout.item_solicitud, contenedorSolicitudes, false);
 
+        TextView tagUrgente = tarjeta.findViewById(R.id.tagUrgente);
         TextView tvInfo     = tarjeta.findViewById(R.id.tvInfoCita);
         TextView tvTriaje   = tarjeta.findViewById(R.id.tvTriajeCita);
         TextView tvEstPago  = tarjeta.findViewById(R.id.tvEstadoPagoCita);
@@ -114,44 +121,52 @@ public class VerCitasActivity extends AppCompatActivity {
         final String tratFinal  = tratamiento;
         final String fechaFinal = fecha;
         final String idPacFinal = idPaciente;
+        final boolean esUrgente = esUrgenteCita;
+        final Double precioFinal = precioTrat;
 
-        // Si es cita ACEPTADA con comprobante, cambiar título de la tarjeta
         boolean soloComprobante = "aceptada".equals(estado) && "pagado".equals(estadoPago);
 
-        tvInfo.setText((soloComprobante ? "💳 " : "🦷 ") +
+        // MOSTRAR TAG URGENTE si corresponde y es solicitud pendiente
+        if (tagUrgente != null && esUrgente && !soloComprobante) {
+            tagUrgente.setVisibility(View.VISIBLE);
+        } else if (tagUrgente != null) {
+            tagUrgente.setVisibility(View.GONE);
+        }
+
+        tvInfo.setText((soloComprobante ? "Comprobante: " : "") +
                 (tratamiento != null ? tratamiento : "Cita") +
-                "\n📅 " + (fecha != null ? fecha : "--") +
-                "  🕐 " + (hora != null ? hora : "--") +
-                (soloComprobante ? "\n✅ Cita aceptada — comprobante pendiente" : "\n👤 Cargando..."));
+                "\n" + (fecha != null ? fecha : "--") +
+                " - " + (hora != null ? hora : "--") +
+                (soloComprobante ? "\nCita aceptada - comprobante pendiente" : "\nCargando..."));
 
         if (!soloComprobante && idPaciente != null) {
             db.collection("usuarios").document(idPaciente).get()
                     .addOnSuccessListener(pac -> {
                         String nombre = pac.getString("Nombre");
                         if (nombre == null) nombre = pac.getString("nombre");
-                        tvInfo.setText("🦷 " + (tratFinal != null ? tratFinal : "Cita") +
-                                "\n📅 " + (fechaFinal != null ? fechaFinal : "--") +
-                                "  🕐 " + (horaFinal != null ? horaFinal : "--") +
-                                "\n👤 " + (nombre != null ? nombre : "Paciente"));
+                        tvInfo.setText((tratFinal != null ? tratFinal : "Cita") +
+                                "\n" + (fechaFinal != null ? fechaFinal : "--") +
+                                " - " + (horaFinal != null ? horaFinal : "--") +
+                                "\n" + (nombre != null ? nombre : "Paciente"));
                     });
         }
 
-        // Triaje (solo en pendientes)
+        // Triaje
         if (!soloComprobante) {
             if (Boolean.TRUE.equals(triajeOk)) {
-                StringBuilder sb = new StringBuilder("📋 Triaje:\n");
+                StringBuilder sb = new StringBuilder("Triaje:\n");
                 if (nivelDolor != null)
-                    sb.append("• Dolor: ").append(nivelDolor).append("\n");
+                    sb.append("- Dolor: ").append(nivelDolor).append("\n");
                 if (primeraVis != null)
-                    sb.append("• Visita: ").append(primeraVis).append("\n");
+                    sb.append("- Visita: ").append(primeraVis).append("\n");
                 if (medicamentos != null)
-                    sb.append("• Medicamentos: ").append(medicamentos);
+                    sb.append("- Medicamentos: ").append(medicamentos);
                 if (descripcion != null && !descripcion.isEmpty())
-                    sb.append("\n• Molestia: ").append(descripcion);
+                    sb.append("\n- Molestia: ").append(descripcion);
                 tvTriaje.setText(sb.toString().trim());
                 tvTriaje.setTextColor(0xFF333333);
             } else {
-                tvTriaje.setText("⏳ Triaje pendiente del paciente.");
+                tvTriaje.setText("Triaje pendiente del paciente.");
                 tvTriaje.setTextColor(0xFF888888);
             }
             tvTriaje.setVisibility(View.VISIBLE);
@@ -159,7 +174,7 @@ public class VerCitasActivity extends AppCompatActivity {
 
         // Estado del pago
         if ("pagado".equals(estadoPago)) {
-            tvEstPago.setText("📤 Comprobante enviado — pendiente de revisión");
+            tvEstPago.setText("Comprobante enviado - pendiente de revision");
             tvEstPago.setVisibility(View.VISIBLE);
             btnVerComp.setVisibility(View.VISIBLE);
             btnVerComp.setOnClickListener(v -> {
@@ -167,76 +182,59 @@ public class VerCitasActivity extends AppCompatActivity {
                 intent.putExtra("idCita", idCita);
                 startActivity(intent);
             });
-            // Si solo es comprobante, ocultar aceptar/rechazar
             if (soloComprobante) {
                 btnAceptar.setVisibility(View.GONE);
                 btnRechazar.setVisibility(View.GONE);
             }
         } else if ("confirmado".equals(estadoPago)) {
-            tvEstPago.setText("✅ Anticipo confirmado");
+            tvEstPago.setText("Anticipo confirmado");
             tvEstPago.setBackgroundColor(0xFFE8F5E9);
             tvEstPago.setTextColor(0xFF2E7D32);
             tvEstPago.setVisibility(View.VISIBLE);
         } else if ("rechazado".equals(estadoPago)) {
-            tvEstPago.setText("❌ Comprobante rechazado — paciente debe reenviar");
+            tvEstPago.setText("Comprobante rechazado - paciente debe reenviar");
             tvEstPago.setBackgroundColor(0xFFFFEBEE);
             tvEstPago.setTextColor(0xFFB71C1C);
             tvEstPago.setVisibility(View.VISIBLE);
         } else if (!soloComprobante) {
-            tvEstPago.setText("💰 Anticipo: pendiente de pago");
+            if (esUrgente && precioTrat != null) {
+                double precioUrgente = precioTrat * (1 + RECARGO_URGENCIA);
+                tvEstPago.setText(String.format(Locale.getDefault(),
+                        "Anticipo URGENTE: $%.2f (+20%% sobre $%.2f)",
+                        precioUrgente, precioTrat));
+            } else {
+                tvEstPago.setText("Anticipo: pendiente de pago");
+            }
             tvEstPago.setVisibility(View.VISIBLE);
         }
 
-        // Botones aceptar/rechazar (solo en pendientes)
+        // Botones aceptar/rechazar
         if (!soloComprobante) {
-            btnAceptar.setOnClickListener(v ->
-                    new AlertDialog.Builder(this)
-                            .setTitle("Aceptar cita")
-                            .setMessage("¿Confirmas aceptar esta solicitud?")
-                            .setPositiveButton("Sí, aceptar", (d, w) -> {
-                                db.collection("citas").document(idCita)
-                                        .update("estado", "aceptada")
-                                        .addOnSuccessListener(aVoid -> {
-                                            Toast.makeText(this, "✅ Cita aceptada",
-                                                    Toast.LENGTH_SHORT).show();
-                                            if (idPacFinal != null) {
-                                                NtfyHelper.citaAceptada(idPacFinal,
-                                                        tratFinal != null ? tratFinal : "tu cita",
-                                                        fechaFinal != null ? fechaFinal : "--",
-                                                        horaFinal != null ? horaFinal : "--");
-                                                if (fechaFinal != null)
-                                                    RecordatorioReceiver.programar(this,
-                                                            idCita, idPacFinal,
-                                                            tratFinal != null ? tratFinal : "Cita",
-                                                            fechaFinal,
-                                                            horaFinal != null ? horaFinal : "--");
-                                            }
-                                        })
-                                        .addOnFailureListener(e ->
-                                                Toast.makeText(this, "Error al aceptar",
-                                                        Toast.LENGTH_SHORT).show());
-                            })
-                            .setNegativeButton("Cancelar", null).show()
-            );
+            btnAceptar.setOnClickListener(v -> {
+                if (esUrgente) {
+                    mostrarDialogoAceptarUrgencia(idCita, tratFinal, fechaFinal,
+                            horaFinal, idPacFinal, precioFinal);
+                } else {
+                    mostrarDialogoAceptarNormal(idCita, tratFinal, fechaFinal,
+                            horaFinal, idPacFinal);
+                }
+            });
 
             btnRechazar.setOnClickListener(v ->
                     new AlertDialog.Builder(this)
                             .setTitle("Rechazar solicitud")
-                            .setMessage("¿Rechazar? Rechazar NO suma falta al paciente.")
-                            .setPositiveButton("Sí, rechazar", (d, w) -> {
+                            .setMessage("Rechazar NO suma falta al paciente.")
+                            .setPositiveButton("Si, rechazar", (d, w) -> {
                                 db.collection("citas").document(idCita)
                                         .update("estado", "rechazada")
                                         .addOnSuccessListener(aVoid -> {
-                                            Toast.makeText(this, "❌ Solicitud rechazada",
+                                            Toast.makeText(this, "Solicitud rechazada",
                                                     Toast.LENGTH_SHORT).show();
                                             if (idPacFinal != null)
                                                 NtfyHelper.citaRechazada(idPacFinal,
                                                         tratFinal != null ? tratFinal : "tu cita");
                                             RecordatorioReceiver.cancelar(this, idCita);
-                                        })
-                                        .addOnFailureListener(e ->
-                                                Toast.makeText(this, "Error al rechazar",
-                                                        Toast.LENGTH_SHORT).show());
+                                        });
                             })
                             .setNegativeButton("Cancelar", null).show()
             );
@@ -245,10 +243,97 @@ public class VerCitasActivity extends AppCompatActivity {
         contenedorSolicitudes.addView(tarjeta);
     }
 
+    // Dialogo especial para aceptar urgencia - muestra el recargo +20%
+    private void mostrarDialogoAceptarUrgencia(String idCita, String trat, String fecha,
+                                                 String hora, String idPac,
+                                                 Double precioBase) {
+        double precioFinal = precioBase != null
+                ? precioBase * (1 + RECARGO_URGENCIA) : 0;
+
+        String msg = "Esta cita esta marcada como URGENTE.\n\n";
+        if (precioBase != null) {
+            msg += String.format(Locale.getDefault(),
+                    "Precio normal: $%.2f\nRecargo urgencia (+20%%): $%.2f\n" +
+                    "Total a cobrar: $%.2f\n\n",
+                    precioBase, precioBase * RECARGO_URGENCIA, precioFinal);
+        } else {
+            msg += "No se encontro el precio base del tratamiento.\n\n";
+        }
+        msg += "Al aceptar, el paciente recibira el nuevo monto a pagar.";
+
+        new AlertDialog.Builder(this)
+                .setTitle("Aceptar cita URGENTE")
+                .setMessage(msg)
+                .setPositiveButton("Aceptar urgencia", (d, w) ->
+                        aceptarCita(idCita, trat, fecha, hora, idPac,
+                                true, precioFinal))
+                .setNeutralButton("Aceptar SIN recargo", (d, w) ->
+                        aceptarCita(idCita, trat, fecha, hora, idPac,
+                                false, precioBase != null ? precioBase : 0))
+                .setNegativeButton("Cancelar", null)
+                .show();
+    }
+
+    private void mostrarDialogoAceptarNormal(String idCita, String trat, String fecha,
+                                               String hora, String idPac) {
+        new AlertDialog.Builder(this)
+                .setTitle("Aceptar cita")
+                .setMessage("Confirmas aceptar esta solicitud?")
+                .setPositiveButton("Si, aceptar", (d, w) ->
+                        aceptarCita(idCita, trat, fecha, hora, idPac, false, 0))
+                .setNegativeButton("Cancelar", null).show();
+    }
+
+    private void aceptarCita(String idCita, String trat, String fecha, String hora,
+                              String idPac, boolean conRecargo, double montoFinal) {
+        Map<String, Object> cambios = new HashMap<>();
+        cambios.put("estado", "aceptada");
+        if (conRecargo) {
+            cambios.put("esUrgente", true);
+            cambios.put("recargoAplicado", true);
+            cambios.put("montoFinal", montoFinal);
+            cambios.put("porcentajeRecargo", RECARGO_URGENCIA * 100);
+        } else {
+            cambios.put("montoFinal", montoFinal);
+        }
+
+        db.collection("citas").document(idCita)
+                .update(cambios)
+                .addOnSuccessListener(aVoid -> {
+                    Toast.makeText(this,
+                            conRecargo ? "Cita urgente aceptada (+20%)" : "Cita aceptada",
+                            Toast.LENGTH_SHORT).show();
+                    if (idPac != null) {
+                        if (conRecargo) {
+                            NtfyHelper.notificarPaciente(idPac,
+                                    "Urgencia aprobada",
+                                    "Tu cita urgente fue aceptada. Nuevo monto: $" +
+                                            String.format(Locale.getDefault(), "%.2f",
+                                                    montoFinal) +
+                                            " (incluye recargo del 20%). " +
+                                            "Realiza el pago desde la app.",
+                                    "!");
+                        } else {
+                            NtfyHelper.citaAceptada(idPac,
+                                    trat != null ? trat : "tu cita",
+                                    fecha != null ? fecha : "--",
+                                    hora != null ? hora : "--");
+                        }
+                        if (fecha != null)
+                            RecordatorioReceiver.programar(this,
+                                    idCita, idPac,
+                                    trat != null ? trat : "Cita",
+                                    fecha, hora != null ? hora : "--");
+                    }
+                })
+                .addOnFailureListener(e ->
+                        Toast.makeText(this, "Error al aceptar",
+                                Toast.LENGTH_SHORT).show());
+    }
+
     @Override
     protected void onDestroy() {
         super.onDestroy();
         if (listenerPendientes != null) listenerPendientes.remove();
-        if (listenerComprobantes != null) listenerComprobantes.remove();
     }
 }

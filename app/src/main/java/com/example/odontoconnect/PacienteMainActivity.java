@@ -73,6 +73,29 @@ public class PacienteMainActivity extends AppCompatActivity {
                     startActivity(new Intent(this, FamiliaresActivity.class))
             );
         }
+
+        // NUEVO: botón de urgencia (solo aparece si existe en el layout)
+        int idBtnUrg = getResources().getIdentifier(
+                "btnTengoUrgencia", "id", getPackageName());
+        if (idBtnUrg != 0) {
+            View btnUrgencia = findViewById(idBtnUrg);
+            if (btnUrgencia != null) {
+                btnUrgencia.setOnClickListener(v -> mostrarDialogoUrgencia());
+            }
+        }
+    }
+
+    private void mostrarDialogoUrgencia() {
+        new AlertDialog.Builder(this)
+                .setTitle("Solicitar urgencia")
+                .setMessage("Vas a crear una solicitud de atencion urgente. " +
+                        "El doctor revisara tu caso y respondera lo antes posible.\n\n" +
+                        "AVISO: Las urgencias tienen un recargo del 20% por atencion prioritaria.\n\n" +
+                        "Deseas continuar?")
+                .setPositiveButton("Si, solicitar", (d, w) ->
+                        startActivity(new Intent(this, SolicitudUrgenciaActivity.class)))
+                .setNegativeButton("Cancelar", null)
+                .show();
     }
 
     // MEJORA: verificar penalización antes de permitir agendar

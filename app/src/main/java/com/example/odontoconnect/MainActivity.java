@@ -2,6 +2,7 @@ package com.example.odontoconnect;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.Button;
 import android.widget.TextView;
 import androidx.appcompat.app.AppCompatActivity;
@@ -65,6 +66,14 @@ public class MainActivity extends AppCompatActivity {
             );
         }
 
+        // NUEVO: Botón Urgencias pendientes (solo si existe en el layout)
+        View btnUrgencias = findViewById(R.id.btnUrgenciasPendientes);
+        if (btnUrgencias != null) {
+            btnUrgencias.setOnClickListener(v ->
+                    startActivity(new Intent(this, UrgenciasPendientesActivity.class))
+            );
+        }
+
         BottomNavHelper.setupDoctor(this, BottomNavHelper.DoctorTab.INICIO);
 
     }
@@ -89,6 +98,22 @@ public class MainActivity extends AppCompatActivity {
                 .whereEqualTo("rol", "paciente")
                 .addSnapshotListener((value, error) -> {
                     if (value != null) tvTotalPacientes.setText(String.valueOf(value.size()));
+                });
+
+        // NUEVO: Contador de urgencias pendientes
+        TextView tvUrgenciasCount = findViewById(R.id.tvUrgenciasCount);
+        View badgeUrgencias = findViewById(R.id.badgeUrgencias);
+        db.collection("citas")
+                .whereEqualTo("estado", "urgencia_pendiente")
+                .addSnapshotListener((value, error) -> {
+                    if (value == null) return;
+                    int n = value.size();
+                    if (tvUrgenciasCount != null) {
+                        tvUrgenciasCount.setText(String.valueOf(n));
+                    }
+                    if (badgeUrgencias != null) {
+                        badgeUrgencias.setVisibility(n > 0 ? View.VISIBLE : View.GONE);
+                    }
                 });
     }
 

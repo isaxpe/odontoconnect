@@ -57,6 +57,9 @@
         <activity android:name=".PagoAnticipoActivity"        android:exported="false"/>
         <activity android:name=".ReagendarCitaActivity"/>
         <receiver android:name=".RecordatorioReceiver" android:exported="false"/>
+        <activity android:name=".SolicitudUrgenciaActivity"/>
+        <activity android:name=".ResponderUrgenciaActivity"/>
+        <activity android:name=".UrgenciasPendientesActivity"/>
 
     </application>
 </manifest>

@@ -242,7 +242,7 @@
                 android:layout_width="match_parent"
                 android:layout_height="64dp"
                 android:text="Citas de Hoy"
-                android:textColor="@color/navy"
+                android:textColor="@color/blanco"
                 android:textSize="14sp"
                 android:textStyle="bold"
                 android:background="@drawable/bg_btn_gold"

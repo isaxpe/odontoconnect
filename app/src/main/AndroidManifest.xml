@@ -60,6 +60,7 @@
         <activity android:name=".SolicitudUrgenciaActivity"/>
         <activity android:name=".ResponderUrgenciaActivity"/>
         <activity android:name=".UrgenciasPendientesActivity"/>
+        <activity android:name=".TodasCitasActivity"/>
 
     </application>
 </manifest>

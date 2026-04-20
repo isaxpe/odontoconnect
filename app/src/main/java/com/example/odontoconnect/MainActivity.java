@@ -59,10 +59,12 @@ public class MainActivity extends AppCompatActivity {
                 startActivity(new Intent(this, GestionTratamientosActivity.class))
         );
 
-        // NUEVO: Botón Citas de Hoy
+        // NUEVO: Botón Citas de Hoy -> ahora abre TodasCitasActivity
+        // (muestra todas las citas con filtro Hoy/Semana/Todas)
         if (btnCitasHoy != null) {
+            btnCitasHoy.setText("Mis citas por atender");
             btnCitasHoy.setOnClickListener(v ->
-                    startActivity(new Intent(this, CitasHoyActivity.class))
+                    startActivity(new Intent(this, TodasCitasActivity.class))
             );
         }
 

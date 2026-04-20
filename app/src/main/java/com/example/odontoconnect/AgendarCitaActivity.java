@@ -102,6 +102,9 @@ public class AgendarCitaActivity extends AppCompatActivity {
         spinnerHoras         = findViewById(R.id.spinnerHoras);
         btnConfirmarCita     = findViewById(R.id.btnConfirmarCita);
 
+        // NUEVO: Banner rojo arriba del titulo preguntando si es urgencia
+        mostrarBannerUrgencia();
+
         if (esFamiliar && nombreFamiliar != null && tvTituloAgendar != null)
             tvTituloAgendar.setText("Agendar Cita\npara: " + nombreFamiliar);
 
@@ -733,5 +736,101 @@ public class AgendarCitaActivity extends AppCompatActivity {
                     btnConfirmarCita.setEnabled(true);
                     btnConfirmarCita.setText("CONFIRMAR CITA");
                 });
+    }
+
+    /**
+     * Crea un banner rojo arriba preguntando al paciente si es urgencia.
+     * Se crea programaticamente para no depender del XML.
+     */
+    private void mostrarBannerUrgencia() {
+        try {
+            // Buscar el ScrollView o el root del contenido
+            View root = findViewById(android.R.id.content);
+            if (!(root instanceof android.view.ViewGroup)) return;
+
+            // Buscar el primer LinearLayout vertical que contiene el formulario
+            // Estrategia simple: poner el banner ANTES del spinner de tratamiento
+            View ancla = spinnerTratamiento != null
+                    ? spinnerTratamiento : tvTituloAgendar;
+            if (ancla == null) return;
+
+            android.view.ViewGroup parent = (android.view.ViewGroup) ancla.getParent();
+            if (parent == null) return;
+
+            float density = getResources().getDisplayMetrics().density;
+
+            // Banner rojo con texto explicativo
+            LinearLayout banner = new LinearLayout(this);
+            banner.setOrientation(LinearLayout.VERTICAL);
+            banner.setBackgroundColor(0xFFFEE2E2);
+            int padding = (int)(14 * density);
+            banner.setPadding(padding, padding, padding, padding);
+
+            TextView tvTitulo = new TextView(this);
+            tvTitulo.setText("¿Tienes una urgencia?");
+            tvTitulo.setTextColor(0xFFB91C1C);
+            tvTitulo.setTextSize(14);
+            tvTitulo.setTypeface(null, android.graphics.Typeface.BOLD);
+            banner.addView(tvTitulo);
+
+            TextView tvSubtitulo = new TextView(this);
+            tvSubtitulo.setText("Si tienes dolor fuerte o necesitas atencion inmediata, toca para solicitar una cita urgente (+20% de recargo).");
+            tvSubtitulo.setTextColor(0xFF991B1B);
+            tvSubtitulo.setTextSize(11);
+            tvSubtitulo.setPadding(0, (int)(4 * density), 0, (int)(10 * density));
+            banner.addView(tvSubtitulo);
+
+            com.google.android.material.button.MaterialButton btnUrg =
+                    new com.google.android.material.button.MaterialButton(this);
+            btnUrg.setText("SOLICITAR URGENCIA");
+            btnUrg.setTextColor(0xFFFFFFFF);
+            btnUrg.setTextSize(12);
+            btnUrg.setBackgroundTintList(
+                    android.content.res.ColorStateList.valueOf(0xFFDC2626));
+            btnUrg.setCornerRadius((int)(10 * density));
+            btnUrg.setInsetTop(0);
+            btnUrg.setInsetBottom(0);
+            btnUrg.setStateListAnimator(null);
+
+            LinearLayout.LayoutParams lpBtn = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    (int)(44 * density));
+            btnUrg.setLayoutParams(lpBtn);
+            btnUrg.setOnClickListener(v -> {
+                new AlertDialog.Builder(this)
+                        .setTitle("Solicitar urgencia")
+                        .setMessage("Esta opcion es para casos de dolor fuerte " +
+                                "o emergencias dentales.\n\n" +
+                                "El doctor revisara tu caso y te propondra " +
+                                "una fecha/hora de atencion.\n\n" +
+                                "AVISO: Las urgencias tienen un recargo del 20% " +
+                                "por atencion prioritaria.\n\n" +
+                                "Deseas continuar?")
+                        .setPositiveButton("Si, es urgencia", (d, w) -> {
+                            Intent intent = new Intent(this,
+                                    SolicitudUrgenciaActivity.class);
+                            startActivity(intent);
+                            finish();
+                        })
+                        .setNegativeButton("No, es cita normal", null)
+                        .show();
+            });
+            banner.addView(btnUrg);
+
+            // Params del banner
+            LinearLayout.LayoutParams lp = new LinearLayout.LayoutParams(
+                    LinearLayout.LayoutParams.MATCH_PARENT,
+                    LinearLayout.LayoutParams.WRAP_CONTENT);
+            int margin = (int)(14 * density);
+            lp.setMargins(margin, margin, margin, margin);
+            banner.setLayoutParams(lp);
+
+            // Insertar ANTES del ancla
+            int pos = parent.indexOfChild(ancla);
+            parent.addView(banner, pos);
+        } catch (Exception e) {
+            android.util.Log.e("AGENDAR", "Error banner urgencia", e);
+            // Si falla, no pasa nada - solo no aparece el banner
+        }
     }
 }
